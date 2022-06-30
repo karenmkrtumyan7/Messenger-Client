@@ -4,7 +4,7 @@ import {
 import {
   signInSuccess, signUpSuccess, verifyFailure, verifySuccess,
 } from '../actions/auth/AuthActionCreators';
-import { failure, load  ing, resetLoading } from '../actions/settings/SettingsActionCreators';
+import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
 import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
 import { authApi } from '../services/auth.service';
 
