@@ -57,7 +57,7 @@
     "lint-staged": "^13.0.3"
   },
   "lint-staged": {
-    "src/**/*.js": [
+    "**/*.js": [
       "eslint src/**/*.js --fix",
       "git add"
     ]
