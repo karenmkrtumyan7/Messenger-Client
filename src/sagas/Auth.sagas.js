@@ -1,12 +1,12 @@
 import {
-  call, takeLatest, put, takeEvery,
+  call, takeLatest, put,
 } from '@redux-saga/core/effects';
 import {
   signInSuccess, signUpSuccess, verifyFailure, verifySuccess,
 } from '../actions/auth/AuthActionCreators';
 import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
 import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
-import { authApi } from '../services/auth.service';
+import { authApi } from '../utils/axios.instance';
 
 const {
   LOGIN_REQUEST,
@@ -17,10 +17,7 @@ const {
 function* signInSaga({ payload }) {
   try {
     yield put(loading());
-    const { data } = yield call(authApi.post, 'signin', payload);
-
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('userId', data.userId);
+    const { data } = yield call(authApi().post, 'signin', payload.data);
 
     yield put(signInSuccess(data));
   } catch ({ response: { data: messages } }) {
@@ -33,8 +30,7 @@ function* signInSaga({ payload }) {
 function* signUpSaga({ payload }) {
   try {
     yield put(loading());
-
-    yield call(authApi.post, 'signup', payload);
+    yield call(authApi().post, 'signup', payload.data);
     yield put(signUpSuccess());
   } catch ({ response: { data: messages } }) {
     yield put(failure(messages));
@@ -48,7 +44,7 @@ function* verifySaga({ payload: { id } }) {
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(authApi.put, `verify/${userId}`);
+    const { data: { msg } } = yield call(authApi().put, `verify/${userId}`);
     yield put(verifySuccess(msg));
   } catch ({ response: { data: message } }) {
     localStorage.removeItem('token');
@@ -64,5 +60,5 @@ function* verifySaga({ payload: { id } }) {
 export const authSagas = [
   takeLatest(LOGIN_REQUEST, signInSaga),
   takeLatest(REGISTER_REQUEST, signUpSaga),
-  takeEvery(VERIFY_REQUEST, verifySaga),
+  takeLatest(VERIFY_REQUEST, verifySaga),
 ];

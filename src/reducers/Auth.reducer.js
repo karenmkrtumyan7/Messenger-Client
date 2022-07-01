@@ -2,46 +2,36 @@ import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
 
 const initialState = {
   registered: false,
-  token: '',
-  userId: '',
   verifyMessage: '',
-  loading: false,
+  authData: JSON.parse(localStorage.getItem('auth') || '{}'),
 };
 
-export const auth = (state = initialState, action) => {
-  switch (action.type) {
+export const auth = (state = initialState, { type, payload }) => {
+  switch (type) {
   case AuthActionTypes.LOGIN_SUCCESS:
     return {
       ...state,
-      registered: false,
-      loading: false,
-      ...action.payload,
+      authData: payload.data,
     };
   case AuthActionTypes.VERIFY_SUCCESS:
     return {
       ...state,
-      registered: false,
-      loading: false,
-      verifyMessage: action.payload.message,
+      verifyMessage: payload.message,
     };
   case AuthActionTypes.VERIFY_FAILURE:
     return {
       ...state,
-      registered: false,
-      loading: false,
-      verifyMessage: action.payload.message,
+      verifyMessage: payload.message,
     };
   case AuthActionTypes.SIGN_OUT:
     return {
       ...state,
-      registered: false,
-      verifyMessage: action.payload.message,
+      verifyMessage: payload.message,
     };
   case AuthActionTypes.REGISTER_SUCCESS:
     return {
       ...state,
       registered: true,
-      loading: false,
     };
   case AuthActionTypes.REGISTER_RESET:
     return {

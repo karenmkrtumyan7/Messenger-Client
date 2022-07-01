@@ -16,13 +16,16 @@ const iconRenderer = (visible) => {
 };
 
 export function SignIn(props) {
-  const { signInRequest, isAuth } = props;
+  const { signInRequest, authData } = props;
   const navigate = useNavigate();
   const onFinish = (values) => signInRequest(values);
 
   useEffect(() => {
-    if (isAuth) navigate('/messenger', { replace: true });
-  }, [isAuth, navigate]);
+    if (Object.keys(authData).length) {
+      localStorage.setItem('auth', JSON.stringify(authData));
+      navigate('/users', { replace: true });
+    }
+  }, [authData, navigate]);
 
   return (
     <Form
@@ -63,11 +66,11 @@ export function SignIn(props) {
 }
 
 SignIn.propTypes = {
-  isAuth: PropTypes.bool,
+  authData: PropTypes.object,
   signInRequest: PropTypes.func,
 };
 
 SignIn.defaultProps = {
-  isAuth: false,
+  authData: {},
   signInRequest: null,
 };

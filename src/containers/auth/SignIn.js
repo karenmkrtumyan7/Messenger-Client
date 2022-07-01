@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { SignIn } from '../../components/auth/SignIn';
 import { signInRequest } from '../../actions/auth/AuthActionCreators';
-import { selectAuthenticated } from '../../selectors';
+import { selectAuthData } from '../../selectors';
 
 const mapStateToProps = ({ auth }) => ({
-  isAuth: selectAuthenticated(auth),
+  authData: selectAuthData(auth),
 });
 
 const mapDispatchToProps = (dispatch) => ({

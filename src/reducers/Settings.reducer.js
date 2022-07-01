@@ -5,12 +5,12 @@ const initialState = {
   loading: false,
 };
 
-export function settings(state = initialState, action) {
-  switch (action.type) {
+export function settings(state = initialState, { type, payload }) {
+  switch (type) {
   case SettingsActionTypes.FAILURE:
     return {
       ...state,
-      messages: Object.values(action.payload),
+      messages: Object.values(payload),
     };
   case SettingsActionTypes.LOADING:
     return {

@@ -1,0 +1,4 @@
+export const UserActionTypes = {
+  GET_USERS_SUCCESS: 'GET_USERS_SUCCESS',
+  GET_USERS_REQUEST: 'USER_USERS_REQUEST',
+};

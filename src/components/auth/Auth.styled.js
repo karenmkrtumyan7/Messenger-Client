@@ -162,12 +162,12 @@ const AuthWrapperStyled = styled.div`
 `;
 
 const SpinStyled = styled(Spin)`
-  margin: 20px 0;
-  margin-bottom: 20px;
-  padding: 30px 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+  background: transparent;
 `;
 
 export {

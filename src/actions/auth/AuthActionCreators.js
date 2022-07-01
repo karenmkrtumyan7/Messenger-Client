@@ -2,12 +2,12 @@ import { AuthActionTypes } from './AuthActionTypes';
 
 const signInSuccess = (data) => ({
   type: AuthActionTypes.LOGIN_SUCCESS,
-  payload: data,
+  payload: { data },
 });
 
 const signInRequest = (data) => ({
   type: AuthActionTypes.LOGIN_REQUEST,
-  payload: data,
+  payload: { data },
 });
 
 const signUpSuccess = () => ({
@@ -16,7 +16,7 @@ const signUpSuccess = () => ({
 
 const signUpRequest = (data) => ({
   type: AuthActionTypes.REGISTER_REQUEST,
-  payload: data,
+  payload: { data },
 });
 
 const signUpReset = () => ({
