@@ -17,7 +17,7 @@ const {
 function* signInSaga({ payload }) {
   try {
     yield put(loading());
-    const { data } = yield call(authApi().post, 'signin', payload.data);
+    const { data } = yield call(authApi.post, 'signin', payload.data);
 
     yield put(signInSuccess(data));
   } catch ({ response: { data: messages } }) {
@@ -30,7 +30,7 @@ function* signInSaga({ payload }) {
 function* signUpSaga({ payload }) {
   try {
     yield put(loading());
-    yield call(authApi().post, 'signup', payload.data);
+    yield call(authApi.post, 'signup', payload.data);
     yield put(signUpSuccess());
   } catch ({ response: { data: messages } }) {
     yield put(failure(messages));
@@ -44,7 +44,7 @@ function* verifySaga({ payload: { id } }) {
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(authApi().put, `verify/${userId}`);
+    const { data: { msg } } = yield call(authApi.put, `verify/${userId}`);
     yield put(verifySuccess(msg));
   } catch ({ response: { data: message } }) {
     localStorage.removeItem('token');
