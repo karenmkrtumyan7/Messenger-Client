@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
+import { getUsers } from '../../selectors';
 import { UserReport } from '../../components/user/UserReport';
 import { getUsersRequest } from '../../actions/user/UserActionCreator';
-import { getUsers } from '../../selectors';
 
 const mapStateToProps = ({ user }) => ({
   users: getUsers(user),

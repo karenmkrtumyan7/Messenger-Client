@@ -3,7 +3,7 @@ import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
 const initialState = {
   registered: false,
   verifyMessage: '',
-  authData: JSON.parse(localStorage.getItem('auth') || '{}'),
+  authData: localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {},
 };
 
 export const auth = (state = initialState, { type, payload }) => {
@@ -13,17 +13,17 @@ export const auth = (state = initialState, { type, payload }) => {
       ...state,
       authData: payload.data,
     };
+  case AuthActionTypes.LOGIN_RESET:
+    return {
+      ...state,
+      authData: {},
+    };
   case AuthActionTypes.VERIFY_SUCCESS:
     return {
       ...state,
       verifyMessage: payload.message,
     };
   case AuthActionTypes.VERIFY_FAILURE:
-    return {
-      ...state,
-      verifyMessage: payload.message,
-    };
-  case AuthActionTypes.SIGN_OUT:
     return {
       ...state,
       verifyMessage: payload.message,

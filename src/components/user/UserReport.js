@@ -1,10 +1,8 @@
 // import { SearchOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table,
-} from 'antd';
 import { UserReportActions } from './UserReportActions';
+import { UsersTableStyled } from './User.styled';
 // import Highlighter from 'react-highlight-words';
 
 export function UserReport(props) {
@@ -123,7 +121,6 @@ export function UserReport(props) {
       width: 150,
       dataIndex: 'id',
       key: 'id',
-      fixed: 'left',
       // ...getColumnSearchProps('id'),
     },
     {
@@ -152,9 +149,9 @@ export function UserReport(props) {
     },
     {
       title: 'Action',
-      key: 'operation',
+      key: 'action',
       fixed: 'right',
-      width: 100,
+      width: 120,
       render: (_, record) => (
         <UserReportActions record={record} />
       )
@@ -164,12 +161,13 @@ export function UserReport(props) {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [getUsers]);
 
   return (
-    <Table
+    <UsersTableStyled
       columns={columns}
       dataSource={users}
+      scroll={{ x: 100, y: 700 }}
     />
   );
 }
@@ -183,5 +181,3 @@ UserReport.defaultProps = {
   users: [],
   getUsers: null,
 };
-
-export default UserReport;

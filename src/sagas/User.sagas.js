@@ -8,12 +8,12 @@ const { GET_USERS_REQUEST } = UserActionTypes;
 
 function* getUsers() {
   try {
-    put(loading());
+    yield put(loading());
 
     const { data } = yield call(userApi.get, '/');
     yield put(getUserSuccess(data));
   } finally {
-    put(resetLoading());
+    yield put(resetLoading());
   }
 }
 

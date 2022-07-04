@@ -10,6 +10,10 @@ const signInRequest = (data) => ({
   payload: { data },
 });
 
+const signInReset = () => ({
+  type: AuthActionTypes.LOGIN_RESET,
+});
+
 const signUpSuccess = () => ({
   type: AuthActionTypes.REGISTER_SUCCESS,
 });
@@ -47,4 +51,5 @@ export {
   verifySuccess,
   verifyRequest,
   verifyFailure,
+  signInReset,
 };

@@ -1,38 +1,50 @@
-import axios from 'axios';
+import { AXIOS_API } from './axios';
 
-// const defaultHeaders = {
-//   authorization: `Bearer ${JSON.parse(localStorage.getItem('auth')) || {}}`,
-// };
+class API extends AXIOS_API {
+  static interceptorables = [];
 
-export const API = (baseUrl) => (
-  axios.create({
-    baseURL: baseUrl || 'http://localhost:8000/auth/',
-  })
-);
+  constructor(url, isInterceptorable) {
+    super(url);
+    this.isInterceptorable = isInterceptorable;
 
-const authApi = API('http://localhost:8000/auth/');
-const userApi = API('http://localhost:8000/users/');
-
-const checkTokenInterceptor = (request) => {
-  const authData = localStorage.getItem('auth');
-  const token = authData ? JSON.parse(authData).token : null;
-  const userId = authData ? JSON.parse(authData).userId : null;
-
-  if (token) {
-    request.headers.Authorization = `Bearer ${token}`;
-    request.headers.userId = userId;
+    if (isInterceptorable) {
+      API.interceptorables.push(this);
+    }
   }
 
-  return request;
-};
+  static checkTokenInterceptor = (request) => {
+    const authData = localStorage.getItem('auth');
+    const token = authData ? JSON.parse(authData).token : null;
+    const userId = authData ? JSON.parse(authData).userId : null;
 
-const responseSuccessInterceptor = (response) => response;
-const responseFailureInterceptor = () => {
-  // console.log(err);
-  // localStorage.clear();
-};
-userApi.interceptors.request.use(checkTokenInterceptor);
-userApi.interceptors.response.use(responseSuccessInterceptor, responseFailureInterceptor);
+    if (token) {
+      request.headers.Authorization = `Bearer ${token}`;
+      request.headers.userId = userId;
+    }
+
+    return request;
+  };
+
+  static responseSuccessInterceptor = (response) => response;
+
+  static responseFailureInterceptor = (err) => {
+    localStorage.clear();
+    window.location.href = '/signin';
+    return Promise.reject(err);
+  };
+
+  static connectInterceptors() {
+    API.interceptorables.forEach((interceptorable) => {
+      interceptorable.interceptors.request.use(API.checkTokenInterceptor);
+      interceptorable.interceptors.response.use(API.responseSuccessInterceptor, API.responseFailureInterceptor);
+    });
+  }
+}
+
+const authApi = new API('http://localhost:8000/auth/', false);
+const userApi = new API('http://localhost:8000/users/', true);
+
+API.connectInterceptors();
 
 export {
   authApi,
