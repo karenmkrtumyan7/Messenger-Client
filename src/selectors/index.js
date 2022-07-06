@@ -7,10 +7,13 @@ import {
 
 import {
   selectErrorMessages,
+  selectLoading,
 } from './Settings.selector';
 
 import {
-  getUsers,
+  selectUsers,
+  selectAllUsersCount,
+  selectUsersLoading,
 } from './Users.selectors';
 
 export {
@@ -19,5 +22,8 @@ export {
   selectAuthData,
   selectVerifyMessage,
   selectErrorMessages,
-  getUsers,
+  selectLoading,
+  selectUsers,
+  selectAllUsersCount,
+  selectUsersLoading,
 };

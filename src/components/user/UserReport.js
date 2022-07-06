@@ -1,112 +1,17 @@
-// import { SearchOutlined } from '@ant-design/icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { UserReportActions } from './UserReportActions';
 import { UsersTableStyled } from './User.styled';
-// import Highlighter from 'react-highlight-words';
 
 export function UserReport(props) {
-  const { users, getUsers } = props;
-  // const [searchText, setSearchText] = useState('');
-  // const [searchedColumn, setSearchedColumn] = useState('');
-  // const searchInput = useRef(null);
-  //
-  // const handleSearch = (selectedKeys, confirm, dataIndex) => {
-  //   confirm();
-  //   setSearchText(selectedKeys[0]);
-  //   setSearchedColumn(dataIndex);
-  // };
-  //
-  // const handleReset = (clearFilters) => {
-  //   clearFilters();
-  //   setSearchText('');
-  // };
-
-  // const getColumnSearchProps = (dataIndex) => ({
-  //   filterDropdown: ({
-  //     setSelectedKeys, selectedKeys, confirm, clearFilters,
-  //   }) => (
-  //     <div
-  //       style={{
-  //         padding: 8,
-  //       }}
-  //     >
-  //       <Input
-  //         ref={searchInput}
-  //         placeholder={`Search ${dataIndex}`}
-  //         value={selectedKeys[0]}
-  //         onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-  //         onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //         style={{
-  //           marginBottom: 8,
-  //           display: 'block',
-  //         }}
-  //       />
-  //       <Space>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           icon={<SearchOutlined />}
-  //           size="small"
-  //           style={{
-  //             width: 90,
-  //           }}
-  //         >
-  //           Search
-  //         </Button>
-  //         <Button
-  //           onClick={() => clearFilters && handleReset(clearFilters)}
-  //           size="small"
-  //           style={{
-  //             width: 90,
-  //           }}
-  //         >
-  //           Reset
-  //         </Button>
-  //         <Button
-  //           type="link"
-  //           size="small"
-  //           onClick={() => {
-  //             confirm({
-  //               closeDropdown: false,
-  //             });
-  //             setSearchText(selectedKeys[0]);
-  //             setSearchedColumn(dataIndex);
-  //           }}
-  //         >
-  //           Filter
-  //         </Button>
-  //       </Space>
-  //     </div>
-  //   ),
-  //   filterIcon: (filtered) => (
-  //     <SearchOutlined
-  //       style={{
-  //         color: filtered ? '#1890ff' : undefined,
-  //       }}
-  //     />
-  //   ),
-  //   onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-  //   onFilterDropdownVisibleChange: (visible) => {
-  //     if (visible) {
-  //       setTimeout(() => searchInput.current?.select(), 100);
-  //     }
-  //   },
-  //   render: (text) => (searchedColumn === dataIndex ? (
-  //     <Highlighter
-  //       highlightStyle={{
-  //         backgroundColor: '#ffc069',
-  //         padding: 0,
-  //       }}
-  //       searchWords={[searchText]}
-  //       autoEscape
-  //       textToHighlight={text ? text.toString() : ''}
-  //     />
-  //   ) : (
-  //     text
-  //   )),
-  // });
-
+  const {
+    count, users, getUsers, loading,
+  } = props;
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 4,
+    total: count,
+  });
   const columns = [
     {
       title: 'Username',
@@ -114,28 +19,27 @@ export function UserReport(props) {
       dataIndex: 'username',
       key: 'username',
       fixed: 'left',
-      // ...getColumnSearchProps('username'),
+      ellipsis: true,
     },
     {
       title: 'Id',
       width: 150,
       dataIndex: 'id',
       key: 'id',
-      // ...getColumnSearchProps('id'),
+      ellipsis: true,
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       width: 150,
-      // ...getColumnSearchProps('email'),
     },
     {
       title: 'Contact number',
       dataIndex: 'contact',
       key: 'contact',
       width: 150,
-      // ...getColumnSearchProps('contact'),
+      ellipsis: true,
     },
     {
       title: 'Creation Date',
@@ -153,7 +57,7 @@ export function UserReport(props) {
       fixed: 'right',
       width: 120,
       render: (_, record) => (
-        <UserReportActions record={record} />
+        <UserReportActions data={record} />
       )
       ,
     },
@@ -163,21 +67,37 @@ export function UserReport(props) {
     getUsers();
   }, [getUsers]);
 
+  useEffect(() => {
+    setPagination({ ...pagination, total: count });
+  }, [count]);
+
+  const handleTableChange = ({ current, pageSize }) => {
+    setPagination({ ...pagination, current });
+    getUsers(current, pageSize);
+  };
+
   return (
     <UsersTableStyled
       columns={columns}
       dataSource={users}
       scroll={{ x: 100, y: 700 }}
+      pagination={pagination}
+      onChange={handleTableChange}
+      loading={loading}
     />
   );
 }
 
 UserReport.propTypes = {
+  count: PropTypes.number,
   users: PropTypes.array,
   getUsers: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 UserReport.defaultProps = {
+  count: 0,
   users: [],
   getUsers: null,
+  loading: false,
 };

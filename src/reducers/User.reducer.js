@@ -1,7 +1,9 @@
 import { UserActionTypes } from '../actions/user/UserActionTypes';
 
 const initialState = {
-  users: [],
+  count: 0,
+  currentUsers: [],
+  loading: false,
 };
 
 export const user = (state = initialState, { type, payload }) => {
@@ -9,7 +11,14 @@ export const user = (state = initialState, { type, payload }) => {
   case UserActionTypes.GET_USERS_SUCCESS:
     return {
       ...state,
-      users: payload.users,
+      count: payload.count,
+      currentUsers: payload.currentUsers,
+      loading: false,
+    };
+  case UserActionTypes.GET_USERS_REQUEST:
+    return {
+      ...state,
+      loading: true,
     };
   default: return state;
   }

@@ -47,9 +47,6 @@ function* verifySaga({ payload: { id } }) {
     const { data: { msg } } = yield call(authApi.put, `verify/${userId}`);
     yield put(verifySuccess(msg));
   } catch ({ response: { data: message } }) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-
     const { msg } = message;
     yield put(verifyFailure(msg));
   } finally {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Auth } from '../components/auth/Auth';
 import SignUpForm from '../containers/auth/SignUp';
-import { selectLoading } from '../selectors/Auth.selectors';
+import { selectLoading } from '../selectors';
 import { Spin } from '../components/settings/Spin';
 
 function SignUp(props) {

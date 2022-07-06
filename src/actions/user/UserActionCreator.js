@@ -1,12 +1,13 @@
 import { UserActionTypes } from './UserActionTypes';
 
-const getUsersRequest = () => ({
+const getUsersRequest = (page, limit) => ({
   type: UserActionTypes.GET_USERS_REQUEST,
+  payload: { page, limit },
 });
 
-const getUserSuccess = (users) => ({
+const getUserSuccess = (count, currentUsers) => ({
   type: UserActionTypes.GET_USERS_SUCCESS,
-  payload: { users },
+  payload: { count, currentUsers },
 });
 
 export {

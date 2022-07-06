@@ -6,16 +6,32 @@ import { UserActionTypes } from '../actions/user/UserActionTypes';
 
 const { GET_USERS_REQUEST } = UserActionTypes;
 
-function* getUsers() {
+function* getUsers({ payload = {} }) {
+  const { page = 1, limit = 4 } = payload;
   try {
     yield put(loading());
 
-    const { data } = yield call(userApi.get, '/');
-    yield put(getUserSuccess(data));
+    const { data: { count, results } } = yield call(userApi.get, `/?page=${page}&limit=${limit}`);
+    yield put(getUserSuccess(count, results));
   } finally {
     yield put(resetLoading());
   }
 }
+
+// function* editUser({ payload }) {
+//   const edit = payload.editedUser;
+//
+//   try {
+//     yield put(loading());
+//
+//     const { data: msg } = yield call(userApi.put, `/`, { edit });
+//
+//   } catch(e) {
+//
+//   } finally {
+//     yield put(resetLoading());
+//   }
+// }
 
 export const userSagas = [
   takeLatest(GET_USERS_REQUEST, getUsers),

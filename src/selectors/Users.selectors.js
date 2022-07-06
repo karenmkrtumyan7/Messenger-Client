@@ -1,4 +1,4 @@
-const getUsers = (state) => state.users.map(((user) => {
+const selectUsers = (state) => state.currentUsers.map(((user) => {
   const { _id: id } = user;
   return {
     key: id,
@@ -9,6 +9,12 @@ const getUsers = (state) => state.users.map(((user) => {
     'creation-date': new Date(user.createdAt).toLocaleDateString(),
   };
 }));
+
+const selectAllUsersCount = (state) => state.count;
+const selectUsersLoading = (state) => state.loading;
+
 export {
-  getUsers,
+  selectUsers,
+  selectAllUsersCount,
+  selectUsersLoading,
 };

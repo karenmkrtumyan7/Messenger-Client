@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Auth } from '../components/auth/Auth';
 import SignInForm from '../containers/auth/SignIn';
 import { Spin } from '../components/settings/Spin';
-import { selectLoading } from '../selectors/Auth.selectors';
+import { selectLoading } from '../selectors';
 
 function SignIn(props) {
   const { isLoading } = props;
