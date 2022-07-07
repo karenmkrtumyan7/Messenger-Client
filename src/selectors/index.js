@@ -11,9 +11,10 @@ import {
 } from './Settings.selector';
 
 import {
-  selectUsers,
-  selectAllUsersCount,
+  selectUsersData,
+  selectUsersCount,
   selectUsersLoading,
+  selectUserChange,
 } from './Users.selectors';
 
 export {
@@ -23,7 +24,8 @@ export {
   selectVerifyMessage,
   selectErrorMessages,
   selectLoading,
-  selectUsers,
-  selectAllUsersCount,
+  selectUsersData,
+  selectUsersCount,
   selectUsersLoading,
+  selectUserChange,
 };

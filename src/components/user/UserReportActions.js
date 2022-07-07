@@ -1,17 +1,22 @@
-import { Button, Row } from 'antd';
+import { Button, Popconfirm, Row } from 'antd';
 import { EyeOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { UserReportActionsStyled } from './User.styled';
-import UserEditModal from './UserEditModal';
+import UserEditModal from '../../containers/user/UserEditModal';
 
 export function UserReportActions(props) {
-  const { data } = props;
+  const { data, deleteUser } = props;
+  const confirm = () => {
+    deleteUser(data._id);
+  };
   return (
     <Row justify="center">
       <UserReportActionsStyled>
         <Button type="primary" icon={<EyeOutlined />} />
         <UserEditModal data={data} />
-        <Button type="primary" icon={<UserDeleteOutlined />} />
+        <Popconfirm title="Sure to delete?" onConfirm={confirm}>
+          <Button type="primary" icon={<UserDeleteOutlined />} />
+        </Popconfirm>
       </UserReportActionsStyled>
     </Row>
   );
@@ -19,8 +24,10 @@ export function UserReportActions(props) {
 
 UserReportActions.propTypes = {
   data: PropTypes.object,
+  deleteUser: PropTypes.func,
 };
 
 UserReportActions.defaultProps = {
   data: {},
+  deleteUser: null,
 };

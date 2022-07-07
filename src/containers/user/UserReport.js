@@ -1,16 +1,20 @@
 import { connect } from 'react-redux';
-import { selectUsers, selectAllUsersCount, selectUsersLoading } from '../../selectors';
+import {
+  selectUsersData, selectUsersCount, selectUsersLoading, selectUserChange,
+} from '../../selectors';
 import { UserReport } from '../../components/user/UserReport';
-import { getUsersRequest } from '../../actions/user/UserActionCreator';
+import { editUserReset, getUsersRequest } from '../../actions/user/UserActionCreator';
 
 const mapStateToProps = ({ user }) => ({
-  users: selectUsers(user),
-  count: selectAllUsersCount(user),
+  data: selectUsersData(user),
+  count: selectUsersCount(user),
   loading: selectUsersLoading(user),
+  change: selectUserChange(user),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUsers: (pageIndex, pageSize) => dispatch(getUsersRequest(pageIndex, pageSize)),
+  resetChange: () => dispatch(editUserReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserReport);

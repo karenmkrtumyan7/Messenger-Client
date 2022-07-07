@@ -1,31 +1,33 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { UserReportActions } from './UserReportActions';
+import UserReportActions from '../../containers/user/UserReportActions';
 import { UsersTableStyled } from './User.styled';
 
 export function UserReport(props) {
   const {
-    count, users, getUsers, loading,
+    count, users, getUsers, loading, change, resetChange,
   } = props;
+
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 4,
     total: count,
   });
+
   const columns = [
     {
       title: 'Username',
       width: 100,
-      dataIndex: 'username',
-      key: 'username',
+      dataIndex: 'userName',
+      key: 'userName',
       fixed: 'left',
       ellipsis: true,
     },
     {
       title: 'Id',
       width: 150,
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: '_id',
+      key: '_id',
       ellipsis: true,
     },
     {
@@ -43,8 +45,8 @@ export function UserReport(props) {
     },
     {
       title: 'Creation Date',
-      dataIndex: 'creation-date',
-      key: 'creation-date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       width: 150,
       sorter: {
         compare: (a, b) => (new Date(a.username) > new Date(b.username) ? 1 : -1),
@@ -66,6 +68,13 @@ export function UserReport(props) {
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  useEffect(() => {
+    if (change) {
+      resetChange();
+      getUsers();
+    }
+  }, [getUsers, change]);
 
   useEffect(() => {
     setPagination({ ...pagination, total: count });
@@ -93,6 +102,8 @@ UserReport.propTypes = {
   users: PropTypes.array,
   getUsers: PropTypes.func,
   loading: PropTypes.bool,
+  change: PropTypes.bool,
+  resetChange: PropTypes.func,
 };
 
 UserReport.defaultProps = {
@@ -100,4 +111,6 @@ UserReport.defaultProps = {
   users: [],
   getUsers: null,
   loading: false,
+  change: false,
+  resetChange: null,
 };

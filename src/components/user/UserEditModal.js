@@ -2,17 +2,22 @@ import { EditOutlined } from '@ant-design/icons';
 import {
   Button, Input, Modal,
 } from 'antd';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
-export default function UserEditModal(props) {
-  const { data } = props;
+export function UserEditModal(props) {
+  const { data, edit } = props;
   const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [values, setValues] = useState(data);
+  const initialValues = useRef(values);
   const {
-    id, email, contact, username,
+    _id, email, contact, userName,
   } = values;
+
+  useEffect(() => {
+    initialValues.current = data;
+  }, [data]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,12 +32,10 @@ export default function UserEditModal(props) {
   };
 
   const handleOk = () => {
-    // setModalText('The modal will be closed after two seconds');
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+    if (!_.isEqual(initialValues.current, values)) {
+      edit(values);
+    }
+    setVisible(false);
   };
 
   const handleCancel = () => {
@@ -46,28 +49,32 @@ export default function UserEditModal(props) {
         title="Edit User"
         visible={visible}
         onOk={handleOk}
-        confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
         <Input
+          addonBefore="Username"
           placeholder="Username"
           onChange={handleInputChange}
-          name="username"
-          value={username}
+          name="userName"
+          value={userName}
         />
         <Input
+          addonBefore="Id"
           placeholder="Id"
           onChange={handleInputChange}
-          name="id"
-          value={id}
+          name="_id"
+          value={_id}
+          disabled
         />
         <Input
+          addonBefore="Email"
           placeholder="Email"
           onChange={handleInputChange}
           name="email"
           value={email}
         />
         <Input
+          addonBefore="Contact number"
           placeholder="Contact Number"
           onChange={handleInputChange}
           name="contact"
@@ -80,8 +87,10 @@ export default function UserEditModal(props) {
 
 UserEditModal.propTypes = {
   data: PropTypes.object,
+  edit: PropTypes.func,
 };
 
 UserEditModal.defaultProps = {
   data: {},
+  edit: null,
 };
