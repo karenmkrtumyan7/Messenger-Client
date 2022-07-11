@@ -1,7 +1,7 @@
 import {
   call, put, takeEvery, takeLatest,
 } from '@redux-saga/core/effects';
-import { userApi } from '../utils/axios.instance';
+import NetworkService from '../services/network.service';
 import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
 import { deleteUserSuccess, editUserSuccess, getUserSuccess } from '../actions/user/UserActionCreator';
 import { UserActionTypes } from '../actions/user/UserActionTypes';
@@ -12,8 +12,13 @@ function* getUsers({ payload = {} }) {
   const { page = 1, limit = 4 } = payload;
   try {
     yield put(loading());
+    const options = {
+      params: {
+        page, limit,
+      },
+    };
 
-    const { data } = yield call(userApi.get, `/?page=${page}&limit=${limit}`);
+    const { data } = yield call(NetworkService.makeAPIGetRequest, '', options);
     yield put(getUserSuccess(data));
   } finally {
     yield put(resetLoading());
@@ -25,7 +30,7 @@ function* editUser({ payload }) {
   try {
     yield put(loading());
 
-    yield call(userApi.put, '/', { edit });
+    yield call(NetworkService.makeAPIPutRequest, '/', { edit });
     yield put(editUserSuccess());
   } catch (e) {
     // console.log(e);
@@ -40,7 +45,7 @@ function* deleteUser({ payload }) {
   try {
     yield put(loading());
 
-    yield call(userApi.delete, `/${id}`);
+    yield call(NetworkService.makeAPIDeleteRequest, `/${id}`);
     yield put(deleteUserSuccess());
   } catch ({ response: { data: message } }) {
     yield put(failure(message));

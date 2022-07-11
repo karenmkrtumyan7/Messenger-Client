@@ -6,7 +6,7 @@ import {
 } from '../actions/auth/AuthActionCreators';
 import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
 import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
-import { authApi } from '../utils/axios.instance';
+import NetworkService from '../services/network.service';
 
 const {
   LOGIN_REQUEST,
@@ -17,7 +17,10 @@ const {
 function* signInSaga({ payload }) {
   try {
     yield put(loading());
-    const { data } = yield call(authApi.post, 'signin', payload.data);
+    const options = {
+      data: payload.data,
+    };
+    const { data } = yield call(NetworkService.makeAPIPostRequest, 'auth/signin', options);
 
     yield put(signInSuccess(data));
   } catch ({ response: { data: messages } }) {
@@ -30,7 +33,11 @@ function* signInSaga({ payload }) {
 function* signUpSaga({ payload }) {
   try {
     yield put(loading());
-    yield call(authApi.post, 'signup', payload.data);
+    const options = {
+      data: payload.data,
+    };
+
+    yield call(NetworkService.makeAPIPostRequest, 'auth/signup', options);
     yield put(signUpSuccess());
   } catch ({ response: { data: messages } }) {
     yield put(failure(messages));
@@ -44,7 +51,7 @@ function* verifySaga({ payload: { id } }) {
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(authApi.put, `verify/${userId}`);
+    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, `verify/${userId}`);
     yield put(verifySuccess(msg));
   } catch ({ response: { data: message } }) {
     const { msg } = message;
