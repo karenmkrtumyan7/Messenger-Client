@@ -5,7 +5,7 @@ import { UsersTableStyled } from './User.styled';
 
 export function UserReport(props) {
   const {
-    count, users, getUsers, loading, change, resetChange,
+    count, data, getUsers, loading, change, resetChange,
   } = props;
 
   const [pagination, setPagination] = useState({
@@ -49,7 +49,7 @@ export function UserReport(props) {
       key: 'createdAt',
       width: 150,
       sorter: {
-        compare: (a, b) => (new Date(a.username) > new Date(b.username) ? 1 : -1),
+        compare: (a, b) => (new Date(a.userName) > new Date(b.userName) ? 1 : -1),
         multiple: 2,
       },
     },
@@ -74,11 +74,11 @@ export function UserReport(props) {
       resetChange();
       getUsers();
     }
-  }, [getUsers, change]);
+  }, [getUsers, change, resetChange]);
 
   useEffect(() => {
     setPagination({ ...pagination, total: count });
-  }, [count]);
+  }, [count, pagination]);
 
   const handleTableChange = ({ current, pageSize }) => {
     setPagination({ ...pagination, current });
@@ -88,7 +88,7 @@ export function UserReport(props) {
   return (
     <UsersTableStyled
       columns={columns}
-      dataSource={users}
+      dataSource={data}
       scroll={{ x: 100, y: 700 }}
       pagination={pagination}
       onChange={handleTableChange}
@@ -99,7 +99,7 @@ export function UserReport(props) {
 
 UserReport.propTypes = {
   count: PropTypes.number,
-  users: PropTypes.array,
+  data: PropTypes.array,
   getUsers: PropTypes.func,
   loading: PropTypes.bool,
   change: PropTypes.bool,
@@ -108,7 +108,7 @@ UserReport.propTypes = {
 
 UserReport.defaultProps = {
   count: 0,
-  users: [],
+  data: [],
   getUsers: null,
   loading: false,
   change: false,

@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom';
+import localStorageService from '../services/localStorage.service';
 
 export function PrivateRoute() {
-  const isAuthenticated = !!localStorage.getItem('auth');
+  const isAuthenticated = !!localStorageService.get('auth');
   return isAuthenticated ? <Outlet /> : <Navigate to="/signup" />;
 }

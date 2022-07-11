@@ -1,5 +1,5 @@
 import {
-  call, takeLatest, put,
+  call, takeLatest, put, all,
 } from '@redux-saga/core/effects';
 import {
   signInSuccess, signUpSuccess, verifyFailure, verifySuccess,
@@ -7,62 +7,71 @@ import {
 import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
 import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
 import NetworkService from '../services/network.service';
+import { AppConstants } from '../constants/app.constants';
+import { getError } from '../utils';
 
 const {
   LOGIN_REQUEST,
   REGISTER_REQUEST,
   VERIFY_REQUEST,
 } = AuthActionTypes;
+const {
+  Auth, SignIn, SignUp, Verify,
+} = AppConstants.api;
 
-function* signInSaga({ payload }) {
+function* signIn({ payload }) {
   try {
     yield put(loading());
     const options = {
       data: payload.data,
     };
-    const { data } = yield call(NetworkService.makeAPIPostRequest, 'auth/signin', options);
+    const { data } = yield call(NetworkService.makeAPIPostRequest, [Auth, SignIn], options);
 
     yield put(signInSuccess(data));
-  } catch ({ response: { data: messages } }) {
-    yield put(failure(messages));
+  } catch (err) {
+    const error = getError(err);
+    yield put(failure(error));
   } finally {
     yield put(resetLoading());
   }
 }
 
-function* signUpSaga({ payload }) {
+function* signUp({ payload }) {
   try {
     yield put(loading());
     const options = {
       data: payload.data,
     };
 
-    yield call(NetworkService.makeAPIPostRequest, 'auth/signup', options);
+    yield call(NetworkService.makeAPIPostRequest, [Auth, SignUp], options);
     yield put(signUpSuccess());
-  } catch ({ response: { data: messages } }) {
-    yield put(failure(messages));
+  } catch (err) {
+    const error = getError(err);
+    yield put(failure(error));
   } finally {
     yield put(resetLoading());
   }
 }
 
-function* verifySaga({ payload: { id } }) {
-  const userId = localStorage.getItem('userId') || id;
+function* verify({ payload: { id } }) {
+  const userId = id;
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, `verify/${userId}`);
+    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, [Verify, userId]);
     yield put(verifySuccess(msg));
-  } catch ({ response: { data: message } }) {
-    const { msg } = message;
-    yield put(verifyFailure(msg));
+  } catch (err) {
+    const error = getError(err);
+    yield put(verifyFailure(error.message.msg));
   } finally {
     yield put(resetLoading());
   }
 }
 
-export const authSagas = [
-  takeLatest(LOGIN_REQUEST, signInSaga),
-  takeLatest(REGISTER_REQUEST, signUpSaga),
-  takeLatest(VERIFY_REQUEST, verifySaga),
-];
+export function* authSagas() {
+  yield all([
+    takeLatest(LOGIN_REQUEST, signIn),
+    takeLatest(REGISTER_REQUEST, signUp),
+    takeLatest(VERIFY_REQUEST, verify),
+  ]);
+}

@@ -10,7 +10,7 @@ export function settings(state = initialState, { type, payload }) {
   case SettingsActionTypes.FAILURE:
     return {
       ...state,
-      messages: Object.values(payload),
+      messages: Object.values(payload.errors),
     };
   case SettingsActionTypes.LOADING:
     return {

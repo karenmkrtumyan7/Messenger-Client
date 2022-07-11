@@ -1,8 +1,8 @@
 import { SettingsActionTypes } from './SettingsActionTypes';
 
-const failure = (data) => ({
+const failure = (error) => ({
   type: SettingsActionTypes.FAILURE,
-  payload: data,
+  payload: error,
 });
 
 const resetFailure = () => ({

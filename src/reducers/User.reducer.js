@@ -15,6 +15,7 @@ export const user = (state = initialState, { type, payload }) => {
     return {
       ...state,
       users: payload.data,
+      loading: false,
     };
   case UserActionTypes.GET_USERS_REQUEST:
     return {

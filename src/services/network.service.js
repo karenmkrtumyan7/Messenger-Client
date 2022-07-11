@@ -35,9 +35,9 @@ const NetworkService = {
     const url = NetworkService.generateUrl(partUrl);
     const baseURL = options.baseURL || Config.baseURL;
     const auth = LocalStorageService.get('auth');
-    const authorization = auth && auth.access_token
+    const authorization = auth && auth.token
       ? {
-        Authorization: `Bearer ${auth.access_token}`,
+        Authorization: `Bearer ${auth.token}`,
       }
       : null;
 

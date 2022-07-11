@@ -1,9 +1,10 @@
 import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
+import localStorageService from '../services/localStorage.service';
 
 const initialState = {
   registered: false,
   verifyMessage: '',
-  authData: localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {},
+  authData: localStorageService.get('auth') || {},
 };
 
 export const auth = (state = initialState, { type, payload }) => {

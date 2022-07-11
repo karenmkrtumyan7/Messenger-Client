@@ -6,4 +6,11 @@ export const AppConstants = {
     DELETE: 'delete',
     PATCH: 'patch',
   },
+  api: {
+    Auth: 'auth',
+    SignIn: 'signin',
+    SignUp: 'signup',
+    Users: 'users',
+    Verify: 'verify',
+  },
 };

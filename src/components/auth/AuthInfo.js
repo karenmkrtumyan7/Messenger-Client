@@ -1,6 +1,6 @@
 import { Col, Grid } from 'antd';
 import { useLocation } from 'react-router-dom';
-import SalyImg from '../../assets/Saly/saly.png';
+import saly from '../../assets/saly.png';
 import {
   AuthHeadingStyled, AuthInfoStyled, AuthInfoWrapperStyled, AuthLoremStyled, AuthRedirectTxtStyled, AuthRedirectUrlStyled,
 } from './Auth.styled';
@@ -25,7 +25,7 @@ export function AuthInfo() {
           </AuthRedirectTxtStyled>
         </AuthInfoStyled>
         <Col span={lg ? 12 : 0}>
-          <img src={SalyImg} alt="Saly img" />
+          <img src={saly} alt="saly" />
         </Col>
       </AuthInfoWrapperStyled>
     </Col>

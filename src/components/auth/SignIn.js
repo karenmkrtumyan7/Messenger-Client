@@ -9,6 +9,7 @@ import {
   AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled,
   EyeStyle, AuthTextFieldStyled,
 } from './Auth.styled';
+import localStorageService from '../../services/localStorage.service';
 
 const iconRenderer = (visible) => {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
@@ -22,7 +23,7 @@ export function SignIn(props) {
 
   useEffect(() => {
     if (Object.keys(authData).length) {
-      localStorage.setItem('auth', JSON.stringify(authData));
+      localStorageService.set('auth', authData);
       navigate('/users', { replace: true });
     }
   }, [authData, navigate]);
