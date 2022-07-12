@@ -20,7 +20,6 @@ export function UserReport(props) {
       width: 100,
       dataIndex: 'userName',
       key: 'userName',
-      fixed: 'left',
       ellipsis: true,
     },
     {
@@ -72,12 +71,14 @@ export function UserReport(props) {
   useEffect(() => {
     if (change) {
       resetChange();
-      getUsers();
+      getUsers(pagination.current, pagination.pageSize);
     }
-  }, [getUsers, change, resetChange]);
+  }, [getUsers, change, resetChange, pagination]);
 
   useEffect(() => {
-    setPagination({ ...pagination, total: count });
+    if (pagination.total !== count) {
+      setPagination({ ...pagination, total: count });
+    }
   }, [count, pagination]);
 
   const handleTableChange = ({ current, pageSize }) => {

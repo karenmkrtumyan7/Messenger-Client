@@ -1,30 +1,30 @@
 import { AuthActionTypes } from './AuthActionTypes';
 
 const signInSuccess = (data) => ({
-  type: AuthActionTypes.LOGIN_SUCCESS,
+  type: AuthActionTypes.SIGNIN_SUCCESS,
   payload: { data },
 });
 
 const signInRequest = (data) => ({
-  type: AuthActionTypes.LOGIN_REQUEST,
+  type: AuthActionTypes.SIGNIN_REQUEST,
   payload: { data },
 });
 
 const signInReset = () => ({
-  type: AuthActionTypes.LOGIN_RESET,
+  type: AuthActionTypes.SIGNIN_RESET,
 });
 
 const signUpSuccess = () => ({
-  type: AuthActionTypes.REGISTER_SUCCESS,
+  type: AuthActionTypes.SIGNUP_SUCCESS,
 });
 
 const signUpRequest = (data) => ({
-  type: AuthActionTypes.REGISTER_REQUEST,
+  type: AuthActionTypes.SIGNUP_REQUEST,
   payload: { data },
 });
 
 const signUpReset = () => ({
-  type: AuthActionTypes.REGISTER_RESET,
+  type: AuthActionTypes.SIGNUP_RESET,
 });
 
 const verifySuccess = (message) => ({
@@ -37,9 +37,9 @@ const verifyRequest = (id) => ({
   payload: { id },
 });
 
-const verifyFailure = (message) => ({
+const verifyFailure = (error) => ({
   type: AuthActionTypes.VERIFY_FAILURE,
-  payload: { message },
+  payload: error,
 });
 
 export {

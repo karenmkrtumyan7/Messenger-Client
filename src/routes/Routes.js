@@ -5,16 +5,16 @@ import { NotFound } from '../pages/NotFound';
 import UserReport from '../pages/UserReport';
 import { PrivateRoute } from './PrivateRoute';
 import { Verification } from '../pages/Verification';
-import ErrorsNotification from '../containers/settings/ErrorsNotification';
+import Pages from '../containers/common/Pages';
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/">
         <Route exact index element={<Navigate to="/signin" />} />
-        <Route path="signin" element={<ErrorsNotification component={<SignIn />} />} />
-        <Route path="signup" element={<ErrorsNotification component={<SignUp />} />} />
-        <Route path="verify/:id" element={<ErrorsNotification component={<Verification />} />} />
+        <Route path="signin" element={<Pages page={<SignIn />} />} />
+        <Route path="signup" element={<Pages page={<SignUp />} />} />
+        <Route path="verify/:id" element={<Pages page={<Verification />} />} />
       </Route>
       <Route path="/users" element={<PrivateRoute />}>
         <Route exact index element={<UserReport />} />

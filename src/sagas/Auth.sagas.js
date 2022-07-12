@@ -11,8 +11,8 @@ import { AppConstants } from '../constants/app.constants';
 import { getError } from '../utils';
 
 const {
-  LOGIN_REQUEST,
-  REGISTER_REQUEST,
+  SIGNIN_REQUEST,
+  SIGNUP_REQUEST,
   VERIFY_REQUEST,
 } = AuthActionTypes;
 const {
@@ -58,11 +58,11 @@ function* verify({ payload: { id } }) {
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, [Verify, userId]);
+    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, [Auth, Verify, userId]);
     yield put(verifySuccess(msg));
   } catch (err) {
     const error = getError(err);
-    yield put(verifyFailure(error.message.msg));
+    yield put(verifyFailure(error));
   } finally {
     yield put(resetLoading());
   }
@@ -70,8 +70,8 @@ function* verify({ payload: { id } }) {
 
 export function* authSagas() {
   yield all([
-    takeLatest(LOGIN_REQUEST, signIn),
-    takeLatest(REGISTER_REQUEST, signUp),
+    takeLatest(SIGNIN_REQUEST, signIn),
+    takeLatest(SIGNUP_REQUEST, signUp),
     takeLatest(VERIFY_REQUEST, verify),
   ]);
 }

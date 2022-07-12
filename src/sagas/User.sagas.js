@@ -3,7 +3,7 @@ import {
   call, put, takeEvery, takeLatest,
 } from '@redux-saga/core/effects';
 import NetworkService from '../services/network.service';
-import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
+import { failure } from '../actions/settings/SettingsActionCreators';
 import { deleteUserSuccess, editUserSuccess, getUserSuccess } from '../actions/user/UserActionCreator';
 import { UserActionTypes } from '../actions/user/UserActionTypes';
 import { AppConstants } from '../constants/app.constants';
@@ -14,8 +14,8 @@ const { Users } = AppConstants.api;
 
 function* getUsers({ payload = {} }) {
   const { page = 1, limit = 4 } = payload;
+
   try {
-    yield put(loading());
     const options = {
       params: {
         page, limit,
@@ -27,8 +27,6 @@ function* getUsers({ payload = {} }) {
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));
-  } finally {
-    yield put(resetLoading());
   }
 }
 
@@ -37,7 +35,6 @@ function* editUser({ payload }) {
   const { _id: id } = edit;
 
   try {
-    yield put(loading());
     const options = {
       data: edit,
     };
@@ -47,23 +44,17 @@ function* editUser({ payload }) {
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));
-  } finally {
-    yield put(resetLoading());
   }
 }
 
 function* deleteUser({ payload }) {
   const { id } = payload;
   try {
-    yield put(loading());
-
     yield call(NetworkService.makeAPIDeleteRequest, [Users, id]);
     yield put(deleteUserSuccess());
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));
-  } finally {
-    yield put(resetLoading());
   }
 }
 

@@ -13,7 +13,7 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUsers: (pageIndex, pageSize) => dispatch(getUsersRequest(pageIndex, pageSize)),
+  getUsers: (page, limit) => dispatch(getUsersRequest(page, limit)),
   resetChange: () => dispatch(editUserReset()),
 });
 

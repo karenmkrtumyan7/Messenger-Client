@@ -9,12 +9,12 @@ const initialState = {
 
 export const auth = (state = initialState, { type, payload }) => {
   switch (type) {
-  case AuthActionTypes.LOGIN_SUCCESS:
+  case AuthActionTypes.SIGNIN_SUCCESS:
     return {
       ...state,
       authData: payload.data,
     };
-  case AuthActionTypes.LOGIN_RESET:
+  case AuthActionTypes.SIGNIN_RESET:
     return {
       ...state,
       authData: {},
@@ -27,14 +27,14 @@ export const auth = (state = initialState, { type, payload }) => {
   case AuthActionTypes.VERIFY_FAILURE:
     return {
       ...state,
-      verifyMessage: payload.message,
+      verifyMessage: payload.errors.msg,
     };
-  case AuthActionTypes.REGISTER_SUCCESS:
+  case AuthActionTypes.SIGNUP_SUCCESS:
     return {
       ...state,
       registered: true,
     };
-  case AuthActionTypes.REGISTER_RESET:
+  case AuthActionTypes.SIGNUP_RESET:
     return {
       ...state,
       registered: false,
