@@ -32,6 +32,8 @@ const validateUserName = (userName) => {
 const validatePhoneNumber = (phoneNumber) => {
   if (phoneNumber === undefined || validator.isEmpty(phoneNumber)) {
     return 'Phone number is required';
+  } if (phoneNumber[0] !== '+') {
+    return 'Phone number must start with +';
   } if (!validator.isMobilePhone(phoneNumber)) {
     return 'Phone number is not correct';
   }

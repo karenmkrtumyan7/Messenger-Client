@@ -1,99 +1,111 @@
-// import {
-//   Button, DatePicker, Form, Input, Row,
-// } from 'antd';
-// import styled from 'styled-components';
-//
-// export function Filters() {
-//   const [form] = Form.useForm();
-//   const onFinish = (values) => {
-//     // console.log('Success:', values);
-//   };
-//
-//   const onChange = (date, dateString) => {
-//     // console.log(date, dateString);
-//   };
-//
-//   const onFinishFailed = (errorInfo) => {
-//     // console.log('Failed:', errorInfo);
-//   };
-//
-//   const FormInputStyled = styled(Input)`
-//     //width: 300px;
-//   `;
-//
-//   const FilterWrapper = styled(Row)`
-//     column-gap: 30px;
-//     justify-content: center;
-//     padding: 15px;
-//   `;
-//
-//   const FiltersButtonsWrapper = styled(Row)`
-//     column-gap: 10px;
-//   `;
-//
-//   const onReset = () => {
-//     form.resetFields();
-//   };
-//
-//   return (
-//     <Form
-//       form={form}
-//       name="filters"
-//       initialValues={{
-//         remember: true,
-//       }}
-//       onFinish={onFinish}
-//       onFinishFailed={onFinishFailed}
-//       autoComplete="off"
-//     >
-//       <FilterWrapper>
-//         <Form.Item
-//           label="Email"
-//           name="email"
-//           rules={[
-//             {
-//               required: true,
-//               message: 'Please input your username!',
-//             },
-//           ]}
-//         >
-//           <FormInputStyled />
-//         </Form.Item>
-//         <Form.Item
-//           label="Username"
-//           name="username"
-//           rules={[
-//             {
-//               required: true,
-//               message: 'Please input your username!',
-//             },
-//           ]}
-//         >
-//           <FormInputStyled />
-//         </Form.Item>
-//         <Form.Item
-//           label="Date"
-//           name="date"
-//           rules={[
-//             {
-//               required: true,
-//               message: 'Please pick date!',
-//             },
-//           ]}
-//         >
-//           <DatePicker onChange={onChange} />
-//         </Form.Item>
-//         <Form.Item>
-//           <FiltersButtonsWrapper>
-//             <Button type="primary" htmlType="submit">
-//               Apply
-//             </Button>
-//             <Button htmlType="button" onClick={onReset}>
-//               Reset
-//             </Button>
-//           </FiltersButtonsWrapper>
-//         </Form.Item>
-//       </FilterWrapper>
-//     </Form>
-//   );
-// }
+import {
+  Button, Col, Form, Row,
+} from 'antd';
+import { FilterOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import {
+  FilterInputWrapperStyled,
+  FiltersButtonsWrapper,
+  FiltersDatePickerStyled,
+  FiltersInputStyled,
+  FilterWrapper,
+} from './User.styled';
+import { getIsoDate } from '../../utils';
+
+export function Filters(props) {
+  const { getUsersByFilter } = props;
+  const [form] = Form.useForm();
+
+  const onFinish = (filterParams) => {
+    const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
+    getUsersByFilter(requestData);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+    getUsersByFilter();
+  };
+
+  const [showFilter, setShowFilter] = useState(true);
+  const viewHandler = () => setShowFilter(!showFilter);
+
+  return (
+    <div>
+      <Row justify="end">
+        <Button type="text" icon={<FilterOutlined />} onClick={viewHandler}>Filter</Button>
+      </Row>
+      {showFilter && (
+        <Form
+          form={form}
+          name="filters"
+          initialValues={{
+            createdAt: '',
+            remember: true,
+          }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <FilterWrapper>
+            <FilterInputWrapperStyled>
+              <Form.Item
+                label="Email"
+                name="email"
+              >
+                <FiltersInputStyled />
+              </Form.Item>
+            </FilterInputWrapperStyled>
+            <FilterInputWrapperStyled>
+              <Form.Item
+                label="Username"
+                name="userName"
+              >
+                <FiltersInputStyled />
+              </Form.Item>
+            </FilterInputWrapperStyled>
+            <FilterInputWrapperStyled>
+              <Form.Item
+                label="Contact"
+                name="contact"
+              >
+                <FiltersInputStyled />
+              </Form.Item>
+            </FilterInputWrapperStyled>
+            <FilterInputWrapperStyled>
+              <Form.Item
+                label="Date"
+                name="createdAt"
+              >
+                <FiltersDatePickerStyled />
+              </Form.Item>
+            </FilterInputWrapperStyled>
+            <FilterInputWrapperStyled>
+              <Form.Item>
+                <FiltersButtonsWrapper>
+                  <Col>
+                    <Button type="primary" htmlType="submit">
+                      Apply
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button htmlType="button" onClick={onReset}>
+                      Reset
+                    </Button>
+                  </Col>
+                </FiltersButtonsWrapper>
+              </Form.Item>
+            </FilterInputWrapperStyled>
+          </FilterWrapper>
+        </Form>
+      )}
+    </div>
+  );
+}
+
+Filters.propTypes = {
+  getUsersByFilter: PropTypes.func,
+};
+
+Filters.defaultProps = {
+  getUsersByFilter: null,
+};

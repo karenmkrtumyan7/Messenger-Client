@@ -10,7 +10,7 @@ const signInRequest = (data) => ({
   payload: { data },
 });
 
-const signInReset = () => ({
+const signInReset = () => ({ // FOR SIGN-OUT BUTTON
   type: AuthActionTypes.SIGNIN_RESET,
 });
 

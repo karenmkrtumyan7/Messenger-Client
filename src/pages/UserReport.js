@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import Users from '../containers/user/UserReport';
-import { Filters } from '../components/user/Filters';
+import Filters from '../containers/user/Filters';
 
 function UserReport() {
   return (

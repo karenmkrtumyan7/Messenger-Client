@@ -1,6 +1,5 @@
 import {
-  all,
-  call, put, takeEvery, takeLatest,
+  all, call, put, takeEvery, takeLatest,
 } from '@redux-saga/core/effects';
 import NetworkService from '../services/network.service';
 import { failure } from '../actions/settings/SettingsActionCreators';
@@ -13,12 +12,12 @@ const { GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST } = UserAction
 const { Users } = AppConstants.api;
 
 function* getUsers({ payload = {} }) {
-  const { page = 1, limit = 4 } = payload;
+  const { page = 1, limit = 4, filterParams = {} } = payload;
 
   try {
     const options = {
       params: {
-        page, limit,
+        page, limit, ...filterParams,
       },
     };
 

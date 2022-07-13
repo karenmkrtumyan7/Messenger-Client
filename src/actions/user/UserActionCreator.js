@@ -1,8 +1,13 @@
 import { UserActionTypes } from './UserActionTypes';
 
-const getUsersRequest = (page, limit) => ({
+const getUsersRequest = (page, limit, filterParams) => ({
   type: UserActionTypes.GET_USERS_REQUEST,
-  payload: { page, limit },
+  payload: { page, limit, filterParams },
+});
+
+const getUsersByFilter = (filterParams) => ({
+  type: UserActionTypes.GET_USERS_REQUEST,
+  payload: { filterParams },
 });
 
 const getUserSuccess = (data) => ({
@@ -32,17 +37,13 @@ const deleteUserSuccess = () => ({
   type: UserActionTypes.DELETE_USER_SUCCESS,
 });
 
-const deleteUserReset = () => ({
-  type: UserActionTypes.DELETE_USER_RESET,
-});
-
 export {
   getUsersRequest,
+  getUsersByFilter,
   getUserSuccess,
   editUserRequest,
   editUserSuccess,
   editUserReset,
   deleteUserRequest,
   deleteUserSuccess,
-  deleteUserReset,
 };

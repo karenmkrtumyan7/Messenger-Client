@@ -1,5 +1,5 @@
 const configVariables = {
-  baseURL: 'http://localhost:8000',
+  baseURL: process.env.BASE_URL || 'http://localhost:8000',
 };
 
 const Config = {

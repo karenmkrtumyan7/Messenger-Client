@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getError = (err, statusCode = false, isAuth = false) => {
   if (err?.response?.data) {
     return {
@@ -15,10 +17,13 @@ export const getError = (err, statusCode = false, isAuth = false) => {
   return {
     errors: [
       {
-        // errorMessage: Notifications.unknownError,
         errorCode: 'error404',
       },
     ],
     status: statusCode ? err.response.status : null,
   };
 };
+
+export const getIsoDate = (date) => moment(date)
+  .utc()
+  .toISOString();
