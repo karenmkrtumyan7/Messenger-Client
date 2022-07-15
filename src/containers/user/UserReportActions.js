@@ -1,9 +1,13 @@
 import { connect } from 'react-redux';
-import { UserReportActions } from '../../components/user/UserReportActions';
-import { deleteUserRequest } from '../../actions/user/UserActionCreator';
+import { bindActionCreators } from 'redux';
+import { UserReportActions } from 'components/user/UserReportActions';
+import { deleteUserRequest } from 'actions/user/UserActionCreator';
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteUser: (id) => dispatch(deleteUserRequest(id)),
-});
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    deleteUser: deleteUserRequest,
+  },
+  dispatch,
+);
 
 export default connect(null, mapDispatchToProps)(UserReportActions);

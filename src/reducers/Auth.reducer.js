@@ -1,10 +1,9 @@
-import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
-import localStorageService from '../services/localStorage.service';
+import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
+import localStorageService from 'services/localStorage.service';
 
 const initialState = {
-  registered: false,
-  verifyMessage: '',
   authData: localStorageService.get('auth') || {},
+  verifyMessage: '',
 };
 
 export const auth = (state = initialState, { type, payload }) => {
@@ -28,16 +27,6 @@ export const auth = (state = initialState, { type, payload }) => {
     return {
       ...state,
       verifyMessage: payload.errors.msg,
-    };
-  case AuthActionTypes.SIGNUP_SUCCESS:
-    return {
-      ...state,
-      registered: true,
-    };
-  case AuthActionTypes.SIGNUP_RESET:
-    return {
-      ...state,
-      registered: false,
     };
   default: return state;
   }

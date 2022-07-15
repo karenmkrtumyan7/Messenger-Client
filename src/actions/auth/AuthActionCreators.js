@@ -14,17 +14,9 @@ const signInReset = () => ({ // FOR SIGN-OUT BUTTON
   type: AuthActionTypes.SIGNIN_RESET,
 });
 
-const signUpSuccess = () => ({
-  type: AuthActionTypes.SIGNUP_SUCCESS,
-});
-
 const signUpRequest = (data) => ({
   type: AuthActionTypes.SIGNUP_REQUEST,
   payload: { data },
-});
-
-const signUpReset = () => ({
-  type: AuthActionTypes.SIGNUP_RESET,
 });
 
 const verifySuccess = (message) => ({
@@ -45,9 +37,7 @@ const verifyFailure = (error) => ({
 export {
   signInSuccess,
   signInRequest,
-  signUpSuccess,
   signUpRequest,
-  signUpReset,
   verifySuccess,
   verifyRequest,
   verifyFailure,

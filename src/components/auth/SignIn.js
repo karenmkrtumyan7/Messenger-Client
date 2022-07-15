@@ -3,13 +3,13 @@ import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import localStorageService from 'services/localStorage.service';
 import { ForgotPasswordPopup } from './ForgotPasswordPopup';
 import { AuthSocial } from './AuthSocial';
 import {
   AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled,
   EyeStyle, AuthTextFieldStyled,
 } from './Auth.styled';
-import localStorageService from '../../services/localStorage.service';
 
 const iconRenderer = (visible) => {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;

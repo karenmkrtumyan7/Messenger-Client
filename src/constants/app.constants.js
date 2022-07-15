@@ -13,4 +13,9 @@ export const AppConstants = {
     Users: 'users',
     Verify: 'verify',
   },
+  regexp: {
+    username: '^[a-z](?!.*?\\.{2})[a-z0-9.]{1,28}[a-z0-9]$',
+    password: '^(?=.*\\d)(?=.*[A-Z]).{8,40}$',
+    contactNumber: '^\\+[1-9]{1}[0-9]{3,14}$',
+  },
 };

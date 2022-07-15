@@ -1,5 +1,5 @@
-import { Auth } from '../components/auth/Auth';
-import SignUpForm from '../containers/auth/SignUp';
+import { Auth } from 'components/auth/Auth';
+import SignUpForm from 'containers/auth/SignUp';
 
 function SignUp() {
   return (

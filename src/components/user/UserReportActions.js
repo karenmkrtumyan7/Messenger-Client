@@ -1,8 +1,8 @@
 import { Button, Popconfirm, Row } from 'antd';
 import { EyeOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
+import UserEditModal from 'containers/user/UserEditModal';
 import { UserReportActionsStyled } from './User.styled';
-import UserEditModal from '../../containers/user/UserEditModal';
 
 export function UserReportActions(props) {
   const { data, deleteUser } = props;

@@ -2,13 +2,15 @@ import {
   call, takeLatest, put, all,
 } from '@redux-saga/core/effects';
 import {
-  signInSuccess, signUpSuccess, verifyFailure, verifySuccess,
-} from '../actions/auth/AuthActionCreators';
-import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
-import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
-import NetworkService from '../services/network.service';
-import { AppConstants } from '../constants/app.constants';
-import { getError } from '../utils';
+  signInSuccess, verifyFailure, verifySuccess,
+} from 'actions/auth/AuthActionCreators';
+import {
+  failure, loading, resetLoading, success,
+} from 'actions/settings/SettingsActionCreators';
+import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
+import NetworkService from 'services/network.service';
+import { AppConstants } from 'constants/app.constants';
+import { getError } from 'utils';
 
 const {
   SIGNIN_REQUEST,
@@ -43,8 +45,8 @@ function* signUp({ payload }) {
       data: payload.data,
     };
 
-    yield call(NetworkService.makeAPIPostRequest, [Auth, SignUp], options);
-    yield put(signUpSuccess());
+    const { data } = yield call(NetworkService.makeAPIPostRequest, [Auth, SignUp], options);
+    yield put(success(data.msg));
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));

@@ -1,23 +1,22 @@
 import {
   all, call, put, takeEvery, takeLatest,
 } from '@redux-saga/core/effects';
-import NetworkService from '../services/network.service';
-import { failure } from '../actions/settings/SettingsActionCreators';
-import { deleteUserSuccess, editUserSuccess, getUserSuccess } from '../actions/user/UserActionCreator';
-import { UserActionTypes } from '../actions/user/UserActionTypes';
-import { AppConstants } from '../constants/app.constants';
-import { getError } from '../utils';
+import { AppConstants } from 'constants/app.constants';
+import NetworkService from 'services/network.service';
+import { failure } from 'actions/settings/SettingsActionCreators';
+import { deleteUserSuccess, editUserSuccess, getUserSuccess } from 'actions/user/UserActionCreator';
+import { UserActionTypes } from 'actions/user/UserActionTypes';
+import { getError } from 'utils';
 
 const { GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST } = UserActionTypes;
 const { Users } = AppConstants.api;
 
-function* getUsers({ payload = {} }) {
-  const { page = 1, limit = 4, filterParams = {} } = payload;
-
+function* getUsers({ payload }) {
+  const { filterParams } = payload;
   try {
     const options = {
       params: {
-        page, limit, ...filterParams,
+        ...filterParams,
       },
     };
 
@@ -30,9 +29,7 @@ function* getUsers({ payload = {} }) {
 }
 
 function* editUser({ payload }) {
-  const { userChanges: edit } = payload;
-  const { _id: id } = edit;
-
+  const { userChanges: edit, id } = payload;
   try {
     const options = {
       data: edit,

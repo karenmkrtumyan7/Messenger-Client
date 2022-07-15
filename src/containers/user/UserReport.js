@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   selectUsersData, selectUsersCount, selectUsersLoading, selectUserChange,
-} from '../../selectors';
-import { UserReport } from '../../components/user/UserReport';
-import { editUserReset, getUsersRequest } from '../../actions/user/UserActionCreator';
+} from 'selectors';
+import { UserReport } from 'components/user/UserReport';
+import { editUserReset, getUsersRequest } from 'actions/user/UserActionCreator';
 
 const mapStateToProps = ({ user }) => ({
   data: selectUsersData(user),
@@ -12,9 +13,12 @@ const mapStateToProps = ({ user }) => ({
   change: selectUserChange(user),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getUsers: (page, limit) => dispatch(getUsersRequest(page, limit)),
-  resetChange: () => dispatch(editUserReset()),
-});
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    getUsers: getUsersRequest,
+    resetChange: editUserReset,
+  },
+  dispatch,
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserReport);

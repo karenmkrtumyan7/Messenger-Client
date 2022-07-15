@@ -1,6 +1,6 @@
 import axios from 'axios';
-import LocalStorageService from '../services/localStorage.service';
-import { NavigationService } from '../services/navigationService';
+import LocalStorageService from 'services/localStorage.service';
+import { NavigationService } from 'services/navigationService';
 
 const responseSuccessInterceptor = (response) => response;
 const responseFailureInterceptor = (error) => {

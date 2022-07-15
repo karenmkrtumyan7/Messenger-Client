@@ -1,6 +1,6 @@
 import { Col, Grid } from 'antd';
 import { useLocation } from 'react-router-dom';
-import saly from '../../assets/saly.png';
+import saly from 'assets/saly.png';
 import {
   AuthHeadingStyled, AuthInfoStyled, AuthInfoWrapperStyled, AuthLoremStyled, AuthRedirectTxtStyled, AuthRedirectUrlStyled,
 } from './Auth.styled';

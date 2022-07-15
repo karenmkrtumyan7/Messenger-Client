@@ -1,7 +1,7 @@
-import Config from '../config';
-import axios from '../utils/axios.interceptors';
+import Config from 'config';
+import axios from 'utils/axios.interceptors';
+import { AppConstants } from 'constants/app.constants';
 import LocalStorageService from './localStorage.service';
-import { AppConstants } from '../constants/app.constants';
 
 const NetworkService = {
   makeAPIGetRequest: (partUrl, options = {}) => NetworkService.makeAPIRequest(partUrl, {

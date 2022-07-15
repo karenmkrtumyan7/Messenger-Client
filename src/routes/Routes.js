@@ -1,11 +1,11 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
-import { NotFound } from '../pages/NotFound';
-import UserReport from '../pages/UserReport';
+import SignIn from 'pages/SignIn';
+import SignUp from 'pages/SignUp';
+import { NotFound } from 'pages/NotFound';
+import UserReport from 'pages/UserReport';
+import { Verification } from 'pages/Verification';
+import Pages from 'containers/common/Pages';
 import { PrivateRoute } from './PrivateRoute';
-import { Verification } from '../pages/Verification';
-import Pages from '../containers/common/Pages';
 
 function AppRoutes() {
   return (

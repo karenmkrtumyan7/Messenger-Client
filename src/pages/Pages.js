@@ -1,31 +1,40 @@
 import { notification } from 'antd';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SpinStyled } from '../components/auth/Auth.styled';
+import { SpinStyled } from 'components/auth/Auth.styled';
 
 export function Pages(props) {
   const {
-    page, messages, resetFailure, isLoading,
+    page, errorMessage, resetFailure, isLoading, successMessage, resetSuccess,
   } = props;
 
   useEffect(() => {
-    if (messages.length) {
-      messages.forEach((message) => {
-        notification.error({
-          description: message,
-          placement: 'bottomLeft',
-          duration: 3,
-        });
-      }, [messages]);
-      resetFailure();
+    if (errorMessage) {
+      notification.error({
+        description: errorMessage,
+        placement: 'bottomLeft',
+        duration: 2,
+        onClose: resetFailure,
+      }, [errorMessage]);
     }
 
     return () => {
-      if (!messages.length) {
+      if (!errorMessage.length) {
         notification.destroy();
       }
     };
-  });
+  }, [errorMessage, resetFailure]);
+
+  useEffect(() => {
+    if (successMessage) {
+      notification.success({
+        description: successMessage,
+        placement: 'bottomLeft',
+        duration: 2,
+        onClose: resetSuccess,
+      });
+    }
+  }, [successMessage, resetSuccess]);
 
   return (
     <>
@@ -37,14 +46,18 @@ export function Pages(props) {
 
 Pages.propTypes = {
   page: PropTypes.element,
-  messages: PropTypes.array,
+  errorMessage: PropTypes.string,
   resetFailure: PropTypes.func,
   isLoading: PropTypes.bool,
+  successMessage: PropTypes.string,
+  resetSuccess: PropTypes.func,
 };
 
 Pages.defaultProps = {
   page: null,
-  messages: [],
+  errorMessage: '',
   resetFailure: null,
   isLoading: false,
+  successMessage: '',
+  resetSuccess: null,
 };

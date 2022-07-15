@@ -6,7 +6,8 @@ import {
 } from './Auth.selectors';
 
 import {
-  selectErrorMessages,
+  selectErrorMessage,
+  selectSuccessMessage,
   selectLoading,
 } from './Settings.selector';
 
@@ -22,10 +23,11 @@ export {
   selectAuthenticated,
   selectAuthData,
   selectVerifyMessage,
-  selectErrorMessages,
+  selectErrorMessage,
   selectLoading,
   selectUsersData,
   selectUsersCount,
   selectUsersLoading,
   selectUserChange,
+  selectSuccessMessage,
 };

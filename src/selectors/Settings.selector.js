@@ -1,4 +1,5 @@
-const selectErrorMessages = (state) => state.messages;
+const selectErrorMessage = (state) => state.error.errorMessage;
+const selectSuccessMessage = (state) => state.successMessage;
 const selectLoading = (state) => state.loading;
 
-export { selectErrorMessages, selectLoading };
+export { selectErrorMessage, selectLoading, selectSuccessMessage };

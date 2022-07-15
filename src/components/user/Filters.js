@@ -4,6 +4,7 @@ import {
 import { FilterOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { getIsoDate } from 'utils';
 import {
   FilterInputWrapperStyled,
   FiltersButtonsWrapper,
@@ -11,23 +12,23 @@ import {
   FiltersInputStyled,
   FilterWrapper,
 } from './User.styled';
-import { getIsoDate } from '../../utils';
 
 export function Filters(props) {
-  const { getUsersByFilter } = props;
+  const { getUsers, setPagination } = props;
   const [form] = Form.useForm();
 
   const onFinish = (filterParams) => {
     const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
-    getUsersByFilter(requestData);
+    getUsers(requestData);
   };
 
   const onReset = () => {
     form.resetFields();
-    getUsersByFilter();
+    getUsers();
+    setPagination({}); // ------changes
   };
 
-  const [showFilter, setShowFilter] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
   const viewHandler = () => setShowFilter(!showFilter);
 
   return (
@@ -103,9 +104,11 @@ export function Filters(props) {
 }
 
 Filters.propTypes = {
-  getUsersByFilter: PropTypes.func,
+  getUsers: PropTypes.func,
+  setPagination: PropTypes.func,
 };
 
 Filters.defaultProps = {
-  getUsersByFilter: null,
+  getUsers: null,
+  setPagination: null,
 };

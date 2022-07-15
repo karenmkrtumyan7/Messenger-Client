@@ -1,8 +1,17 @@
 import { SettingsActionTypes } from './SettingsActionTypes';
 
+const success = (successMessage) => ({
+  type: SettingsActionTypes.SUCCESS,
+  payload: { successMessage },
+});
+
+const resetSuccess = () => ({
+  type: SettingsActionTypes.RESET_SUCCESS,
+});
+
 const failure = (error) => ({
   type: SettingsActionTypes.FAILURE,
-  payload: error,
+  payload: { error },
 });
 
 const resetFailure = () => ({
@@ -17,8 +26,10 @@ const resetLoading = () => ({
 });
 
 export {
+  success,
   failure,
   loading,
   resetFailure,
   resetLoading,
+  resetSuccess,
 };

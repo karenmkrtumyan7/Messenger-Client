@@ -1,40 +1,37 @@
 import { EditOutlined } from '@ant-design/icons';
 import {
-  Button, Input, Modal,
+  Button, Input, Modal, Form,
 } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { AppConstants } from 'constants/app.constants';
+
+const { Item } = Form;
 
 export function UserEditModal(props) {
-  const { data, edit } = props;
+  const { data, editUser } = props;
   const [visible, setVisible] = useState(false);
-  const [values, setValues] = useState(data);
-  const initialValues = useRef(values);
-  const {
-    _id, email, contact, userName,
-  } = values;
+  const [form] = Form.useForm();
+  const { validateFields, resetFields } = form;
 
-  useEffect(() => {
-    initialValues.current = data;
-  }, [data]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  useEffect(() => () => {
+    if (!visible) {
+      resetFields();
+    }
+  }, [resetFields, visible]);
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleOk = () => {
-    if (!_.isEqual(initialValues.current, values)) {
-      edit(values);
-    }
+    validateFields().then((values) => {
+      const existingObj = _.pick(data, ['userName', 'email', 'contact']);
+      if (!_.isEqual(existingObj, values)) {
+        editUser(data._id, values);
+      }
+    });
     setVisible(false);
   };
 
@@ -51,35 +48,65 @@ export function UserEditModal(props) {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Input
-          addonBefore="Username"
-          placeholder="Username"
-          onChange={handleInputChange}
-          name="userName"
-          value={userName}
-        />
-        <Input
-          addonBefore="Id"
-          placeholder="Id"
-          onChange={handleInputChange}
-          name="_id"
-          value={_id}
-          disabled
-        />
-        <Input
-          addonBefore="Email"
-          placeholder="Email"
-          onChange={handleInputChange}
-          name="email"
-          value={email}
-        />
-        <Input
-          addonBefore="Contact number"
-          placeholder="Contact Number"
-          onChange={handleInputChange}
-          name="contact"
-          value={contact}
-        />
+        <Form
+          form={form}
+          initialValues={data}
+        >
+          <Item
+            name="userName"
+            rules={[
+              {
+                required: true,
+                message: 'Username is required',
+              },
+              {
+                pattern: AppConstants.regexp.username,
+                message: 'Username is not valid',
+              },
+            ]}
+          >
+            <Input
+              addonBefore="Username"
+              placeholder="Username"
+            />
+          </Item>
+          <Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Email is required',
+              },
+              {
+                type: 'email',
+                message: 'Email is not valid',
+              },
+            ]}
+          >
+            <Input
+              addonBefore="Email"
+              placeholder="Email"
+            />
+          </Item>
+          <Item
+            name="contact"
+            rules={[
+              {
+                required: true,
+                message: 'Contact number is required',
+              },
+              {
+                pattern: AppConstants.regexp.contactNumber,
+                message: 'Contact number is not valid',
+              },
+            ]}
+          >
+            <Input
+              addonBefore="Contact number"
+              placeholder="Contact Number"
+            />
+          </Item>
+        </Form>
       </Modal>
     </>
   );
@@ -87,10 +114,10 @@ export function UserEditModal(props) {
 
 UserEditModal.propTypes = {
   data: PropTypes.object,
-  edit: PropTypes.func,
+  editUser: PropTypes.func,
 };
 
 UserEditModal.defaultProps = {
   data: {},
-  edit: null,
+  editUser: null,
 };

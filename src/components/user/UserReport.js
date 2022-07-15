@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import UserReportActions from '../../containers/user/UserReportActions';
+import UserReportActions from 'containers/user/UserReportActions';
 import { UsersTableStyled } from './User.styled';
 
 export function UserReport(props) {
@@ -10,7 +10,7 @@ export function UserReport(props) {
 
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 4,
+    pageSize: 10,
     total: count,
   });
 
@@ -65,13 +65,14 @@ export function UserReport(props) {
   ];
 
   useEffect(() => {
-    getUsers();
+    getUsers({ page: 1, limit: 10 });
   }, [getUsers]);
 
   useEffect(() => {
     if (change) {
+      const { current, pageSize } = pagination;
       resetChange();
-      getUsers(pagination.current, pagination.pageSize);
+      getUsers({ page: current, limit: pageSize });
     }
   }, [getUsers, change, resetChange, pagination]);
 
@@ -81,9 +82,9 @@ export function UserReport(props) {
     }
   }, [count, pagination]);
 
-  const handleTableChange = ({ current, pageSize }) => {
-    setPagination({ ...pagination, current });
-    getUsers(current, pageSize);
+  const handleTableChange = ({ current, pageSize, total }) => {
+    setPagination({ current, pageSize, total });
+    getUsers({ page: current, limit: pageSize });
   };
 
   return (

@@ -1,16 +1,10 @@
 import moment from 'moment';
 
-export const getError = (err, statusCode = false, isAuth = false) => {
+export const getError = (err, statusCode = false) => {
   if (err?.response?.data) {
     return {
-      errors: !isAuth
-        ? err.response.data
-        : [
-          {
-            errorMessage: err.response.data.errorMessage,
-            errorCode: err.response.data.errorCode,
-          },
-        ],
+      errorMessage: err.response.data.msg,
+      errorCode: err.response.data.errorCode,
       status: statusCode ? err.response.status : null,
     };
   }
