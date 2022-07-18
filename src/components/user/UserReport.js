@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import UserReportActions from 'containers/user/UserReportActions';
+import _ from 'lodash';
 import { UsersTableStyled } from './User.styled';
 
 export function UserReport(props) {
   const {
-    count, data, getUsers, loading, change, resetChange,
+    count, data, getUsers, loading, change, resetChange, filterParams, pagination, setPagination,
   } = props;
-
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: count,
-  });
 
   const columns = [
     {
@@ -57,7 +52,7 @@ export function UserReport(props) {
       key: 'action',
       fixed: 'right',
       width: 120,
-      render: (_, record) => (
+      render: (__, record) => (
         <UserReportActions data={record} />
       )
       ,
@@ -72,19 +67,24 @@ export function UserReport(props) {
     if (change) {
       const { current, pageSize } = pagination;
       resetChange();
-      getUsers({ page: current, limit: pageSize });
+      getUsers({ page: current, limit: pageSize, ...filterParams });
     }
-  }, [getUsers, change, resetChange, pagination]);
+  }, [getUsers, change, resetChange, pagination, filterParams]);
 
   useEffect(() => {
     if (pagination.total !== count) {
       setPagination({ ...pagination, total: count });
     }
-  }, [count, pagination]);
+  }, [count, pagination, setPagination]);
 
   const handleTableChange = ({ current, pageSize, total }) => {
     setPagination({ current, pageSize, total });
-    getUsers({ page: current, limit: pageSize });
+    const requestBody = { page: current, limit: pageSize };
+
+    if (!_.isEmpty(filterParams)) {
+      Object.assign(requestBody, filterParams);
+    }
+    getUsers(requestBody);
   };
 
   return (
@@ -106,6 +106,9 @@ UserReport.propTypes = {
   loading: PropTypes.bool,
   change: PropTypes.bool,
   resetChange: PropTypes.func,
+  filterParams: PropTypes.object,
+  pagination: PropTypes.object,
+  setPagination: PropTypes.func,
 };
 
 UserReport.defaultProps = {
@@ -115,4 +118,7 @@ UserReport.defaultProps = {
   loading: false,
   change: false,
   resetChange: null,
+  filterParams: {},
+  pagination: {},
+  setPagination: null,
 };

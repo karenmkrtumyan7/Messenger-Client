@@ -12,24 +12,31 @@ import {
   FiltersInputStyled,
   FilterWrapper,
 } from './User.styled';
+import LocalStorageService from '../../services/localStorage.service';
 
 export function Filters(props) {
-  const { getUsers, setPagination } = props;
+  const { setFilterParams, setPagination, getUsers } = props;
   const [form] = Form.useForm();
 
   const onFinish = (filterParams) => {
     const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
-    getUsers(requestData);
+    setPagination((prevState) => ({ total: prevState.total, pageSize: 10, current: 1 }));
+    setFilterParams(requestData);
+    getUsers({ page: 1, limit: 10, ...filterParams });
   };
 
   const onReset = () => {
     form.resetFields();
-    getUsers();
-    setPagination({}); // ------changes
+    setFilterParams({});
+    setPagination((prevState) => ({ total: prevState.total, pageSize: 10, current: 1 }));
+    getUsers({ page: 1, limit: 10 });
   };
 
-  const [showFilter, setShowFilter] = useState(false);
-  const viewHandler = () => setShowFilter(!showFilter);
+  const [showFilter, setShowFilter] = useState(LocalStorageService.get('usersFilterView'));
+  const viewHandler = () => {
+    LocalStorageService.set('usersFilterView', !showFilter);
+    setShowFilter(!showFilter);
+  };
 
   return (
     <div>
@@ -104,11 +111,13 @@ export function Filters(props) {
 }
 
 Filters.propTypes = {
-  getUsers: PropTypes.func,
+  setFilterParams: PropTypes.func,
   setPagination: PropTypes.func,
+  getUsers: PropTypes.func,
 };
 
 Filters.defaultProps = {
-  getUsers: null,
+  setFilterParams: null,
   setPagination: null,
+  getUsers: null,
 };

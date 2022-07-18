@@ -8,17 +8,17 @@ import { selectUsersCount } from '../selectors';
 
 function UserReport(props) {
   const { count } = props;
+  const [filterParams, setFilterParams] = useState({});
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: count,
   });
-
   return (
     <Row justify="center">
       <Col>
-        <Filters setPagination={setPagination} />
-        <Users pagination={pagination} setPagination={setPagination} />
+        <Filters setFilterParams={setFilterParams} setPagination={setPagination} />
+        <Users pagination={pagination} setPagination={setPagination} filterParams={filterParams} />
       </Col>
     </Row>
   );

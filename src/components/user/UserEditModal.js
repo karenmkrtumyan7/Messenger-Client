@@ -47,8 +47,10 @@ export function UserEditModal(props) {
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
+        forceRender
       >
         <Form
+          name="as"
           form={form}
           initialValues={data}
         >
