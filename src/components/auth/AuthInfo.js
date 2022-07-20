@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import saly from 'assets/saly.png';
 import {
   AuthHeadingStyled, AuthInfoStyled, AuthInfoWrapperStyled, AuthLoremStyled, AuthRedirectTxtStyled, AuthRedirectUrlStyled,
-} from './Auth.styled';
+} from 'components/auth/Auth.styled';
 
-export function AuthInfo() {
+const AuthInfo = () => {
   const { pathname } = useLocation();
   const RedirectTxt = pathname === '/signin' ? 'Register here !' : 'Login here !';
   const RedirectLink = pathname === '/signin' ? '/signup' : '/signin';
@@ -30,4 +30,6 @@ export function AuthInfo() {
       </AuthInfoWrapperStyled>
     </Col>
   );
-}
+};
+
+export { AuthInfo };

@@ -35,6 +35,40 @@ const FilterInputWrapperStyled = styled(Col)`
   box-sizing: border-box;
 `;
 
+const AccountInfoWrapper = styled.div`
+  margin: 100px 0;
+`;
+
+const AccountInfoTitle = styled.h2`
+  font-size: 20px;
+  border-bottom: 1px solid #C2C6CB;
+  margin-bottom: 30px;
+`;
+
+const AccountInfoDetailsTitlesWrapper = styled(Col)`
+  margin-right: 25px;
+  text-align: end;
+`;
+
+const AccountInfoDetailsWrapper = styled(Col)`
+  font-weight: bold;
+`;
+
+const AccountInfoMainWrapper = styled(Row)`
+  justify-content: center; 
+  background-color: white; 
+  border-radius: 10px; 
+  flex: 1 1 auto;
+`;
+
+const AccountStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 70%;
+  margin: 0 auto;
+`;
+
 export {
   UserReportActionsStyled,
   UsersTableStyled,
@@ -43,4 +77,10 @@ export {
   FilterWrapper,
   FiltersButtonsWrapper,
   FilterInputWrapperStyled,
+  AccountInfoWrapper,
+  AccountInfoTitle,
+  AccountInfoDetailsTitlesWrapper,
+  AccountInfoDetailsWrapper,
+  AccountInfoMainWrapper,
+  AccountStyled,
 };

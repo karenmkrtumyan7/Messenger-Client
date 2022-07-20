@@ -1,4 +1,4 @@
-import { AuthActionTypes } from './AuthActionTypes';
+import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
 
 const signInSuccess = (data) => ({
   type: AuthActionTypes.SIGNIN_SUCCESS,

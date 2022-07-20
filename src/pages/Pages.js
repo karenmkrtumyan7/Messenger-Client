@@ -1,9 +1,9 @@
 import { notification } from 'antd';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SpinStyled } from 'components/auth/Auth.styled';
+import { SpinStyled } from 'components/styledComponents/Spin/Spin.styled';
 
-export function Pages(props) {
+const Pages = (props) => {
   const {
     page, errorMessage, resetFailure, isLoading, successMessage, resetSuccess,
   } = props;
@@ -42,7 +42,7 @@ export function Pages(props) {
       { isLoading && <SpinStyled /> }
     </>
   );
-}
+};
 
 Pages.propTypes = {
   page: PropTypes.element,
@@ -61,3 +61,5 @@ Pages.defaultProps = {
   successMessage: '',
   resetSuccess: null,
 };
+
+export { Pages };

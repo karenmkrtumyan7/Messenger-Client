@@ -26,7 +26,7 @@ export const auth = (state = initialState, { type, payload }) => {
   case AuthActionTypes.VERIFY_FAILURE:
     return {
       ...state,
-      verifyMessage: payload.errors.msg,
+      verifyMessage: payload.errorMessage,
     };
   default: return state;
   }

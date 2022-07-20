@@ -99,5 +99,6 @@ module.exports = {
     'jsx-a11y/media-has-caption': 'off',
     'prefer-promise-reject-errors': 0,
     'default-param-last': 'off',
+    'react/function-component-definition': 0,
   },
 };

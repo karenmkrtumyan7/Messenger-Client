@@ -2,7 +2,7 @@ import { Button, Result } from 'antd';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export function VerifyResult(props) {
+const VerifyResult = (props) => {
   const { message } = props;
   return (
     <Result
@@ -14,7 +14,7 @@ export function VerifyResult(props) {
       ]}
     />
   );
-}
+};
 
 VerifyResult.propTypes = {
   message: PropTypes.string,
@@ -23,3 +23,5 @@ VerifyResult.propTypes = {
 VerifyResult.defaultProps = {
   message: '',
 };
+
+export { VerifyResult };

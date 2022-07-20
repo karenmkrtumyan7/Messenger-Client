@@ -6,36 +6,35 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { getIsoDate } from 'utils';
 import {
-  FilterInputWrapperStyled,
-  FiltersButtonsWrapper,
-  FiltersDatePickerStyled,
-  FiltersInputStyled,
-  FilterWrapper,
-} from './User.styled';
-import LocalStorageService from '../../services/localStorage.service';
+  FilterInputWrapperStyled, FiltersButtonsWrapper, FiltersDatePickerStyled, FiltersInputStyled, FilterWrapper,
+} from 'components/user/User.styled';
+import { useLocation } from 'react-router-dom';
+import FilterService from 'services/filterService';
 
-export function Filters(props) {
+const Filters = (props) => {
   const { setFilterParams, setPagination, getUsers } = props;
   const [form] = Form.useForm();
+  const params = useLocation();
+  const expand = !!FilterService.getQuery(params.search).expand;
 
   const onFinish = (filterParams) => {
     const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
     setPagination((prevState) => ({ total: prevState.total, pageSize: 10, current: 1 }));
     setFilterParams(requestData);
-    getUsers({ page: 1, limit: 10, ...filterParams });
+    getUsers({ page: 1, pageSize: 10, ...filterParams });
   };
 
   const onReset = () => {
     form.resetFields();
     setFilterParams({});
     setPagination((prevState) => ({ total: prevState.total, pageSize: 10, current: 1 }));
-    getUsers({ page: 1, limit: 10 });
+    getUsers({ page: 1, pageSize: 10 });
   };
 
-  const [showFilter, setShowFilter] = useState(LocalStorageService.get('usersFilterView'));
+  const [showFilter, setShowFilter] = useState(expand);
   const viewHandler = () => {
-    LocalStorageService.set('usersFilterView', !showFilter);
     setShowFilter(!showFilter);
+    // FilterService.setQuery({ name: 'karen' });
   };
 
   return (
@@ -108,7 +107,7 @@ export function Filters(props) {
       )}
     </div>
   );
-}
+};
 
 Filters.propTypes = {
   setFilterParams: PropTypes.func,
@@ -121,3 +120,5 @@ Filters.defaultProps = {
   setPagination: null,
   getUsers: null,
 };
+
+export { Filters };

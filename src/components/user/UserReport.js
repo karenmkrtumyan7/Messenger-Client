@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import UserReportActions from 'containers/user/UserReportActions';
 import _ from 'lodash';
-import { UsersTableStyled } from './User.styled';
+import { UsersTableStyled } from 'components/user/User.styled';
 
-export function UserReport(props) {
+const UserReport = (props) => {
   const {
     count, data, getUsers, loading, change, resetChange, filterParams, pagination, setPagination,
   } = props;
@@ -60,14 +60,14 @@ export function UserReport(props) {
   ];
 
   useEffect(() => {
-    getUsers({ page: 1, limit: 10 });
+    getUsers({ page: 1, pageSize: 10 });
   }, [getUsers]);
 
   useEffect(() => {
     if (change) {
       const { current, pageSize } = pagination;
       resetChange();
-      getUsers({ page: current, limit: pageSize, ...filterParams });
+      getUsers({ page: current, pageSize, ...filterParams });
     }
   }, [getUsers, change, resetChange, pagination, filterParams]);
 
@@ -79,7 +79,7 @@ export function UserReport(props) {
 
   const handleTableChange = ({ current, pageSize, total }) => {
     setPagination({ current, pageSize, total });
-    const requestBody = { page: current, limit: pageSize };
+    const requestBody = { page: current, pageSize };
 
     if (!_.isEmpty(filterParams)) {
       Object.assign(requestBody, filterParams);
@@ -97,7 +97,7 @@ export function UserReport(props) {
       loading={loading}
     />
   );
-}
+};
 
 UserReport.propTypes = {
   count: PropTypes.number,
@@ -122,3 +122,5 @@ UserReport.defaultProps = {
   pagination: {},
   setPagination: null,
 };
+
+export { UserReport };

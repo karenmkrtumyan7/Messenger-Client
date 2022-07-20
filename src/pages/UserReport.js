@@ -6,7 +6,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { selectUsersCount } from '../selectors';
 
-function UserReport(props) {
+const UserReport = (props) => {
   const { count } = props;
   const [filterParams, setFilterParams] = useState({});
   const [pagination, setPagination] = useState({
@@ -22,7 +22,7 @@ function UserReport(props) {
       </Col>
     </Row>
   );
-}
+};
 
 UserReport.propTypes = {
   count: PropTypes.number,

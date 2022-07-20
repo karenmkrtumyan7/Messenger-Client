@@ -1,4 +1,4 @@
-import { UserActionTypes } from './UserActionTypes';
+import { UserActionTypes } from 'actions/user/UserActionTypes';
 
 const getUsersRequest = (filterParams) => ({
   type: UserActionTypes.GET_USERS_REQUEST,

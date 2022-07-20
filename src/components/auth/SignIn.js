@@ -4,19 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import localStorageService from 'services/localStorage.service';
-import { ForgotPasswordPopup } from './ForgotPasswordPopup';
-import { AuthSocial } from './AuthSocial';
+import { AuthSocial } from 'components/auth/AuthSocial';
+import { ForgotPasswordPopup } from 'components/auth/ForgotPasswordPopup';
 import {
-  AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled,
-  EyeStyle, AuthTextFieldStyled,
-} from './Auth.styled';
+  AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled, EyeStyle, AuthTextFieldStyled,
+} from 'components/auth/Auth.styled';
 
 const iconRenderer = (visible) => {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
   return <EyeStyle>{ Eye }</EyeStyle>;
 };
 
-export function SignIn(props) {
+const SignIn = (props) => {
   const { signInRequest, authData } = props;
   const navigate = useNavigate();
   const onFinish = (values) => signInRequest(values);
@@ -24,7 +23,7 @@ export function SignIn(props) {
   useEffect(() => {
     if (Object.keys(authData).length) {
       localStorageService.set('auth', authData);
-      navigate('/users', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [authData, navigate]);
 
@@ -64,7 +63,7 @@ export function SignIn(props) {
       <AuthSocial />
     </Form>
   );
-}
+};
 
 SignIn.propTypes = {
   authData: PropTypes.object,
@@ -75,3 +74,5 @@ SignIn.defaultProps = {
   authData: {},
   signInRequest: null,
 };
+
+export { SignIn };

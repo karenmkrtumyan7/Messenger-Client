@@ -2,9 +2,9 @@ import { Button, Popconfirm, Row } from 'antd';
 import { EyeOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import UserEditModal from 'containers/user/UserEditModal';
-import { UserReportActionsStyled } from './User.styled';
+import { UserReportActionsStyled } from 'components/user/User.styled';
 
-export function UserReportActions(props) {
+const UserReportActions = (props) => {
   const { data, deleteUser } = props;
   const confirm = () => {
     deleteUser(data._id);
@@ -20,7 +20,7 @@ export function UserReportActions(props) {
       </UserReportActionsStyled>
     </Row>
   );
-}
+};
 
 UserReportActions.propTypes = {
   data: PropTypes.object,
@@ -31,3 +31,5 @@ UserReportActions.defaultProps = {
   data: {},
   deleteUser: null,
 };
+
+export { UserReportActions };

@@ -9,7 +9,7 @@ import { AppConstants } from 'constants/app.constants';
 
 const { Item } = Form;
 
-export function UserEditModal(props) {
+const UserEditModal = (props) => {
   const { data, editUser } = props;
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -112,7 +112,7 @@ export function UserEditModal(props) {
       </Modal>
     </>
   );
-}
+};
 
 UserEditModal.propTypes = {
   data: PropTypes.object,
@@ -123,3 +123,5 @@ UserEditModal.defaultProps = {
   data: {},
   editUser: null,
 };
+
+export { UserEditModal };

@@ -1,4 +1,4 @@
-import { SettingsActionTypes } from './SettingsActionTypes';
+import { SettingsActionTypes } from 'actions/settings/SettingsActionTypes';
 
 const success = (successMessage) => ({
   type: SettingsActionTypes.SUCCESS,

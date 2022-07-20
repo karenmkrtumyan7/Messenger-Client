@@ -3,20 +3,20 @@ import {
   selectRegistered,
   selectVerifyMessage,
   selectAuthData,
-} from './Auth.selectors';
+} from 'selectors/Auth.selectors';
 
 import {
   selectErrorMessage,
   selectSuccessMessage,
   selectLoading,
-} from './Settings.selector';
+} from 'selectors/Settings.selector';
 
 import {
   selectUsersData,
   selectUsersCount,
   selectUsersLoading,
   selectUserChange,
-} from './Users.selectors';
+} from 'selectors/Users.selectors';
 
 export {
   selectRegistered,

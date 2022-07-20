@@ -2,17 +2,17 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Form } from 'antd';
 import PropTypes from 'prop-types';
 import { AppConstants } from 'constants/app.constants';
-import { AuthSocial } from './AuthSocial';
 import {
   AuthButtonStyled, AuthTitleStyled, EyeStyle, AuthPassFieldStyled, AuthTextFieldStyled,
-} from './Auth.styled';
+} from 'components/auth/Auth.styled';
+import { AuthSocial } from 'components/auth/AuthSocial';
 
 function iconRenderer(visible) {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
   return <EyeStyle>{ Eye }</EyeStyle>;
 }
 
-export function SignUp(props) {
+const SignUp = (props) => {
   const { signUpRequest } = props;
 
   const onFinish = (values) => {
@@ -106,7 +106,7 @@ export function SignUp(props) {
       <AuthSocial />
     </>
   );
-}
+};
 
 SignUp.propTypes = {
   signUpRequest: PropTypes.func,
@@ -115,3 +115,5 @@ SignUp.propTypes = {
 SignUp.defaultProps = {
   signUpRequest: null,
 };
+
+export { SignUp };
