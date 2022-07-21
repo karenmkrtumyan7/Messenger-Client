@@ -1,44 +1,23 @@
-import { useEffect } from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Form, notification } from 'antd';
+import { Form } from 'antd';
 import PropTypes from 'prop-types';
-import { AuthSocial } from './AuthSocial';
+import { AppConstants } from 'constants/app.constants';
 import {
   AuthButtonStyled, AuthTitleStyled, EyeStyle, AuthPassFieldStyled, AuthTextFieldStyled,
-} from './Auth.styled';
-import {
-  validateEmail, validatePassword, validatePhoneNumber, validateRepeatPassword, validateUserName,
-} from '../../services/validation.service';
+} from 'components/auth/Auth.styled';
+import { AuthSocial } from 'components/auth/AuthSocial';
 
 function iconRenderer(visible) {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
   return <EyeStyle>{ Eye }</EyeStyle>;
 }
 
-export function SignUp(props) {
-  const { registered, signUpRequest, signUpReset } = props;
+const SignUp = (props) => {
+  const { signUpRequest } = props;
 
   const onFinish = (values) => {
     signUpRequest(values);
   };
-
-  useEffect(() => {
-    if (registered) {
-      notification.success({
-        description: 'Verify your account with your email',
-        placement: 'bottomLeft',
-        duration: 180,
-      });
-    }
-
-    signUpReset();
-
-    return () => {
-      if (!registered) {
-        notification.destroy();
-      }
-    };
-  }, [registered, signUpReset]);
 
   return (
     <>
@@ -47,15 +26,14 @@ export function SignUp(props) {
         <Form.Item
           name="email"
           rules={[
-            () => ({
-              validator(_, value) {
-                const message = validateEmail(value);
-                if (!message) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error(message));
-              },
-            }),
+            {
+              required: true,
+              message: 'Email is required',
+            },
+            {
+              type: 'email',
+              message: 'Email is not valid',
+            },
           ]}
         >
           <AuthTextFieldStyled placeholder="Enter email" />
@@ -63,15 +41,14 @@ export function SignUp(props) {
         <Form.Item
           name="userName"
           rules={[
-            () => ({
-              validator(_, value) {
-                const message = validateUserName(value);
-                if (!message) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error(message));
-              },
-            }),
+            {
+              required: true,
+              message: 'Username is required',
+            },
+            {
+              pattern: AppConstants.regexp.username,
+              message: 'Username is not valid',
+            },
           ]}
         >
           <AuthTextFieldStyled placeholder="Create User name" />
@@ -79,15 +56,14 @@ export function SignUp(props) {
         <Form.Item
           name="contact"
           rules={[
-            () => ({
-              validator(_, value) {
-                const message = validatePhoneNumber(value);
-                if (!message) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error(message));
-              },
-            }),
+            {
+              required: true,
+              message: 'Contact number is required',
+            },
+            {
+              pattern: AppConstants.regexp.contactNumber,
+              message: 'Contact number is not valid',
+            },
           ]}
         >
           <AuthTextFieldStyled placeholder="Contact Number" />
@@ -95,15 +71,14 @@ export function SignUp(props) {
         <Form.Item
           name="password"
           rules={[
-            () => ({
-              validator(_, value) {
-                const message = validatePassword(value);
-                if (!message) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error(message));
-              },
-            }),
+            {
+              required: true,
+              message: 'Password is required',
+            },
+            {
+              pattern: AppConstants.regexp.password,
+              message: 'Password is not valid',
+            },
           ]}
         >
           <AuthPassFieldStyled placeholder="Password" iconRender={iconRenderer} />
@@ -112,17 +87,12 @@ export function SignUp(props) {
           name="repeatPassword"
           dependencies={['password']}
           rules={[
-            {
-              required: true,
-              message: 'Repeat password is required!',
-            },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                const message = validateRepeatPassword(value);
-                if (!value || getFieldValue('password') === value) {
+                if (getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error(message));
+                return Promise.reject(new Error('Repeat password is not equal'));
               },
             }),
           ]}
@@ -136,16 +106,14 @@ export function SignUp(props) {
       <AuthSocial />
     </>
   );
-}
+};
 
 SignUp.propTypes = {
-  registered: PropTypes.bool,
   signUpRequest: PropTypes.func,
-  signUpReset: PropTypes.func,
 };
 
 SignUp.defaultProps = {
-  registered: false,
   signUpRequest: null,
-  signUpReset: null,
 };
+
+export { SignUp };

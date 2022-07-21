@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
-  Row, Col, Typography, Input, Space, Spin,
+  Row, Col, Typography, Input, Space,
 } from 'antd';
 
 const { Title } = Typography;
@@ -93,16 +93,6 @@ const AuthTitleStyled = styled.h3`
   font-weight: 500;
 `;
 
-const AuthMiniTxtStyled = styled.p`
-  font-size: 13px;
-  line-height: 20px;
-  color: #B0B0B0;
-  margin-bottom: 46px;
-  text-align: end;
-  margin-bottom: 46px;
-  text-align: end;
-`;
-
 const AuthButtonStyled = styled.button`
   cursor: pointer;
   background: #4D47C3;
@@ -161,15 +151,6 @@ const AuthWrapperStyled = styled.div`
   font-weight: 500;
 `;
 
-const SpinStyled = styled(Spin)`
-  margin: 20px 0;
-  margin-bottom: 20px;
-  padding: 30px 50px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-`;
-
 export {
   ContainerStyled,
   AuthHeaderStyled,
@@ -181,7 +162,6 @@ export {
   AuthInfoStyled,
   SignInPasswordInputStyled,
   AuthTitleStyled,
-  AuthMiniTxtStyled,
   AuthButtonStyled,
   ForgotPassStyled,
   SocialIconStyled,
@@ -192,5 +172,4 @@ export {
   AuthWrapperStyled,
   AuthTextFieldStyled,
   AuthPassFieldStyled,
-  SpinStyled,
 };

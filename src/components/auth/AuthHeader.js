@@ -1,9 +1,9 @@
 import { Typography, Grid } from 'antd';
-import { AuthHeaderStyled, ContainerStyled } from './Auth.styled';
+import { AuthHeaderStyled, ContainerStyled } from 'components/auth//Auth.styled';
 
 const { Title } = Typography;
 
-export function AuthHeader() {
+const AuthHeader = () => {
   const { useBreakpoint } = Grid;
   const { md } = useBreakpoint();
   return (
@@ -13,4 +13,6 @@ export function AuthHeader() {
       </ContainerStyled>
     </AuthHeaderStyled>
   );
-}
+};
+
+export { AuthHeader };

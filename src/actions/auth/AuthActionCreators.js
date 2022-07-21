@@ -1,26 +1,22 @@
-import { AuthActionTypes } from './AuthActionTypes';
+import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
 
 const signInSuccess = (data) => ({
-  type: AuthActionTypes.LOGIN_SUCCESS,
-  payload: data,
+  type: AuthActionTypes.SIGNIN_SUCCESS,
+  payload: { data },
 });
 
 const signInRequest = (data) => ({
-  type: AuthActionTypes.LOGIN_REQUEST,
-  payload: data,
+  type: AuthActionTypes.SIGNIN_REQUEST,
+  payload: { data },
 });
 
-const signUpSuccess = () => ({
-  type: AuthActionTypes.REGISTER_SUCCESS,
+const signInReset = () => ({ // FOR SIGN-OUT BUTTON
+  type: AuthActionTypes.SIGNIN_RESET,
 });
 
 const signUpRequest = (data) => ({
-  type: AuthActionTypes.REGISTER_REQUEST,
-  payload: data,
-});
-
-const signUpReset = () => ({
-  type: AuthActionTypes.REGISTER_RESET,
+  type: AuthActionTypes.SIGNUP_REQUEST,
+  payload: { data },
 });
 
 const verifySuccess = (message) => ({
@@ -33,18 +29,17 @@ const verifyRequest = (id) => ({
   payload: { id },
 });
 
-const verifyFailure = (message) => ({
+const verifyFailure = (error) => ({
   type: AuthActionTypes.VERIFY_FAILURE,
-  payload: { message },
+  payload: error,
 });
 
 export {
   signInSuccess,
   signInRequest,
-  signUpSuccess,
   signUpRequest,
-  signUpReset,
   verifySuccess,
   verifyRequest,
   verifyFailure,
+  signInReset,
 };

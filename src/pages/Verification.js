@@ -1,5 +1,5 @@
-import Verify from '../containers/auth/Verify';
+import Verify from 'containers/auth/Verify';
 
-export function Verification() {
-  return <Verify />;
-}
+const Verification = () => <Verify />;
+
+export { Verification };

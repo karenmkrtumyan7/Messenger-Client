@@ -3,26 +3,29 @@ import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { ForgotPasswordPopup } from './ForgotPasswordPopup';
-import { AuthSocial } from './AuthSocial';
+import localStorageService from 'services/localStorage.service';
+import { AuthSocial } from 'components/auth/AuthSocial';
+import { ForgotPasswordPopup } from 'components/auth/ForgotPasswordPopup';
 import {
-  AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled,
-  EyeStyle, AuthTextFieldStyled,
-} from './Auth.styled';
+  AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled, EyeStyle, AuthTextFieldStyled,
+} from 'components/auth/Auth.styled';
 
 const iconRenderer = (visible) => {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
   return <EyeStyle>{ Eye }</EyeStyle>;
 };
 
-export function SignIn(props) {
-  const { signInRequest, isAuth } = props;
+const SignIn = (props) => {
+  const { signInRequest, authData } = props;
   const navigate = useNavigate();
   const onFinish = (values) => signInRequest(values);
 
   useEffect(() => {
-    if (isAuth) navigate('/messenger', { replace: true });
-  }, [isAuth, navigate]);
+    if (Object.keys(authData).length) {
+      localStorageService.set('auth', authData);
+      navigate('/', { replace: true });
+    }
+  }, [authData, navigate]);
 
   return (
     <Form
@@ -60,14 +63,16 @@ export function SignIn(props) {
       <AuthSocial />
     </Form>
   );
-}
+};
 
 SignIn.propTypes = {
-  isAuth: PropTypes.bool,
+  authData: PropTypes.object,
   signInRequest: PropTypes.func,
 };
 
 SignIn.defaultProps = {
-  isAuth: false,
+  authData: {},
   signInRequest: null,
 };
+
+export { SignIn };

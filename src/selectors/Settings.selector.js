@@ -1,6 +1,5 @@
-import { createSelector } from 'reselect';
+const selectErrorMessage = (state) => state.error.errorMessage;
+const selectSuccessMessage = (state) => state.successMessage;
+const selectLoading = (state) => state.loading;
 
-const getErrorMessages = (state) => state.messages;
-const selectErrorMessages = createSelector(getErrorMessages, (messages) => messages);
-
-export { selectErrorMessages };
+export { selectErrorMessage, selectLoading, selectSuccessMessage };

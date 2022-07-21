@@ -1,68 +1,79 @@
 import {
-  call, takeLatest, put, takeEvery,
+  call, takeLatest, put, all,
 } from '@redux-saga/core/effects';
 import {
-  signInSuccess, signUpSuccess, verifyFailure, verifySuccess,
-} from '../actions/auth/AuthActionCreators';
-import { failure, loading, resetLoading } from '../actions/settings/SettingsActionCreators';
-import { AuthActionTypes } from '../actions/auth/AuthActionTypes';
-import { authApi } from '../services/auth.service';
+  signInSuccess, verifyFailure, verifySuccess,
+} from 'actions/auth/AuthActionCreators';
+import {
+  failure, loading, resetLoading, success,
+} from 'actions/settings/SettingsActionCreators';
+import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
+import NetworkService from 'services/network.service';
+import { AppConstants } from 'constants/app.constants';
+import { getError } from 'utils';
 
 const {
-  LOGIN_REQUEST,
-  REGISTER_REQUEST,
+  SIGNIN_REQUEST,
+  SIGNUP_REQUEST,
   VERIFY_REQUEST,
 } = AuthActionTypes;
+const {
+  Auth, SignIn, SignUp, Verify,
+} = AppConstants.api;
 
-function* signInSaga({ payload }) {
+function* signIn({ payload }) {
   try {
     yield put(loading());
-    const { data } = yield call(authApi.post, 'signin', payload);
-
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('userId', data.userId);
+    const options = {
+      data: payload.data,
+    };
+    const { data } = yield call(NetworkService.makeAPIPostRequest, [Auth, SignIn], options);
 
     yield put(signInSuccess(data));
-  } catch ({ response: { data: messages } }) {
-    yield put(failure(messages));
+  } catch (err) {
+    const error = getError(err);
+    yield put(failure(error));
   } finally {
     yield put(resetLoading());
   }
 }
 
-function* signUpSaga({ payload }) {
+function* signUp({ payload }) {
   try {
     yield put(loading());
+    const options = {
+      data: payload.data,
+    };
 
-    yield call(authApi.post, 'signup', payload);
-    yield put(signUpSuccess());
-  } catch ({ response: { data: messages } }) {
-    yield put(failure(messages));
+    const { data } = yield call(NetworkService.makeAPIPostRequest, [Auth, SignUp], options);
+    yield put(success(data.msg));
+  } catch (err) {
+    const error = getError(err);
+    yield put(failure(error));
   } finally {
     yield put(resetLoading());
   }
 }
 
-function* verifySaga({ payload: { id } }) {
-  const userId = localStorage.getItem('userId') || id;
+function* verify({ payload: { id } }) {
+  const userId = id;
   try {
     yield put(loading());
 
-    const { data: { msg } } = yield call(authApi.put, `verify/${userId}`);
+    const { data: { msg } } = yield call(NetworkService.makeAPIPutRequest, [Auth, Verify, userId]);
     yield put(verifySuccess(msg));
-  } catch ({ response: { data: message } }) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-
-    const { msg } = message;
-    yield put(verifyFailure(msg));
+  } catch (err) {
+    const error = getError(err);
+    yield put(verifyFailure(error));
   } finally {
     yield put(resetLoading());
   }
 }
 
-export const authSagas = [
-  takeLatest(LOGIN_REQUEST, signInSaga),
-  takeLatest(REGISTER_REQUEST, signUpSaga),
-  takeEvery(VERIFY_REQUEST, verifySaga),
-];
+export function* authSagas() {
+  yield all([
+    takeLatest(SIGNIN_REQUEST, signIn),
+    takeLatest(SIGNUP_REQUEST, signUp),
+    takeLatest(VERIFY_REQUEST, verify),
+  ]);
+}

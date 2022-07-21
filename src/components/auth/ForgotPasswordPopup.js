@@ -1,9 +1,8 @@
 import { Modal, Input } from 'antd';
 import { useState } from 'react';
+import { ForgotPassStyled } from 'components/auth/Auth.styled';
 
-import { ForgotPassStyled } from './Auth.styled';
-
-export function ForgotPasswordPopup() {
+const ForgotPasswordPopup = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const showModal = () => setIsModalVisible(true);
@@ -19,4 +18,6 @@ export function ForgotPasswordPopup() {
       </Modal>
     </>
   );
-}
+};
+
+export { ForgotPasswordPopup };

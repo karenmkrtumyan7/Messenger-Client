@@ -1,10 +1,10 @@
 import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
-import { AuthInfo } from './AuthInfo';
-import { AuthHeader } from './AuthHeader';
-import { AuthWrapperStyled, ContainerStyled } from './Auth.styled';
+import { AuthWrapperStyled, ContainerStyled } from 'components/auth/Auth.styled';
+import { AuthHeader } from 'components/auth/AuthHeader';
+import { AuthInfo } from 'components/auth/AuthInfo';
 
-export function Auth(props) {
+const Auth = (props) => {
   const { children } = props;
 
   return (
@@ -20,8 +20,10 @@ export function Auth(props) {
       </Row>
     </AuthWrapperStyled>
   );
-}
+};
 
 Auth.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export { Auth };

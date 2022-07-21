@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
-import { SignIn } from '../../components/auth/SignIn';
-import { signInRequest } from '../../actions/auth/AuthActionCreators';
-import { selectAuthenticated } from '../../selectors';
+import { bindActionCreators } from 'redux';
+import { SignIn } from 'components/auth/SignIn';
+import { signInRequest } from 'actions/auth/AuthActionCreators';
+import { selectAuthData } from 'selectors';
 
 const mapStateToProps = ({ auth }) => ({
-  isAuth: selectAuthenticated(auth),
+  authData: selectAuthData(auth),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  signInRequest: (payload) => dispatch(signInRequest(payload)),
-});
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    signInRequest,
+  },
+  dispatch,
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

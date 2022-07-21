@@ -1,12 +1,12 @@
 import { Col, Grid } from 'antd';
-import facebookIcon from '../../assets/social-networks/facebook.png';
-import googleIcon from '../../assets/social-networks/google.png';
-import appleIcon from '../../assets/social-networks/apple.png';
+import facebookIcon from 'assets/social-networks/facebook.png';
+import googleIcon from 'assets/social-networks/google.png';
+import appleIcon from 'assets/social-networks/apple.png';
 import {
   SocialIconMidStyled, SocialIconStyled, SocialAuthTxtStyled, SocialIconsWrapperStyled,
-} from './Auth.styled';
+} from 'components/auth/Auth.styled';
 
-export function AuthSocial() {
+const AuthSocial = () => {
   const { useBreakpoint } = Grid;
   const { lg } = useBreakpoint();
   return (
@@ -19,4 +19,6 @@ export function AuthSocial() {
       </SocialIconsWrapperStyled>
     </Col>
   );
-}
+};
+
+export { AuthSocial };

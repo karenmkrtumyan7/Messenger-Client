@@ -21,7 +21,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        moduleDirectory: ['node_modules', './src'],
+        moduleDirectory: ['node_modules', 'src'],
       },
     },
   },
@@ -52,6 +52,7 @@ module.exports = {
     'no-const-assign': 2,
     'no-constant-condition': 2,
     'no-control-regex': 2,
+    'no-constructor-return': 0,
     'no-debugger': 2,
     'no-delete-var': 2,
     'no-dupe-args': 2,
@@ -80,6 +81,7 @@ module.exports = {
     'no-sparse-arrays': 2,
     'no-this-before-super': 2,
     'no-undef': 2,
+    'no-underscore-dangle': 0,
     'no-unexpected-multiline': 2,
     'no-unreachable': 2,
     'no-unsafe-finally': 2,
@@ -97,5 +99,6 @@ module.exports = {
     'jsx-a11y/media-has-caption': 'off',
     'prefer-promise-reject-errors': 0,
     'default-param-last': 'off',
+    'react/function-component-definition': 0,
   },
 };
