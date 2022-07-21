@@ -3,6 +3,7 @@ import localStorageService from 'services/localStorage.service';
 
 const initialState = {
   authData: localStorageService.get('auth') || {},
+  user: {},
   verifyMessage: '',
 };
 
@@ -27,6 +28,11 @@ export const auth = (state = initialState, { type, payload }) => {
     return {
       ...state,
       verifyMessage: payload.errorMessage,
+    };
+  case AuthActionTypes.AUTH_USER_SUCCESS:
+    return {
+      ...state,
+      user: payload.data,
     };
   default: return state;
   }

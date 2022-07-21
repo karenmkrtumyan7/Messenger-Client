@@ -13,9 +13,10 @@ import FilterService from 'services/filterService';
 
 const Filters = (props) => {
   const { setFilterParams, setPagination, getUsers } = props;
+  const { getQuery, getExpand, setQuery } = FilterService;
   const [form] = Form.useForm();
   const params = useLocation();
-  const expand = !!FilterService.getQuery(params.search).expand;
+  const expand = getExpand(getQuery(params.search).expand);
 
   const onFinish = (filterParams) => {
     const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
@@ -34,7 +35,7 @@ const Filters = (props) => {
   const [showFilter, setShowFilter] = useState(expand);
   const viewHandler = () => {
     setShowFilter(!showFilter);
-    // FilterService.setQuery({ name: 'karen' });
+    setQuery({ expand: !showFilter });
   };
 
   return (

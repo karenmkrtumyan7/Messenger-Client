@@ -11,6 +11,7 @@ import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
 import NetworkService from 'services/network.service';
 import { AppConstants } from 'constants/app.constants';
 import { getError } from 'utils';
+import localStorageService from 'services/localStorage.service';
 
 const {
   SIGNIN_REQUEST,
@@ -28,6 +29,7 @@ function* signIn({ payload }) {
       data: payload.data,
     };
     const { data } = yield call(NetworkService.makeAPIPostRequest, [Auth, SignIn], options);
+    localStorageService.set('auth', data);
 
     yield put(signInSuccess(data));
   } catch (err) {
