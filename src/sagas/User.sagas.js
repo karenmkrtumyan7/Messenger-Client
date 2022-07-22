@@ -9,6 +9,7 @@ import { UserActionTypes } from 'actions/user/UserActionTypes';
 import { getError } from 'utils';
 import { getUserDetailsSuccess } from 'actions/auth/AuthActionCreators';
 import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
+import localStorageService from 'services/localStorage.service';
 
 const { GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST } = UserActionTypes;
 const { AUTH_USER_REQUEST } = AuthActionTypes;
@@ -61,6 +62,7 @@ function* getUserDetails() {
   try {
     yield put(loading());
     const { data } = yield call(NetworkService.makeAPIGetRequest, [Users, 'details']);
+    localStorageService.set('user', data);
     yield put(getUserDetailsSuccess(data));
   } catch (err) {
     const error = getError(err);

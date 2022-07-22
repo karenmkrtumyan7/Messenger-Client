@@ -3,7 +3,7 @@ import localStorageService from 'services/localStorage.service';
 
 const initialState = {
   authData: localStorageService.get('auth') || {},
-  user: {},
+  user: localStorageService.get('user') || {},
   verifyMessage: '',
 };
 

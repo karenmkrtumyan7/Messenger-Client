@@ -8,6 +8,7 @@ import Pages from 'containers/common/Pages';
 import { PrivateRoute } from 'routes/PrivateRoute';
 import Account from 'pages/Account';
 import history from 'services/history';
+import { UserDetails } from 'pages/UserDetails';
 
 function AppRoutes() {
   return (
@@ -21,8 +22,9 @@ function AppRoutes() {
         <Route path="/" element={<PrivateRoute />}>
           <Route exact index element={<Pages page={<Account />} />} />
         </Route>
-        <Route path="/users" element={<PrivateRoute />}>
+        <Route path="/users/" element={<PrivateRoute />}>
           <Route exact index element={<UserReport />} />
+          <Route path=":id" element={<UserDetails />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

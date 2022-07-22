@@ -23,7 +23,7 @@ const SignIn = (props) => {
 
   useEffect(() => {
     if (Object.keys(authData).length && localStorageService.get('auth')) {
-      NavigationService('/users');
+      NavigationService('/');
     }
   }, [authData, navigate]);
 

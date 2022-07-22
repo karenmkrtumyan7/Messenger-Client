@@ -6,14 +6,18 @@ import { connect } from 'react-redux';
 import { getUserDetailsRequest } from 'actions/auth/AuthActionCreators';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { selectAuthUser, selectRole } from 'selectors/Auth.selectors';
 
 const Account = (props) => {
-  const { getUserDetails } = props;
+  const { getUserDetails, user, role } = props;
   return (
     <BannerStyled>
       <AccountStyled>
-        <Banner />
-        <AccountInfo getUserDetails={getUserDetails} />
+        <Banner role={role} />
+        <AccountInfo
+          getUserDetails={getUserDetails}
+          user={user}
+        />
       </AccountStyled>
     </BannerStyled>
   );
@@ -21,15 +25,18 @@ const Account = (props) => {
 
 Account.propTypes = {
   getUserDetails: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 Account.defaultProps = {
   getUserDetails: null,
 };
 
-// const mapStateToProps = ({ auth }) => ({
-//
-// });
+const mapStateToProps = ({ auth }) => ({
+  user: selectAuthUser(auth),
+  role: selectRole(auth),
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
@@ -38,4 +45,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(Account);
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

@@ -1,25 +1,12 @@
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import SubMenu from 'antd/es/menu/SubMenu';
 
 const { Content, Sider } = Layout;
-
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items = [
-  getItem('User Management', 'sub1', <UserOutlined />, [
-    getItem('Users', 'users'),
-  ]),
-];
 
 const StyledLayout = styled.div`
   display: flex;
@@ -38,7 +25,16 @@ const BaseLayout = (props) => {
     >
       <Layout className="site-layout">
         <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+            <Menu.Item key="account" icon={<UserOutlined />}>
+              <Link to="/">Account</Link>
+            </Menu.Item>
+            <SubMenu key="User Management" icon={<UserSwitchOutlined />} title="User Management">
+              <Menu.Item key="users">
+                <Link key="users" to="/users">Users</Link>
+              </Menu.Item>
+            </SubMenu>
+          </Menu>
         </Sider>
         <Content style={{ padding: '10px 18px' }}>
           <StyledLayout>
