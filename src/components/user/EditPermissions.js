@@ -1,42 +1,31 @@
-import { Table } from 'antd';
+import { Button, Checkbox } from 'antd';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const columns = [
-  {
-    title: 'Resource',
-    dataIndex: 'resource',
-    key: 'resource',
-  },
-  {
-    title: 'Permission',
-    dataIndex: 'permission',
-    key: 'permission',
-  },
-];
-const data = [
-  {
-    key: 1,
-    resource: 'User Management',
-    description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-  },
-];
+const EditPermissions = (props) => {
+  const { resourcePermissions } = props;
+  const plainOptions = Object.keys(resourcePermissions);
+  const defaultCheckedList = plainOptions.filter((option) => resourcePermissions[option] === true);
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
 
-const EditPermissions = () => (
-  <Table
-    columns={columns}
-    // expandable={{
-    //   expandedRowRender: (record) => (
-    //     <p
-    //       style={{
-    //         margin: 0,
-    //       }}
-    //     >
-    //       {record.description}
-    //     </p>
-    //   ),
-    //   rowExpandable: (record) => record.name !== 'Not Expandable',
-    // }}
-    dataSource={data}
-  />
-);
+  const onChange = (list) => {
+    setCheckedList(list);
+  };
+
+  return (
+    <div>
+      <Checkbox.Group options={plainOptions} value={checkedList} onChange={onChange} />
+      <Button type="primary">Save</Button>
+    </div>
+  );
+};
+
+EditPermissions.propTypes = {
+  resourcePermissions: PropTypes.object,
+};
+
+EditPermissions.defaultProps = {
+  resourcePermissions: {},
+};
 
 export { EditPermissions };

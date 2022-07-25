@@ -8,7 +8,7 @@ const UserInfoStyled = styled(Row)`
 `;
 
 const UserInfo = () => (
-  <UserInfoStyled gutter={16}>
+  <UserInfoStyled gutter={8}>
     <Col span={8}>
       <Card title="Username" bordered={false} size="small">
         content

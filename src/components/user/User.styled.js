@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {
-  Col, DatePicker, Input, Row, Table,
+  Col, DatePicker, Input, Row, Table, Tabs,
 } from 'antd';
 
 const UserReportActionsStyled = styled(Row)`
@@ -69,6 +69,10 @@ const AccountStyled = styled.div`
   margin: 0 auto;
 `;
 
+const UserTabsStyled = styled(Tabs)`
+  margin-top: 30px;
+`;
+
 export {
   UserReportActionsStyled,
   UsersTableStyled,
@@ -83,4 +87,5 @@ export {
   AccountInfoDetailsWrapper,
   AccountInfoMainWrapper,
   AccountStyled,
+  UserTabsStyled,
 };

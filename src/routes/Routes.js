@@ -8,7 +8,7 @@ import Pages from 'containers/common/Pages';
 import { PrivateRoute } from 'routes/PrivateRoute';
 import Account from 'pages/Account';
 import history from 'services/history';
-import { UserDetails } from 'pages/UserDetails';
+import UserDetails from 'pages/UserDetails';
 
 function AppRoutes() {
   return (

@@ -10,7 +10,7 @@ import { AppConstants } from 'constants/app.constants';
 const { Item } = Form;
 
 const UserEditModal = (props) => {
-  const { data, editUser } = props;
+  const { data, editUser, disabled } = props;
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const { validateFields, resetFields } = form;
@@ -41,7 +41,7 @@ const UserEditModal = (props) => {
 
   return (
     <>
-      <Button type="primary" icon={<EditOutlined />} onClick={showModal} />
+      <Button type="primary" icon={<EditOutlined />} onClick={showModal} disabled={disabled} />
       <Modal
         title="Edit User"
         visible={visible}
@@ -117,11 +117,13 @@ const UserEditModal = (props) => {
 UserEditModal.propTypes = {
   data: PropTypes.object,
   editUser: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 UserEditModal.defaultProps = {
   data: {},
   editUser: null,
+  disabled: false,
 };
 
 export { UserEditModal };

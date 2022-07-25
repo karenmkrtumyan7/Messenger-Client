@@ -6,13 +6,10 @@ import { UserReportActionsStyled } from 'components/user/User.styled';
 
 const UserReportActions = (props) => {
   const {
-    data, deleteUser, usersPermissions, currentUserId, isAdmin,
+    data, deleteUser, usersPermissions, currentUserId,
   } = props;
-  const { view, edit, delete: remove } = usersPermissions;
-
-  const viewCondition = isAdmin || view;
-  const editCondition = isAdmin || data._id === currentUserId || edit;
-  const removeCondition = isAdmin || remove;
+  const { VIEW, EDIT, DELETE: REMOVE } = usersPermissions;
+  const EDITCondition = data._id === currentUserId || EDIT;
 
   const confirm = () => {
     deleteUser(data._id);
@@ -21,13 +18,11 @@ const UserReportActions = (props) => {
   return (
     <Row justify="center">
       <UserReportActionsStyled>
-        { viewCondition && <Button type="primary" icon={<EyeOutlined />} /> }
-        { editCondition && <UserEditModal data={data} /> }
-        { removeCondition && (
-          <Popconfirm title="Sure to delete?" onConfirm={confirm}>
-            <Button type="primary" icon={<UserDeleteOutlined />} />
-          </Popconfirm>
-        )}
+        <Button type="primary" icon={<EyeOutlined />} disabled={!VIEW} />
+        <UserEditModal data={data} disabled={!EDITCondition} />
+        <Popconfirm title="Sure to delete?" onConfirm={confirm} disabled={!REMOVE}>
+          <Button type="primary" icon={<UserDeleteOutlined />} disabled={!REMOVE} />
+        </Popconfirm>
       </UserReportActionsStyled>
     </Row>
   );
@@ -38,12 +33,10 @@ UserReportActions.propTypes = {
   usersPermissions: PropTypes.object.isRequired,
   currentUserId: PropTypes.string,
   deleteUser: PropTypes.func,
-  isAdmin: PropTypes.bool,
 };
 
 UserReportActions.defaultProps = {
   deleteUser: null,
-  isAdmin: false,
   currentUserId: PropTypes.string,
 };
 
