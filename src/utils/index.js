@@ -21,3 +21,8 @@ export const getError = (err, statusCode = false) => {
 export const getIsoDate = (date) => moment(date)
   .utc()
   .toISOString();
+
+export const getFormattedDate = (date) => moment(date)
+  .utc(date)
+  .local()
+  .format('YYYY-MM-DD');

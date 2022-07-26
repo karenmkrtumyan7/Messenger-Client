@@ -5,6 +5,7 @@ const initialState = {
     count: 0,
     data: [],
   },
+  user: {},
   loading: false,
   userChange: false,
 };
@@ -41,6 +42,11 @@ export const user = (state = initialState, { type, payload }) => {
     return {
       ...state,
       userChange: false,
+    };
+  case UserActionTypes.GET_USER_SUCCESS:
+    return {
+      ...state,
+      user: payload.userData,
     };
   default: return state;
   }

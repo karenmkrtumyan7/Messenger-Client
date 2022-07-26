@@ -14,7 +14,7 @@ const selectUserRole = (state) => createSelector(
   (roleObj) => (roleObj || {}),
 )();
 
-const selectRole = (state) => selectUserRole(state).value;
+const selectRole = (state) => selectUserRole(state).value || '';
 const selectIsAdmin = (state) => selectUserRole(state).isAdmin;
 
 const selectPermissions = (state) => createSelector(

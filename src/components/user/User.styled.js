@@ -73,6 +73,10 @@ const UserTabsStyled = styled(Tabs)`
   margin-top: 30px;
 `;
 
+const UserInfoStyled = styled(Row)`
+  row-gap: 10px;
+`;
+
 export {
   UserReportActionsStyled,
   UsersTableStyled,
@@ -88,4 +92,5 @@ export {
   AccountInfoMainWrapper,
   AccountStyled,
   UserTabsStyled,
+  UserInfoStyled,
 };

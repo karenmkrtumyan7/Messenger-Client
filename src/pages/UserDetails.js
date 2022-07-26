@@ -1,4 +1,4 @@
-import { UserInfo } from 'components/user/UserInfo';
+import UserInfo from 'containers/user/UserInfo';
 import { Tabs } from 'antd';
 import { User } from 'components/user/User';
 import { connect } from 'react-redux';
