@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 import { getUserDetailsRequest } from 'actions/auth/AuthActionCreators';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { selectAuthUser, selectRole } from 'selectors/Auth.selectors';
+import { selectAuthUser, selectAuthUserRole } from 'selectors/Auth.selectors';
 
 const Account = (props) => {
   const { getUserDetails, user, role } = props;
   return (
     <BannerStyled>
       <AccountStyled>
-        <Banner role={role} />
+        <Banner text={role} />
         <AccountInfo
           getUserDetails={getUserDetails}
           user={user}
@@ -35,7 +35,7 @@ Account.defaultProps = {
 
 const mapStateToProps = ({ auth }) => ({
   user: selectAuthUser(auth),
-  role: selectRole(auth),
+  role: selectAuthUserRole(auth),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(

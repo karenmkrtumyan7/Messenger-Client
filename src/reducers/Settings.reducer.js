@@ -4,6 +4,7 @@ const initialState = {
   error: { status: null, errorMessage: '', errorCode: '' },
   successMessage: '',
   loading: false,
+  changeStatus: false,
 };
 
 export function settings(state = initialState, { type, payload }) {
@@ -38,6 +39,18 @@ export function settings(state = initialState, { type, payload }) {
     return {
       ...state,
       loading: false,
+    };
+  }
+  case SettingsActionTypes.CHANGE_STATUS: {
+    return {
+      ...state,
+      changeStatus: true,
+    };
+  }
+  case SettingsActionTypes.RESET_CHANGE_STATUS: {
+    return {
+      ...state,
+      changeStatus: false,
     };
   }
   default:

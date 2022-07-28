@@ -1,10 +1,11 @@
 import { Table } from 'antd';
 import { ViewPermissions } from 'components/user/ViewPermissions';
 import PropTypes from 'prop-types';
-import { EditPermissions } from 'components/user/EditPermissions';
+import EditPermissions from 'containers/user/EditPermissions';
 
-const User = (props) => {
+const UserPermissionControl = (props) => {
   const { resourcePermissions } = props;
+
   const columns = [
     {
       title: 'Resource',
@@ -29,21 +30,19 @@ const User = (props) => {
   return (
     <Table
       columns={columns}
-      expandable={{
-        expandedRowRender,
-      }}
+      expandable={{ expandedRowRender }}
       dataSource={data}
       pagination={false}
     />
   );
 };
 
-User.propTypes = {
+UserPermissionControl.propTypes = {
   resourcePermissions: PropTypes.object,
 };
 
-User.defaultProps = {
+UserPermissionControl.defaultProps = {
   resourcePermissions: {},
 };
 
-export { User };
+export { UserPermissionControl };

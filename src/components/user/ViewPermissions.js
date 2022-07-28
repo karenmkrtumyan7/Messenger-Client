@@ -1,17 +1,20 @@
 import { Button, Row } from 'antd';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 export const ViewPermissions = (props) => {
   const { resourcePermissions } = props;
-  const designPermissions = Object.entries(resourcePermissions);
+  const formatPermissions = Object.keys(resourcePermissions);
 
   return (
-    <Row>
-      {
-        designPermissions.map((permArr) => (
-          <Button key={permArr[0]}>{ permArr[0] }</Button>))
-      }
-    </Row>
+    !_.isEmpty(formatPermissions) && (
+      <Row>
+        {
+          formatPermissions.map((permissions) => (
+            <Button key={permissions}>{ permissions }</Button>))
+        }
+      </Row>
+    )
   );
 };
 

@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import SubMenu from 'antd/es/menu/SubMenu';
+import { selectAuthUserResources } from 'selectors/Auth.selectors';
+import { connect } from 'react-redux';
+import { Can } from 'components/common/Can';
+import { resource, types } from 'constants/accessControl';
 
 const { Content, Sider } = Layout;
 
@@ -15,7 +19,7 @@ const StyledLayout = styled.div`
 `;
 
 const BaseLayout = (props) => {
-  const { children } = props;
+  const { children, resources } = props;
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout
@@ -29,11 +33,13 @@ const BaseLayout = (props) => {
             <Menu.Item key="account" icon={<UserOutlined />}>
               <Link to="/">Account</Link>
             </Menu.Item>
-            <SubMenu key="User Management" icon={<UserSwitchOutlined />} title="User Management">
-              <Menu.Item key="users">
-                <Link key="users" to="/users">Users</Link>
-              </Menu.Item>
-            </SubMenu>
+            <Can actionType={types.view} resource={resources[resource.users]}>
+              <SubMenu key="User Management" icon={<UserSwitchOutlined />} title="User Management">
+                <Menu.Item key="users">
+                  <Link key="users" to="/users/">Users</Link>
+                </Menu.Item>
+              </SubMenu>
+            </Can>
           </Menu>
         </Sider>
         <Content style={{ padding: '10px 18px' }}>
@@ -48,10 +54,15 @@ const BaseLayout = (props) => {
 
 BaseLayout.propTypes = {
   children: PropTypes.object,
+  resources: PropTypes.object.isRequired,
 };
 
 BaseLayout.defaultProps = {
   children: {},
 };
 
-export { BaseLayout };
+const mapStateToProps = ({ auth }) => ({
+  resources: selectAuthUserResources(auth),
+});
+
+export default connect(mapStateToProps)(BaseLayout);

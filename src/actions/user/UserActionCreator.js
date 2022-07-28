@@ -42,9 +42,19 @@ const getUserSuccess = (userData) => ({
   payload: { userData },
 });
 
-const updatePermissionsRequest = (updatePermissions) => ({
+const updatePermissionsRequest = (id, updatePermissionsData) => ({
   type: UserActionTypes.UPDATE_PERMISSIONS_REQUEST,
-  payload: { updatePermissions },
+  payload: { id, updatePermissionsData },
+});
+
+const getPermissionsRequest = (id) => ({
+  type: UserActionTypes.GET_PERMISSIONS_REQUEST,
+  payload: { id },
+});
+
+const getPermissionsSuccess = (userPermissions) => ({
+  type: UserActionTypes.GET_PERMISSIONS_SUCCESS,
+  payload: { userPermissions },
 });
 
 export {
@@ -58,4 +68,6 @@ export {
   getUserRequest,
   getUserSuccess,
   updatePermissionsRequest,
+  getPermissionsSuccess,
+  getPermissionsRequest,
 };

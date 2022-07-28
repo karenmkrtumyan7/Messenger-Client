@@ -6,6 +6,7 @@ const initialState = {
     data: [],
   },
   user: {},
+  permissions: {},
   loading: false,
   userChange: false,
 };
@@ -47,6 +48,11 @@ export const user = (state = initialState, { type, payload }) => {
     return {
       ...state,
       user: payload.userData,
+    };
+  case UserActionTypes.GET_PERMISSIONS_SUCCESS:
+    return {
+      ...state,
+      permissions: payload.userPermissions,
     };
   default: return state;
   }

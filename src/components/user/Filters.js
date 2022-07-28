@@ -15,8 +15,9 @@ const Filters = (props) => {
   const { setFilterParams, setPagination, getUsers } = props;
   const { getQuery, getExpand, setQuery } = FilterService;
   const [form] = Form.useForm();
-  const params = useLocation();
-  const expand = getExpand(getQuery(params.search).expand);
+  const { search } = useLocation();
+  const { expand } = getQuery(search);
+  const isExpand = getExpand(expand);
 
   const onFinish = (filterParams) => {
     const requestData = { ...filterParams, createdAt: getIsoDate(filterParams.createdAt) };
@@ -32,7 +33,7 @@ const Filters = (props) => {
     getUsers({ page: 1, pageSize: 10 });
   };
 
-  const [showFilter, setShowFilter] = useState(expand);
+  const [showFilter, setShowFilter] = useState(isExpand);
   const viewHandler = () => {
     setShowFilter(!showFilter);
     setQuery({ expand: !showFilter });

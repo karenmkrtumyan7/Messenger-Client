@@ -6,6 +6,7 @@ const selectUsersLoading = (state) => state.loading;
 const selectUserChange = (state) => state.userChange;
 
 const selectUser = (state) => state.user;
+const selectUserResources = (state) => state.permissions;
 
 export {
   selectUsersCount,
@@ -13,4 +14,5 @@ export {
   selectUsersLoading,
   selectUserChange,
   selectUser,
+  selectUserResources,
 };

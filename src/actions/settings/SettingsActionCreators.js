@@ -25,6 +25,14 @@ const resetLoading = () => ({
   type: SettingsActionTypes.RESET_LOADING,
 });
 
+const changeStatus = () => ({
+  type: SettingsActionTypes.CHANGE_STATUS,
+});
+
+const resetChangeStatus = () => ({
+  type: SettingsActionTypes.RESET_CHANGE_STATUS,
+});
+
 export {
   success,
   failure,
@@ -32,4 +40,6 @@ export {
   resetFailure,
   resetLoading,
   resetSuccess,
+  changeStatus,
+  resetChangeStatus,
 };

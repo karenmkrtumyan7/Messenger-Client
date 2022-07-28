@@ -3,9 +3,11 @@ import {
 } from '@redux-saga/core/effects';
 import { AppConstants } from 'constants/app.constants';
 import NetworkService from 'services/network.service';
-import { failure, loading, resetLoading } from 'actions/settings/SettingsActionCreators';
 import {
-  deleteUserSuccess, editUserSuccess, getUsersSuccess, getUserSuccess,
+  changeStatus, failure, loading, resetLoading,
+} from 'actions/settings/SettingsActionCreators';
+import {
+  deleteUserSuccess, editUserSuccess, getPermissionsSuccess, getUsersSuccess, getUserSuccess,
 } from 'actions/user/UserActionCreator';
 import { UserActionTypes } from 'actions/user/UserActionTypes';
 import { getError } from 'utils';
@@ -14,7 +16,7 @@ import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
 import localStorageService from 'services/localStorage.service';
 
 const {
-  GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST, GET_USER_REQUEST, UPDATE_PERMISSIONS_REQUEST,
+  GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST, GET_USER_REQUEST, UPDATE_PERMISSIONS_REQUEST, GET_PERMISSIONS_REQUEST,
 } = UserActionTypes;
 const { AUTH_USER_REQUEST } = AuthActionTypes;
 const { Users, UpdatePermissions } = AppConstants.api;
@@ -91,9 +93,28 @@ function* getUser({ payload }) {
 }
 
 function* updatePermissions({ payload }) {
-  const { id } = payload;
+  const { updatePermissionsData, id } = payload;
+  const options = {
+    data: {
+      updatePermissionsData,
+    },
+  };
+
   try {
-    yield call(NetworkService.makeAPIPutRequest, [Users, UpdatePermissions, id]);
+    yield call(NetworkService.makeAPIPutRequest, [Users, id, UpdatePermissions], options);
+    yield put(changeStatus());
+  } catch (err) {
+    const error = getError(err);
+    yield put(failure(error));
+  }
+}
+
+function* getPermissions({ payload }) {
+  const { id } = payload;
+
+  try {
+    const { data } = yield call(NetworkService.makeAPIGetRequest, [Users, id, UpdatePermissions]);
+    yield put(getPermissionsSuccess(data));
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));
@@ -108,5 +129,6 @@ export function* userSagas() {
     takeEvery(AUTH_USER_REQUEST, getUserDetails),
     takeEvery(GET_USER_REQUEST, getUser),
     takeLatest(UPDATE_PERMISSIONS_REQUEST, updatePermissions),
+    takeEvery(GET_PERMISSIONS_REQUEST, getPermissions),
   ]);
 }

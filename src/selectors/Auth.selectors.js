@@ -7,24 +7,18 @@ const selectAuthData = (state) => state.authData;
 const selectVerifyMessage = (state) => state.verifyMessage;
 
 const selectAuthUser = (state) => state.user;
-const selectUserId = (state) => selectAuthUser(state)._id;
+const selectAuthUserId = (state) => selectAuthUser(state)._id;
 
-const selectUserRole = (state) => createSelector(
+const selectAuthUserRoleObject = (state) => createSelector(
   () => selectAuthUser(state).role,
   (roleObj) => (roleObj || {}),
 )();
 
-const selectRole = (state) => selectUserRole(state).value || '';
-const selectIsAdmin = (state) => selectUserRole(state).isAdmin;
+const selectAuthUserRole = (state) => selectAuthUserRoleObject(state).value || '';
 
-const selectPermissions = (state) => createSelector(
-  () => selectUserRole(state).permissions,
+const selectAuthUserResources = (state) => createSelector(
+  () => selectAuthUserRoleObject(state).permissions,
   (permissions) => (permissions || {}),
-)();
-
-const selectUsersPermissions = (state) => createSelector(
-  () => selectPermissions(state).users,
-  (users) => (users || {}),
 )();
 
 export {
@@ -32,10 +26,8 @@ export {
   selectAuthenticated,
   selectVerifyMessage,
   selectAuthData,
-  selectUserId,
-  selectIsAdmin,
-  selectPermissions,
+  selectAuthUserId,
+  selectAuthUserResources,
   selectAuthUser,
-  selectRole,
-  selectUsersPermissions,
+  selectAuthUserRole,
 };
