@@ -17,8 +17,13 @@ const UserReportActions = (props) => {
     <Row justify="center">
       <UserReportActionsStyled>
         <Can actionType={types.manage} resource={resources[resource.users]}>
-          <Button type="primary" icon={<LockOutlined />} onClick={() => NavigationService(`${data._id}`)} />
+          <Button
+            type="primary"
+            icon={<LockOutlined />}
+            onClick={() => NavigationService(`${data._id}`)}
+          />
         </Can>
+
         {EditByOwnerCondition
           ? (
             <Can actionType={types.editOwn} resource={resources[resource.users]}>

@@ -8,11 +8,6 @@ export const types = {
   manage: 'MANAGE',
 };
 
-export const ui = {
-  disabled: 'disabled',
-  notVisible: 'notVisible',
-};
-
 export const resource = {
   users: 'users',
 };

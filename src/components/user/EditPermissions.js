@@ -16,7 +16,7 @@ const EditPermissions = (props) => {
   useEffect(() => {
     if (changeStatus) {
       resetChangeStatus();
-      NavigationService('/users');
+      NavigationService('/users/');
     }
   }, [changeStatus]);
 

@@ -1,6 +1,6 @@
 import UserInfo from 'containers/user/UserInfo';
 import { Tabs } from 'antd';
-import { UserPermissionControl } from 'components/user/User';
+import { UserPermissionControl } from 'components/user/UserPermissionControl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
