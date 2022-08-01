@@ -9,7 +9,7 @@ const LayoutStyled = styled.div`
 `;
 
 const ContentStyled = styled(Content)`
-  padding: 10px 18px;
+  padding: 0.71rem 1.28rem;
 `;
 
 const LayoutWrapperStyled = styled(Layout)`

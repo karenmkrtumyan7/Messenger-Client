@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 const Global = createGlobalStyle`
-html.app-html{
+html{
   height: 100%;
   font-size: 14px;
   font-family: ${(props) => props.theme.typography.fontFamilyBase};

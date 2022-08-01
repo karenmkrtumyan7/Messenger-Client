@@ -9,17 +9,17 @@ const BannerStyled = styled(Row)`
 `;
 
 const BannerRadiusStyled = styled(Row)`
-  background-color: #00a1af;
+  background-color: ${(props) => props.theme.colors.bondiBlue};
   height: 50px;
   border-radius: 10px;
   align-items: center;
-  padding: 0 15px;
-  margin-bottom: 25px;
+  padding: 0 1rem;
+  margin-bottom: 1.78rem;
 `;
 
 const BannerTitleStyled = styled.h3`
-  font-size: 16px; 
-  color: white; 
+  font-size: 1.14rem; 
+  color: ${(props) => props.theme.colors.white}; 
   margin: 0;
 `;
 

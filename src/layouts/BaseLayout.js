@@ -1,4 +1,6 @@
-import { LogoutOutlined, UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined, MessageOutlined, UserOutlined, UserSwitchOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -31,6 +33,14 @@ const BaseLayout = (props) => {
       icon: <UserSwitchOutlined />,
       onClick: () => NavigationService('/users/'),
       hide: Can({ actionType: types.view, resource: resources[resource.users], fallback: true }),
+    },
+    {
+      label: 'Messenger',
+      key: 'Messenger',
+      icon: <MessageOutlined />,
+      onClick: () => NavigationService('/messenger/'),
+
+      hide: false,
     },
     {
       label: 'Sign out',

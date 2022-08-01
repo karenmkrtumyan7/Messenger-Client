@@ -1,6 +1,6 @@
-import { Row } from 'antd';
 import {
-  AccountInfoDetailsTitlesWrapper, AccountInfoDetailsWrapper, AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper,
+  AccountInfoDetailsStyled,
+  AccountInfoDetailsTitlesWrapper, AccountInfoDetailsWrapperStyled, AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper,
 } from 'components/user/User.styled';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -19,20 +19,20 @@ const AccountInfo = (props) => {
     <AccountInfoMainWrapper>
       <AccountInfoWrapper>
         <AccountInfoTitle>Account Info</AccountInfoTitle>
-        <Row>
+        <AccountInfoDetailsWrapperStyled>
           <AccountInfoDetailsTitlesWrapper>
             <p>User ID:</p>
             <p>Username:</p>
             <p>Email:</p>
             <p>Contact:</p>
           </AccountInfoDetailsTitlesWrapper>
-          <AccountInfoDetailsWrapper>
+          <AccountInfoDetailsStyled>
             <p>{ id }</p>
             <p>{ userName }</p>
             <p>{ email }</p>
             <p>{ contact }</p>
-          </AccountInfoDetailsWrapper>
-        </Row>
+          </AccountInfoDetailsStyled>
+        </AccountInfoDetailsWrapperStyled>
       </AccountInfoWrapper>
     </AccountInfoMainWrapper>
   );
