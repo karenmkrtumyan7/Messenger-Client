@@ -8,7 +8,9 @@ const lightModeColors = {
   silverChalice: '#B0B0B0',
   silverSand: '#C2C6CB',
   mercury: '#E6E6E6',
-
+  dustyGray: '#999999',
+  black: '#1a1a1a',
+  porcelain: '#ECEFF1',
 };
 
 const theme = {

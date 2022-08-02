@@ -7,7 +7,7 @@ const UserItem = () => (
   <Skeleton loading={false} avatar>
     <UserItemStyled>
       <Col>
-        <UserAvatarStyled src="https://joeschmoe.io/api/v1/random" />
+        <UserAvatarStyled src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" />
       </Col>
       <UserDescriptionWrapperStyled>
         <UserNameStyled>Louis CK</UserNameStyled>

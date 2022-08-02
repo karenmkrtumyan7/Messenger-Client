@@ -13,7 +13,7 @@ const ContentStyled = styled(Content)`
 `;
 
 const LayoutWrapperStyled = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 export {
