@@ -18,7 +18,7 @@ const EditPermissions = (props) => {
       resetChangeStatus();
       NavigationService('/users/');
     }
-  }, [changeStatus]);
+  }, [changeStatus, resetChangeStatus]);
 
   const onClick = () => {
     const requestData = {};

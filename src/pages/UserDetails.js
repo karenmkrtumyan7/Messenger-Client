@@ -20,7 +20,7 @@ const UserDetails = (props) => {
 
   useEffect(() => {
     getResources(id);
-  }, []);
+  }, [getResources]);
 
   return (
     <div>

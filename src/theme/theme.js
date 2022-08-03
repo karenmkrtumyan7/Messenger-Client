@@ -27,11 +27,6 @@ theme.typography = {
   fontFamilyBase: 'Poppins, sans-serif',
 };
 
-theme.borderRadius = {
-  borderRadiusDefault: `${theme.borderRadiusBase}px`,
-  borderRadiusSmall: `${theme.borderRadiusBase + 1}px`,
-};
-
 theme.colors = lightModeColors;
 
 export { theme };
