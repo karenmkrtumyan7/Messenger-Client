@@ -1,38 +1,38 @@
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 
-const getConversationCandidatesRequest = (id) => ({
-  type: MessengerActionTypes.GET_CONVERSATIONS_REQUEST,
+const getConversationsMembersRequest = (id) => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_MEMBERS_REQUEST,
   payload: { id },
 });
 
-const getConversationCandidatesSuccess = (conversationCandidates) => ({
-  type: MessengerActionTypes.GET_CONVERSATIONS_SUCCESS,
-  payload: { conversationCandidates },
+const getConversationMembersSuccess = (members) => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_MEMBERS_SUCCESS,
+  payload: { members },
 });
 
 const getMessagesRequest = (from, to) => ({
-  type: MessengerActionTypes.GET_MESSAGES_REQUEST,
+  type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_REQUEST,
   payload: { from, to },
 });
 
 const getMessagesSuccess = (messages) => ({
-  type: MessengerActionTypes.GET_MESSAGES_SUCCESS,
+  type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_SUCCESS,
   payload: { messages },
 });
 
 const sendMessageRequest = (data) => ({
-  type: MessengerActionTypes.POST_MESSAGE_REQUEST,
+  type: MessengerActionTypes.POST_CONVERSATION_MESSAGE_REQUEST,
   payload: { data },
 });
 
 const sendMessageSuccess = (data) => ({
-  type: MessengerActionTypes.POST_MESSAGE_SUCCESS,
+  type: MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS,
   payload: { data },
 });
 
 export {
-  getConversationCandidatesRequest,
-  getConversationCandidatesSuccess,
+  getConversationsMembersRequest,
+  getConversationMembersSuccess,
   getMessagesRequest,
   getMessagesSuccess,
   sendMessageRequest,

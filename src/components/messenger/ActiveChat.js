@@ -1,52 +1,45 @@
 import { ActiveChatStyled, BubbleStyled } from 'components/messenger/Messenger.styled';
+import _ from 'lodash';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-const messages = [
-  {
-    from: 'id1',
-    to: 'id2',
-    text: 'Barev',
-  },
-  {
-    from: 'id2',
-    to: 'id1',
-    text: 'Barev',
-  },
-  {
-    from: 'id1',
-    to: 'id2',
-    text: 'Inch ka?',
-  },
-  {
-    from: 'id1',
-    to: 'id2',
-    text: 'Vonc es',
-  },
-  {
-    from: 'id1',
-    to: 'id2',
-    text: '?',
-  },
-  {
-    from: 'id2',
-    to: 'id1',
-    text: 'Lav du asa',
-  },
-];
+const ActiveChat = (props) => {
+  const {
+    messages, getMessages, id, currentConversationUser, scrollToBottom,
+  } = props;
 
-const ActiveChat = () => {
-  // test
-  const id = 'id1';
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
+  useEffect(() => {
+    getMessages(id, currentConversationUser);
+  }, [getMessages, currentConversationUser, id]);
+
   return (
-    messages.length && (
+    !_.isEmpty(messages) && (
       <ActiveChatStyled>
         {
           messages.map((message) => (
-            <BubbleStyled me={id === message.from}>{ message.text }</BubbleStyled>
+            <BubbleStyled
+              key={message._id}
+              me={id === message.from}
+            >
+              { message.text }
+            </BubbleStyled>
           ))
         }
       </ActiveChatStyled>
     )
   );
+};
+
+ActiveChat.propTypes = {
+  messages: PropTypes.array.isRequired,
+  getMessages: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  currentConversationUser: PropTypes.object.isRequired,
+  scrollToBottom: PropTypes.func.isRequired,
 };
 
 export { ActiveChat };

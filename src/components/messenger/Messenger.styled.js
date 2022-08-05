@@ -5,43 +5,57 @@ import {
 import { SendOutlined } from '@ant-design/icons';
 
 const UserItemStyled = styled(Row)`
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 1.5rem;
-    //$background-color: ${(props) => (props.active ? props.theme.colors.dodgerBlue : 'initial')};
-    &:hover {
-      background-color: ${(props) => props.theme.colors.dodgerBlue};
-      span {
-        color: white;
-      }
-      &:after {
-        background-color: ${(props) => props.theme.colors.dodgerBlue};
-        width: 100%;
-        left: 0;
-      }
-    };
-    &:after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      height: 1px;
-      background-color: ${(props) => props.theme.colors.mercury};
-      width: calc(100% - 3rem);
-      left: 1.5rem;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1.5rem;
+  flex-wrap: nowrap;
+  background-color: ${(props) => (props.active ? props.theme.colors.dodgerBlue : 'initial')};
+  span {
+    color: ${(props) => (props.active ? props.theme.colors.white : props.theme.colors.black)};
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.colors.dodgerBlue};
+    span {
+      color: white;
     }
+    &:after {
+      background-color: ${(props) => props.theme.colors.dodgerBlue};
+      width: 100%;
+      left: 0;
+    }
+  };
+  &:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    height: 1px;
+    background-color: ${(props) => props.theme.colors.mercury};
+    width: calc(100% - 3rem);
+    left: 1.5rem;
+  }
 `;
 
 const LastMessageStyled = styled.span`
-    font-size: 1rem;
-    line-height: 1.2rem;
-    color: ${(props) => props.theme.colors.dustyGray}
+  font-size: 1rem;
+  line-height: 1.2rem;
+  color: ${(props) => props.theme.colors.dustyGray};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+
+const LastMessageTimeStyled = styled(LastMessageStyled)`
+  white-space: nowrap;
 `;
 
 const UserNameStyled = styled(LastMessageStyled)`
-    font-weight: ${(props) => props.theme.typography.fontWeightBold};
-    color: ${(props) => props.theme.colors.black}
+  font-weight: ${(props) => props.theme.typography.fontWeightBold};
+  color: ${(props) => props.theme.colors.black};
 `;
 
 const UserAvatarStyled = styled(Avatar)`
@@ -50,21 +64,29 @@ const UserAvatarStyled = styled(Avatar)`
 `;
 
 const UserDescriptionWrapperStyled = styled(Row)`
-  flex-direction: column; 
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  margin-left: 1rem;
   justify-content: space-around;
 `;
 
 const UserSearchStyled = styled(Input)`
-  //width: 188px;
   border-radius: 21px;
   height: 42px;
   padding: 0 1rem;
 `;
 
 const UserSearchButtonStyled = styled(Button)`
-  height: 42px;
-  width: 42px;
-  margin-left: 10px;
+  span {
+    display: inline-block;
+    svg {
+      width: 40px;
+    }
+  }
+
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 `;
 
@@ -127,11 +149,13 @@ const SendOutlinedStyled = styled(SendOutlined)`
   }
 `;
 
-const SearchStyled = styled(Col)`
+const SearchStyled = styled(Row)`
   padding: 2rem;
   display: flex;
   justify-content: center;
+  column-gap: 10px;
   flex-wrap: nowrap;
+  //flex-shrink: 1;
 `;
 
 const UserItemsStyled = styled(Col)`
@@ -140,6 +164,7 @@ const UserItemsStyled = styled(Col)`
 `;
 
 const LeftStyled = styled(Row)`
+  width: 300px;
   height: 100%;
   flex-wrap: nowrap;
   flex-direction: column;
@@ -241,4 +266,5 @@ export {
   ActiveChatStyled,
   BubbleStyled,
   MessengerFormWrapperStyled,
+  LastMessageTimeStyled,
 };

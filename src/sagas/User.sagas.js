@@ -15,10 +15,6 @@ import { getUserDetailsSuccess } from 'actions/auth/AuthActionCreators';
 import { AuthActionTypes } from 'actions/auth/AuthActionTypes';
 import localStorageService from 'services/localStorage.service';
 
-const {
-  GET_USERS_REQUEST, EDIT_USER_REQUEST, DELETE_USER_REQUEST, GET_USER_REQUEST, UPDATE_PERMISSIONS_REQUEST, GET_PERMISSIONS_REQUEST,
-} = UserActionTypes;
-const { AUTH_USER_REQUEST } = AuthActionTypes;
 const { Users, UpdatePermissions } = AppConstants.api;
 
 function* getUsers({ payload }) {
@@ -123,12 +119,12 @@ function* getPermissions({ payload }) {
 
 export function* userSagas() {
   yield all([
-    takeEvery(GET_USERS_REQUEST, getUsers),
-    takeLatest(EDIT_USER_REQUEST, editUser),
-    takeLatest(DELETE_USER_REQUEST, deleteUser),
-    takeEvery(AUTH_USER_REQUEST, getUserDetails),
-    takeEvery(GET_USER_REQUEST, getUser),
-    takeLatest(UPDATE_PERMISSIONS_REQUEST, updatePermissions),
-    takeEvery(GET_PERMISSIONS_REQUEST, getPermissions),
+    takeEvery(UserActionTypes.GET_USERS_REQUEST, getUsers),
+    takeLatest(UserActionTypes.EDIT_USER_REQUEST, editUser),
+    takeLatest(UserActionTypes.DELETE_USER_REQUEST, deleteUser),
+    takeEvery(AuthActionTypes.AUTH_USER_REQUEST, getUserDetails),
+    takeEvery(UserActionTypes.GET_USER_REQUEST, getUser),
+    takeLatest(UserActionTypes.UPDATE_PERMISSIONS_REQUEST, updatePermissions),
+    takeEvery(UserActionTypes.GET_PERMISSIONS_REQUEST, getPermissions),
   ]);
 }

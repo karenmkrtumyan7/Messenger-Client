@@ -14,11 +14,6 @@ import { getError } from 'utils';
 import localStorageService from 'services/localStorage.service';
 
 const {
-  SIGNIN_REQUEST,
-  SIGNUP_REQUEST,
-  VERIFY_REQUEST,
-} = AuthActionTypes;
-const {
   Auth, SignIn, SignUp, Verify,
 } = AppConstants.api;
 
@@ -74,8 +69,8 @@ function* verify({ payload: { id } }) {
 
 export function* authSagas() {
   yield all([
-    takeLatest(SIGNIN_REQUEST, signIn),
-    takeLatest(SIGNUP_REQUEST, signUp),
-    takeLatest(VERIFY_REQUEST, verify),
+    takeLatest(AuthActionTypes.SIGNIN_REQUEST, signIn),
+    takeLatest(AuthActionTypes.SIGNUP_REQUEST, signUp),
+    takeLatest(AuthActionTypes.VERIFY_REQUEST, verify),
   ]);
 }

@@ -1,23 +1,41 @@
 import { Col, Skeleton } from 'antd';
 import {
-  LastMessageStyled, UserAvatarStyled, UserDescriptionWrapperStyled, UserItemStyled, UserNameStyled,
+  LastMessageStyled, LastMessageTimeStyled, UserAvatarStyled, UserDescriptionWrapperStyled, UserItemStyled, UserNameStyled,
 } from 'components/messenger/Messenger.styled';
+import PropTypes from 'prop-types';
 
-const UserItem = () => (
-  <Skeleton loading={false} avatar>
-    <UserItemStyled>
-      <Col>
-        <UserAvatarStyled src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" />
-      </Col>
-      <UserDescriptionWrapperStyled>
-        <UserNameStyled>Louis CK</UserNameStyled>
-        <LastMessageStyled>I was wondering...</LastMessageStyled>
-      </UserDescriptionWrapperStyled>
-      <Col>
-        <LastMessageStyled>2:09 PM</LastMessageStyled>
-      </Col>
-    </UserItemStyled>
-  </Skeleton>
-);
+const UserItem = (props) => {
+  const {
+    avatar, userName, lastMessageTime, lastMessage,
+  } = props.data;
+  const { active, onClick } = props;
+
+  return (
+    <Skeleton loading={false} avatar>
+      <UserItemStyled active={active ? 1 : 0} onClick={onClick}>
+        <Col>
+          <UserAvatarStyled src={avatar} />
+        </Col>
+        <UserDescriptionWrapperStyled>
+          <UserNameStyled>{ userName }</UserNameStyled>
+          <LastMessageStyled>{ lastMessage }</LastMessageStyled>
+        </UserDescriptionWrapperStyled>
+        <Col>
+          <LastMessageTimeStyled>{ lastMessageTime }</LastMessageTimeStyled>
+        </Col>
+      </UserItemStyled>
+    </Skeleton>
+  );
+};
+
+UserItem.propTypes = {
+  data: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired,
+  onClick: PropTypes.func,
+};
+
+UserItem.defaultProps = {
+  onClick: null,
+};
 
 export default UserItem;
