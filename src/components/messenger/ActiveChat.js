@@ -13,7 +13,9 @@ const ActiveChat = (props) => {
   }, [messages, scrollToBottom]);
 
   useEffect(() => {
-    getMessages(id, currentConversationUser);
+    if (id) {
+      getMessages(id, currentConversationUser);
+    }
   }, [getMessages, currentConversationUser, id]);
 
   return (

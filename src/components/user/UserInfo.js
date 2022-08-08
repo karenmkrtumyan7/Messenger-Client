@@ -19,7 +19,9 @@ const UserInfo = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getUser(id);
+    if (id) {
+      getUser(id);
+    }
   }, [getUser, id]);
 
   return (

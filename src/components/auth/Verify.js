@@ -9,7 +9,9 @@ const Verify = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    verifyRequest(id);
+    if (id) {
+      verifyRequest(id);
+    }
   }, [verifyRequest, id]);
 
   return !message ? <SpinStyled /> : <VerifyResult message={message} />;

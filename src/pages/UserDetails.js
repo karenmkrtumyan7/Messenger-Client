@@ -19,7 +19,9 @@ const UserDetails = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getResources(id);
+    if (id) {
+      getResources(id);
+    }
   }, [getResources, id]);
 
   return (
