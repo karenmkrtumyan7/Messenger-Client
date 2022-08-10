@@ -2,6 +2,7 @@ import { ActiveChatStyled, BubbleStyled } from 'components/messenger/Messenger.s
 import _ from 'lodash';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import socket from 'services/socket';
 
 const ActiveChat = (props) => {
   const {
@@ -14,9 +15,15 @@ const ActiveChat = (props) => {
 
   useEffect(() => {
     if (id) {
-      getMessages(id, currentConversationUser);
+      getMessages(id, currentConversationUser._id);
     }
   }, [getMessages, currentConversationUser, id]);
+
+  useEffect(() => {
+    socket.on('CONVERSATION:NEW_MESSAGE', (message) => {
+      console.log(message);
+    });
+  }, []);
 
   return (
     !_.isEmpty(messages) && (

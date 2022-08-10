@@ -1,43 +1,16 @@
-import { all, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
+import { all, call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 import { getConversationMembersSuccess, getMessagesSuccess, sendMessageSuccess } from 'actions/messenger/MessengerActionCreators';
 import { getError } from 'utils';
 import { failure } from 'actions/settings/SettingsActionCreators';
+import socket from 'services/socket';
+import NetworkService from 'services/network.service';
 
 function* getConversationsMembers({ payload }) {
   const { id } = payload;
   try {
-    const members = [
-      {
-        avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg',
-        userName: 'Thomas Bangalter',
-        lastMessageTime: '2:09 PM',
-        lastMessage: 'I was wondering...',
-        _id: '1',
-      },
-      {
-        avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/dog.png',
-        userName: 'Dog Woofson',
-        lastMessageTime: '1:44 PM',
-        lastMessage: 'I\'ve forgotten how it felt before',
-        _id: '2',
-      },
-      {
-        avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/louis-ck.jpeg',
-        userName: 'Louis CK',
-        lastMessageTime: '2:09 PM',
-        lastMessage: 'But we’re probably gonna need a new carpet.',
-        _id: '3',
-      },
-      {
-        avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/bo-jackson.jpg',
-        userName: 'Bo Jackson',
-        lastMessageTime: '2:09 PM',
-        lastMessage: 'It’s not that bad...',
-        _id: '4',
-      },
-    ];
-    yield put(getConversationMembersSuccess(members));
+    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', id, 'members']);
+    yield put(getConversationMembersSuccess(data));
   } catch (err) {
     const error = getError(err);
     yield put(failure(error));
@@ -45,8 +18,9 @@ function* getConversationsMembers({ payload }) {
 }
 
 function* getMessages({ payload }) {
-  const { from, to } = payload;
+  const { conversationId } = payload;
   try {
+    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', '62f3b24f5da6f140cc79bb83', 'messages']);
     const messages = [
       {
         from: 'id1',
@@ -91,7 +65,7 @@ function* getMessages({ payload }) {
         _id: '7',
       },
     ];
-    yield put(getMessagesSuccess(messages));
+    yield put(getMessagesSuccess(data));
   } catch (err) {
     const error = getError(err);
     failure(error);
@@ -99,9 +73,10 @@ function* getMessages({ payload }) {
 }
 
 function* sendMessage({ payload }) {
-  const { from, to, data } = payload;
+  const { data } = payload;
   try {
-    yield put(sendMessageSuccess({ from, to, data }));
+    yield socket.emit('CONVERSATION:NEW_MESSAGE', data);
+    yield put(sendMessageSuccess({ data }));
   } catch (err) {
     const error = getError(err);
     failure(error);

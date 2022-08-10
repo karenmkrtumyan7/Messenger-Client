@@ -3,6 +3,7 @@ import {
   LastMessageStyled, LastMessageTimeStyled, UserAvatarStyled, UserDescriptionWrapperStyled, UserItemStyled, UserNameStyled,
 } from 'components/messenger/Messenger.styled';
 import PropTypes from 'prop-types';
+import user from 'assets/user.png';
 
 const UserItem = (props) => {
   const {
@@ -14,7 +15,7 @@ const UserItem = (props) => {
     <Skeleton loading={false} avatar>
       <UserItemStyled active={active ? 1 : 0} onClick={onClick}>
         <Col>
-          <UserAvatarStyled src={avatar} />
+          <UserAvatarStyled src={avatar || user} />
         </Col>
         <UserDescriptionWrapperStyled>
           <UserNameStyled>{ userName }</UserNameStyled>

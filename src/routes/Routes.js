@@ -29,6 +29,7 @@ function AppRoutes() {
         </Route>
         <Route path="/messenger/" element={<PrivateRoute />}>
           <Route exact index element={<Messenger />} />
+          <Route path=":id" element={<Messenger />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

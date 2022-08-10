@@ -1,15 +1,21 @@
 import UserItem from 'components/messenger/UserItem';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { NavigationService } from 'services/navigationService';
 
 const MessengerMembers = (props) => {
   const {
-    members, getMembers, currentConversationUser, setCurrentConversationUser,
+    members, getMembers, currentConversationUser, setCurrentConversationUser, id,
   } = props;
 
   useEffect(() => {
-    getMembers();
+    getMembers(id);
   }, [getMembers]);
+
+  useEffect(() => {
+    if (!_.isEmpty(members)) setCurrentConversationUser(members[0]);
+  }, [members]);
 
   return (
     <>
@@ -19,7 +25,10 @@ const MessengerMembers = (props) => {
             key={member._id}
             data={member}
             active={currentConversationUser._id === member._id}
-            onClick={() => setCurrentConversationUser(member)}
+            onClick={() => {
+              setCurrentConversationUser(member);
+              NavigationService(member._id);
+            }}
           />
         ))
       }
