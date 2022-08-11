@@ -10,9 +10,9 @@ const getConversationMembersSuccess = (members) => ({
   payload: { members },
 });
 
-const getMessagesRequest = (from, to) => ({
+const getMessagesRequest = (conversationId) => ({
   type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_REQUEST,
-  payload: { from, to },
+  payload: { conversationId },
 });
 
 const getMessagesSuccess = (messages) => ({
@@ -30,6 +30,11 @@ const sendMessageSuccess = (data) => ({
   payload: { data },
 });
 
+const newMessage = (data) => ({
+  type: MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS,
+  payload: { data },
+});
+
 export {
   getConversationsMembersRequest,
   getConversationMembersSuccess,
@@ -37,4 +42,5 @@ export {
   getMessagesSuccess,
   sendMessageRequest,
   sendMessageSuccess,
+  newMessage,
 };

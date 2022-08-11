@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { selectMessages } from 'selectors/Messenger.selectors';
 import { ActiveChat } from 'components/messenger/ActiveChat';
-import { getMessagesRequest } from 'actions/messenger/MessengerActionCreators';
+import { getMessagesRequest, newMessage } from 'actions/messenger/MessengerActionCreators';
 import { bindActionCreators } from 'redux';
 import { selectAuthUserId } from 'selectors/Auth.selectors';
 
@@ -13,6 +13,7 @@ const mapStateToProps = ({ messenger, auth }) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     getMessages: getMessagesRequest,
+    newMessage,
   },
   dispatch,
 );

@@ -20,7 +20,7 @@ export const messenger = (state = initialState, { type, payload }) => {
   case MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS:
     return {
       ...state,
-      messages: [...state.messages, payload.data.data],
+      messages: [...state.messages, payload.data],
     };
   default: return state;
   }

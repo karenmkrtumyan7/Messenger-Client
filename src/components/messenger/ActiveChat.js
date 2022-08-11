@@ -3,10 +3,11 @@ import _ from 'lodash';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import socket from 'services/socket';
+import io from 'socket.io-client';
 
 const ActiveChat = (props) => {
   const {
-    messages, getMessages, id, currentConversationUser, scrollToBottom,
+    messages, getMessages, id, currentConversationUser, scrollToBottom, newMessage,
   } = props;
 
   useEffect(() => {
@@ -14,16 +15,24 @@ const ActiveChat = (props) => {
   }, [messages, scrollToBottom]);
 
   useEffect(() => {
-    if (id) {
-      getMessages(id, currentConversationUser._id);
+    if (currentConversationUser.conversationId) {
+      getMessages(currentConversationUser.conversationId);
     }
-  }, [getMessages, currentConversationUser, id]);
+  }, [getMessages, currentConversationUser]);
+
+  useEffect(() => {
+    socket.emit('CONVERSATION:JOIN', id);
+  }, []);
 
   useEffect(() => {
     socket.on('CONVERSATION:NEW_MESSAGE', (message) => {
-      console.log(message);
+      if (message) {
+        console.log(message);
+        console.log(1);
+        newMessage(message);
+      }
     });
-  }, []);
+  }, [newMessage]);
 
   return (
     !_.isEmpty(messages) && (

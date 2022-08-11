@@ -10,7 +10,9 @@ import io from 'socket.io-client';
 import { useEffect } from 'react';
 
 function App() {
-  useEffect(() => { io(process.env.BASE_URL || 'http://localhost:8000'); }, []);
+  useEffect(() => {
+    io(process.env.BASE_URL || 'http://localhost:8000');
+  }, []);
 
   return (
     <Provider store={store}>

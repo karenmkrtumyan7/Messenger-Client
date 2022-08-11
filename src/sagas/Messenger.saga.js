@@ -20,51 +20,7 @@ function* getConversationsMembers({ payload }) {
 function* getMessages({ payload }) {
   const { conversationId } = payload;
   try {
-    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', '62f3b24f5da6f140cc79bb83', 'messages']);
-    const messages = [
-      {
-        from: 'id1',
-        to: 'id2',
-        text: 'Barev',
-        _id: '1',
-      },
-      {
-        from: 'id2',
-        to: 'id1',
-        text: 'Barev',
-        _id: '2',
-      },
-      {
-        from: 'id1',
-        to: 'id2',
-        text: 'Inch ka?',
-        _id: '3',
-      },
-      {
-        from: 'id1',
-        to: 'id2',
-        text: 'Vonc es',
-        _id: '4',
-      },
-      {
-        from: 'id1',
-        to: 'id2',
-        text: '?',
-        _id: '5',
-      },
-      {
-        from: 'id2',
-        to: 'id1',
-        text: 'Lav du asa',
-        _id: '6',
-      },
-      {
-        from: 'id1',
-        to: 'id2',
-        text: 'Lav',
-        _id: '7',
-      },
-    ];
+    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', conversationId, 'messages']);
     yield put(getMessagesSuccess(data));
   } catch (err) {
     const error = getError(err);
@@ -76,7 +32,7 @@ function* sendMessage({ payload }) {
   const { data } = payload;
   try {
     yield socket.emit('CONVERSATION:NEW_MESSAGE', data);
-    yield put(sendMessageSuccess({ data }));
+    // yield put(sendMessageSuccess({ data }));
   } catch (err) {
     const error = getError(err);
     failure(error);
