@@ -3,24 +3,38 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { NavigationService } from 'services/navigationService';
+import { useParams } from 'react-router-dom';
 
 const MessengerMembers = (props) => {
+  const { id: paramsId } = useParams();
   const {
-    members, getMembers, currentConversationUser, setCurrentConversationUser, id,
+    members, getMembers, currentConversationUser, setCurrentConversationUser, id, membersFiltered, setMembersFiltered,
   } = props;
 
   useEffect(() => {
     getMembers(id);
-  }, [getMembers]);
+  }, [getMembers, id]);
 
   useEffect(() => {
-    if (!_.isEmpty(members)) setCurrentConversationUser(members[0]);
-  }, [members]);
+    setMembersFiltered(members);
+  }, [members, setMembersFiltered]);
+
+  useEffect(() => {
+    if (!_.isEmpty(members) && _.isEmpty(currentConversationUser)) {
+      if (members[0].userName !== currentConversationUser.userName) {
+        if (paramsId) {
+          setCurrentConversationUser(members.find((member) => member._id === paramsId));
+        } else {
+          setCurrentConversationUser(members[0]);
+        }
+      }
+    }
+  }, [members, setCurrentConversationUser, currentConversationUser.userName, paramsId, currentConversationUser]);
 
   return (
     <>
       {
-        members.map((member) => (
+        membersFiltered.map((member) => (
           <UserItem
             key={member._id}
             data={member}
@@ -41,6 +55,9 @@ MessengerMembers.propTypes = {
   getMembers: PropTypes.func,
   currentConversationUser: PropTypes.object,
   setCurrentConversationUser: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  membersFiltered: PropTypes.array.isRequired,
+  setMembersFiltered: PropTypes.func.isRequired,
 };
 
 MessengerMembers.defaultProps = {

@@ -17,7 +17,7 @@ export const messenger = (state = initialState, { type, payload }) => {
       ...state,
       members: payload.members,
     };
-  case MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS:
+  case MessengerActionTypes.CONVERSATION_NEW_MESSAGE:
     return {
       ...state,
       messages: [...state.messages, payload.data],

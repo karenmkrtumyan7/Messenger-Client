@@ -78,16 +78,16 @@ const UserSearchStyled = styled(Input)`
 `;
 
 const UserSearchButtonStyled = styled(Button)`
-  span {
-    display: inline-block;
-    svg {
-      width: 40px;
-    }
-  }
-
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: ${(props) => props.theme.colors.dodgerBlue};
+  border-color: ${(props) => props.theme.colors.dodgerBlue};
+`;
+
+const UserSearchWrapperStyled = styled(Row)`
+  column-gap: 10px;
+  flex-wrap: nowrap;
 `;
 
 const MessengerHeaderStyled = styled.div`
@@ -179,6 +179,7 @@ const RightStyled = styled(Row)`
   flex-shrink: 1;
   flex-wrap: nowrap;
   flex-direction: column;
+  width: calc(100% - 320px);
 `;
 
 const MessengerStyled = styled(Row)`
@@ -204,6 +205,7 @@ const ActiveChatStyled = styled(Row)`
 `;
 
 const BubbleStyled = styled.div`
+  max-width: 90%;
   background-color: ${(props) => (props.me ? props.theme.colors.dodgerBlue : props.theme.colors.porcelain)};
   align-self: ${(props) => (props.me ? 'flex-end' : 'flex-start')};
   color: ${(props) => (props.me ? props.theme.colors.white : props.theme.colors.black)};
@@ -256,6 +258,7 @@ export {
   MessengerInputStyled,
   MessengerSendStyled,
   MessengerFormStyled,
+  UserSearchWrapperStyled,
   SendOutlinedStyled,
   SearchStyled,
   UserItemsStyled,

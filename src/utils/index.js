@@ -22,6 +22,9 @@ export const getIsoDate = (date) => moment(date)
   .utc()
   .toISOString();
 
+export const getIsoHours = (date) => moment(date)
+  .format('hh:mm A');
+
 export const getFormattedDate = (date) => moment(date)
   .utc(date)
   .local()

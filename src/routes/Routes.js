@@ -9,7 +9,7 @@ import { PrivateRoute } from 'routes/PrivateRoute';
 import Account from 'pages/Account';
 import history from 'services/history';
 import UserDetails from 'pages/UserDetails';
-import { Messenger } from 'pages/Messenger';
+import Messenger from 'pages/Messenger';
 
 function AppRoutes() {
   return (

@@ -10,4 +10,7 @@ export const types = {
 
 export const resource = {
   users: 'users',
+  messenger: 'messenger',
+  members: 'members',
+  messages: 'messages',
 };

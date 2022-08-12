@@ -1,4 +1,4 @@
-import { UserSearch } from 'components/messenger/UserSearch';
+import UserSearch from 'containers/messenger/UserSearch';
 import { MessengerHeader } from 'components/messenger/MessengerHeader';
 import MessengerForm from 'containers/messenger/MessengerForm';
 import {
@@ -7,25 +7,31 @@ import {
 import ActiveChat from 'containers/messenger/ActiveChat';
 import MessengerMembers from 'containers/messenger/MessengerMembers';
 import { useState, useRef } from 'react';
+import { selectMembers } from 'selectors/Messenger.selectors';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Messenger = () => {
+const Messenger = (props) => {
+  const { members } = props;
   const [currentConversationUser, setCurrentConversationUser] = useState({});
-
+  const [membersFiltered, setMembersFiltered] = useState(members);
   const messagesToBottomRef = useRef(null);
   const scrollToBottom = () => {
-    messagesToBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesToBottomRef.current?.scrollIntoView();
   };
 
   return (
     <MessengerStyled>
       <LeftStyled>
         <SearchStyled>
-          <UserSearch />
+          <UserSearch setMembersFiltered={setMembersFiltered} />
         </SearchStyled>
         <UserItemsStyled>
           <MessengerMembers
             currentConversationUser={currentConversationUser}
             setCurrentConversationUser={setCurrentConversationUser}
+            membersFiltered={membersFiltered}
+            setMembersFiltered={setMembersFiltered}
           />
         </UserItemsStyled>
       </LeftStyled>
@@ -51,4 +57,12 @@ const Messenger = () => {
   );
 };
 
-export { Messenger };
+Messenger.propTypes = {
+  members: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = ({ messenger }) => ({
+  members: selectMembers(messenger),
+});
+
+export default connect(mapStateToProps)(Messenger);

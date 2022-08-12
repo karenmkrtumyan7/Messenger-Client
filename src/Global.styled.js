@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Form } from 'antd';
 
 const Global = createGlobalStyle`
 html{
@@ -20,6 +21,10 @@ html{
   button, input, select, textarea{
      font-family: ${(props) => props.theme.typography.fontFamilyBase};
   }
+  
+  body {
+    font-family: ${(props) => props.theme.typography.fontFamilyBase};
+  }
 }
 
 ::-webkit-scrollbar {
@@ -39,4 +44,12 @@ html{
 }
 `;
 
+const FormItemStyled = styled(Form.Item)`
+  margin: 0;
+`;
+
 export default Global;
+
+export {
+  FormItemStyled,
+};

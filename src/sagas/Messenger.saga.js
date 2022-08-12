@@ -1,15 +1,20 @@
-import { all, call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
+import {
+  all, call, put, takeEvery, takeLatest,
+} from '@redux-saga/core/effects';
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
-import { getConversationMembersSuccess, getMessagesSuccess, sendMessageSuccess } from 'actions/messenger/MessengerActionCreators';
+import { getConversationMembersSuccess, getMessagesSuccess } from 'actions/messenger/MessengerActionCreators';
 import { getError } from 'utils';
 import { failure } from 'actions/settings/SettingsActionCreators';
 import socket from 'services/socket';
 import NetworkService from 'services/network.service';
+import { resource } from 'constants/accessControl';
+
+const { messenger, members, messages } = resource;
 
 function* getConversationsMembers({ payload }) {
   const { id } = payload;
   try {
-    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', id, 'members']);
+    const { data } = yield call(NetworkService.makeAPIGetRequest, [messenger, id, members]);
     yield put(getConversationMembersSuccess(data));
   } catch (err) {
     const error = getError(err);
@@ -20,7 +25,7 @@ function* getConversationsMembers({ payload }) {
 function* getMessages({ payload }) {
   const { conversationId } = payload;
   try {
-    const { data } = yield call(NetworkService.makeAPIGetRequest, ['messenger', conversationId, 'messages']);
+    const { data } = yield call(NetworkService.makeAPIGetRequest, [messenger, conversationId, messages]);
     yield put(getMessagesSuccess(data));
   } catch (err) {
     const error = getError(err);
@@ -31,8 +36,7 @@ function* getMessages({ payload }) {
 function* sendMessage({ payload }) {
   const { data } = payload;
   try {
-    yield socket.emit('CONVERSATION:NEW_MESSAGE', data);
-    // yield put(sendMessageSuccess({ data }));
+    yield socket.emit(MessengerActionTypes.CONVERSATION_NEW_MESSAGE, data);
   } catch (err) {
     const error = getError(err);
     failure(error);

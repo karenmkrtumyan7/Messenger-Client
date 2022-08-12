@@ -4,10 +4,11 @@ import {
 } from 'components/messenger/Messenger.styled';
 import PropTypes from 'prop-types';
 import user from 'assets/user.png';
+import { getIsoHours } from 'utils';
 
 const UserItem = (props) => {
   const {
-    avatar, userName, lastMessageTime, lastMessage,
+    avatar, userName, date, text,
   } = props.data;
   const { active, onClick } = props;
 
@@ -19,10 +20,10 @@ const UserItem = (props) => {
         </Col>
         <UserDescriptionWrapperStyled>
           <UserNameStyled>{ userName }</UserNameStyled>
-          <LastMessageStyled>{ lastMessage }</LastMessageStyled>
+          <LastMessageStyled>{ text }</LastMessageStyled>
         </UserDescriptionWrapperStyled>
         <Col>
-          <LastMessageTimeStyled>{ lastMessageTime }</LastMessageTimeStyled>
+          <LastMessageTimeStyled>{ getIsoHours(date) }</LastMessageTimeStyled>
         </Col>
       </UserItemStyled>
     </Skeleton>

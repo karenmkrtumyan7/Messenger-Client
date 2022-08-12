@@ -3,13 +3,12 @@ import _ from 'lodash';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import socket from 'services/socket';
-import io from 'socket.io-client';
+import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 
 const ActiveChat = (props) => {
   const {
-    messages, getMessages, id, currentConversationUser, scrollToBottom, newMessage,
+    messages, getMessages, id, currentConversationUser, scrollToBottom, newMessage, getMembers,
   } = props;
-
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
@@ -21,18 +20,17 @@ const ActiveChat = (props) => {
   }, [getMessages, currentConversationUser]);
 
   useEffect(() => {
-    socket.emit('CONVERSATION:JOIN', id);
-  }, []);
+    socket.emit(MessengerActionTypes.CONVERSATION_JOIN, id);
+  }, [id]);
 
   useEffect(() => {
-    socket.on('CONVERSATION:NEW_MESSAGE', (message) => {
+    socket.on(MessengerActionTypes.CONVERSATION_NEW_MESSAGE, (message) => {
       if (message) {
-        console.log(message);
-        console.log(1);
         newMessage(message);
+        getMembers(id);
       }
     });
-  }, [newMessage]);
+  }, [newMessage, getMembers, id]);
 
   return (
     !_.isEmpty(messages) && (
@@ -58,6 +56,8 @@ ActiveChat.propTypes = {
   id: PropTypes.string.isRequired,
   currentConversationUser: PropTypes.object.isRequired,
   scrollToBottom: PropTypes.func.isRequired,
+  newMessage: PropTypes.func.isRequired,
+  getMembers: PropTypes.func.isRequired,
 };
 
 export { ActiveChat };

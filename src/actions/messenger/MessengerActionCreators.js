@@ -25,13 +25,8 @@ const sendMessageRequest = (data) => ({
   payload: { data },
 });
 
-const sendMessageSuccess = (data) => ({
-  type: MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS,
-  payload: { data },
-});
-
 const newMessage = (data) => ({
-  type: MessengerActionTypes.POST_CONVERSATION_MESSAGE_SUCCESS,
+  type: MessengerActionTypes.CONVERSATION_NEW_MESSAGE,
   payload: { data },
 });
 
@@ -41,6 +36,5 @@ export {
   getMessagesRequest,
   getMessagesSuccess,
   sendMessageRequest,
-  sendMessageSuccess,
   newMessage,
 };
