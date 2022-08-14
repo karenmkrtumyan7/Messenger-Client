@@ -1,4 +1,4 @@
-import { Col, Skeleton } from 'antd';
+import { Badge, Col, Skeleton } from 'antd';
 import {
   LastMessageStyled, LastMessageTimeStyled, UserAvatarStyled, UserDescriptionWrapperStyled, UserItemStyled, UserNameStyled,
 } from 'components/messenger/Messenger.styled';
@@ -16,14 +16,16 @@ const UserItem = (props) => {
     <Skeleton loading={false} avatar>
       <UserItemStyled active={active ? 1 : 0} onClick={onClick}>
         <Col>
-          <UserAvatarStyled src={avatar || user} />
+          <Badge count={1}>
+            <UserAvatarStyled src={avatar || user} />
+          </Badge>
         </Col>
         <UserDescriptionWrapperStyled>
           <UserNameStyled>{ userName }</UserNameStyled>
           <LastMessageStyled>{ text }</LastMessageStyled>
         </UserDescriptionWrapperStyled>
         <Col>
-          <LastMessageTimeStyled>{ getIsoHours(date) }</LastMessageTimeStyled>
+          { date && <LastMessageTimeStyled>{ getIsoHours(date) }</LastMessageTimeStyled> }
         </Col>
       </UserItemStyled>
     </Skeleton>

@@ -9,6 +9,7 @@ const ActiveChat = (props) => {
   const {
     messages, getMessages, id, currentConversationUser, scrollToBottom, newMessage, getMembers,
   } = props;
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
@@ -26,11 +27,16 @@ const ActiveChat = (props) => {
   useEffect(() => {
     socket.on(MessengerActionTypes.CONVERSATION_NEW_MESSAGE, (message) => {
       if (message) {
-        newMessage(message);
-        getMembers(id);
+        if (message.conversationId === currentConversationUser.conversationId) {
+          getMembers(id);
+          newMessage(message);
+        }
       }
     });
-  }, [newMessage, getMembers, id]);
+    return () => {
+      socket.off(MessengerActionTypes.CONVERSATION_NEW_MESSAGE);
+    };
+  }, [newMessage, getMembers, id, currentConversationUser.conversationId]);
 
   return (
     !_.isEmpty(messages) && (

@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
-    io(process.env.BASE_URL || 'http://localhost:8000');
+    io(process.env.BASE_URL || 'http://localhost:8001');
   }, []);
 
   return (
