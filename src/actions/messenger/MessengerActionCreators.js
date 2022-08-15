@@ -30,6 +30,21 @@ const newMessage = (data) => ({
   payload: { data },
 });
 
+const getNotSeenMessagesRequest = (data) => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_NOT_SEEN_MESSAGES_REQUEST,
+  payload: { data },
+});
+
+const getNotSeenMessagesSuccess = (data) => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_NOT_SEEN_MESSAGES_SUCCESS,
+  payload: { data },
+});
+
+const messagesSeenRequest = (messageIds) => ({
+  type: MessengerActionTypes.PUT_CONVERSATION_MESSAGES_SEEN_REQUEST,
+  payload: { data: messageIds },
+});
+
 export {
   getConversationsMembersRequest,
   getConversationMembersSuccess,
@@ -37,4 +52,7 @@ export {
   getMessagesSuccess,
   sendMessageRequest,
   newMessage,
+  getNotSeenMessagesSuccess,
+  getNotSeenMessagesRequest,
+  messagesSeenRequest,
 };

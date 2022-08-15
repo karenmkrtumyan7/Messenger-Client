@@ -3,6 +3,7 @@ import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 const initialState = {
   messages: [],
   members: [],
+  notSeenMessages: [],
 };
 
 export const messenger = (state = initialState, { type, payload }) => {
@@ -21,6 +22,11 @@ export const messenger = (state = initialState, { type, payload }) => {
     return {
       ...state,
       messages: [...state.messages, payload.data],
+    };
+  case MessengerActionTypes.GET_CONVERSATIONS_NOT_SEEN_MESSAGES_SUCCESS:
+    return {
+      ...state,
+      notSeenMessages: payload.data,
     };
   default: return state;
   }

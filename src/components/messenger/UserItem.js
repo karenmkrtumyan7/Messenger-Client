@@ -10,13 +10,12 @@ const UserItem = (props) => {
   const {
     avatar, userName, date, text,
   } = props.data;
-  const { active, onClick } = props;
-
+  const { active, onClick, count } = props;
   return (
     <Skeleton loading={false} avatar>
       <UserItemStyled active={active ? 1 : 0} onClick={onClick}>
         <Col>
-          <Badge count={1}>
+          <Badge count={count}>
             <UserAvatarStyled src={avatar || user} />
           </Badge>
         </Col>
@@ -36,6 +35,7 @@ UserItem.propTypes = {
   data: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
+  count: PropTypes.number.isRequired,
 };
 
 UserItem.defaultProps = {

@@ -1,13 +1,16 @@
 import { connect } from 'react-redux';
-import { selectMessages } from 'selectors/Messenger.selectors';
+import { selectMessages, selectNotSeenMessages } from 'selectors/Messenger.selectors';
 import { ActiveChat } from 'components/messenger/ActiveChat';
-import { getConversationsMembersRequest, getMessagesRequest, newMessage } from 'actions/messenger/MessengerActionCreators';
+import {
+  getConversationsMembersRequest, getMessagesRequest, getNotSeenMessagesRequest, messagesSeenRequest, newMessage,
+} from 'actions/messenger/MessengerActionCreators';
 import { bindActionCreators } from 'redux';
 import { selectAuthUserId } from 'selectors/Auth.selectors';
 
 const mapStateToProps = ({ messenger, auth }) => ({
   messages: selectMessages(messenger),
   id: selectAuthUserId(auth),
+  notSeenMessages: selectNotSeenMessages(messenger),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
@@ -15,6 +18,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     getMessages: getMessagesRequest,
     newMessage,
     getMembers: getConversationsMembersRequest,
+    getNotSeenMessages: getNotSeenMessagesRequest,
+    messagesSeen: messagesSeenRequest,
   },
   dispatch,
 );

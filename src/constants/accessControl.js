@@ -13,4 +13,6 @@ export const resource = {
   messenger: 'messenger',
   members: 'members',
   messages: 'messages',
+  notSeenMessages: 'notSeenMessages',
+  messagesSeen: 'messagesSeen',
 };

@@ -8,12 +8,17 @@ import { useParams } from 'react-router-dom';
 const MessengerMembers = (props) => {
   const { id: paramsId } = useParams();
   const {
-    members, getMembers, currentConversationUser, setCurrentConversationUser, id, membersFiltered, setMembersFiltered,
+    members, getMembers, currentConversationUser, setCurrentConversationUser, id,
+    membersFiltered, setMembersFiltered, getNotSeenMessages, notSeenMessages,
   } = props;
 
   useEffect(() => {
     getMembers(id);
   }, [getMembers, id]);
+
+  useEffect(() => {
+    getNotSeenMessages();
+  }, [getNotSeenMessages]);
 
   useEffect(() => {
     setMembersFiltered(members);
@@ -34,17 +39,22 @@ const MessengerMembers = (props) => {
   return (
     <>
       {
-        membersFiltered.map((member) => (
-          <UserItem
-            key={member._id}
-            data={member}
-            active={currentConversationUser._id === member._id}
-            onClick={() => {
-              setCurrentConversationUser(member);
-              NavigationService(member._id);
-            }}
-          />
-        ))
+        membersFiltered.map((member) => {
+          const countObject = notSeenMessages.find((message) => message.conversationId === member.conversationId);
+          const count = countObject?.count || 0;
+          return (
+            <UserItem
+              key={member._id}
+              data={member}
+              active={currentConversationUser._id === member._id}
+              count={count}
+              onClick={() => {
+                setCurrentConversationUser(member);
+                NavigationService(member._id);
+              }}
+            />
+          );
+        })
       }
     </>
   );
@@ -58,6 +68,8 @@ MessengerMembers.propTypes = {
   id: PropTypes.string.isRequired,
   membersFiltered: PropTypes.array.isRequired,
   setMembersFiltered: PropTypes.func.isRequired,
+  getNotSeenMessages: PropTypes.func.isRequired,
+  notSeenMessages: PropTypes.array.isRequired,
 };
 
 MessengerMembers.defaultProps = {

@@ -7,8 +7,21 @@ import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 
 const ActiveChat = (props) => {
   const {
-    messages, getMessages, id, currentConversationUser, scrollToBottom, newMessage, getMembers,
+    messages, getMessages, id, currentConversationUser, scrollToBottom,
+    newMessage, getMembers, getNotSeenMessages, messagesSeen, notSeenMessages,
   } = props;
+
+  useEffect(
+    () => {
+      const seenMessagesIds = notSeenMessages.find((message) => message.conversationId === currentConversationUser.conversationId)?.ids;
+      if (!_.isEmpty(seenMessagesIds)) {
+        messagesSeen(seenMessagesIds);
+        getMembers(id);
+        getNotSeenMessages(currentConversationUser.conversationId);
+      }
+    },
+    [currentConversationUser.conversationId, getMembers, id, notSeenMessages, messagesSeen, getNotSeenMessages],
+  );
 
   useEffect(() => {
     scrollToBottom();
@@ -18,7 +31,7 @@ const ActiveChat = (props) => {
     if (currentConversationUser.conversationId) {
       getMessages(currentConversationUser.conversationId);
     }
-  }, [getMessages, currentConversationUser]);
+  }, [getMessages, currentConversationUser.conversationId]);
 
   useEffect(() => {
     socket.emit(MessengerActionTypes.CONVERSATION_JOIN, id);
@@ -28,15 +41,18 @@ const ActiveChat = (props) => {
     socket.on(MessengerActionTypes.CONVERSATION_NEW_MESSAGE, (message) => {
       if (message) {
         if (message.conversationId === currentConversationUser.conversationId) {
-          getMembers(id);
           newMessage(message);
+          messagesSeen([message._id]);
+        } else {
+          getNotSeenMessages();
         }
+        getMembers(id);
       }
     });
     return () => {
       socket.off(MessengerActionTypes.CONVERSATION_NEW_MESSAGE);
     };
-  }, [newMessage, getMembers, id, currentConversationUser.conversationId]);
+  }, [newMessage, getMembers, id, currentConversationUser.conversationId, getNotSeenMessages, messagesSeen]);
 
   return (
     !_.isEmpty(messages) && (
@@ -64,6 +80,9 @@ ActiveChat.propTypes = {
   scrollToBottom: PropTypes.func.isRequired,
   newMessage: PropTypes.func.isRequired,
   getMembers: PropTypes.func.isRequired,
+  getNotSeenMessages: PropTypes.func.isRequired,
+  messagesSeen: PropTypes.func.isRequired,
+  notSeenMessages: PropTypes.array.isRequired,
 };
 
 export { ActiveChat };
