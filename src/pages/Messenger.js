@@ -2,6 +2,7 @@ import UserSearch from 'containers/messenger/UserSearch';
 import { MessengerHeader } from 'components/messenger/MessengerHeader';
 import MessengerForm from 'containers/messenger/MessengerForm';
 import {
+  ActiveChatInnerStyled,
   ActiveChatWrapperStyled, LeftStyled, MessengerFormWrapperStyled, MessengerStyled, RightStyled, SearchStyled, UserItemsStyled,
 } from 'components/messenger/Messenger.styled';
 import ActiveChat from 'containers/messenger/ActiveChat';
@@ -38,13 +39,13 @@ const Messenger = (props) => {
       <RightStyled>
         <MessengerHeader currentConversationUser={currentConversationUser} />
         <ActiveChatWrapperStyled>
-          <div>
+          <ActiveChatInnerStyled>
             <ActiveChat
               currentConversationUser={currentConversationUser}
               scrollToBottom={scrollToBottom}
             />
             <div ref={messagesToBottomRef} />
-          </div>
+          </ActiveChatInnerStyled>
         </ActiveChatWrapperStyled>
         <MessengerFormWrapperStyled>
           <MessengerForm

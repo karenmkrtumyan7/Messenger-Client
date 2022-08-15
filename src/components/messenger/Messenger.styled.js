@@ -16,12 +16,8 @@ const UserItemStyled = styled(Row)`
     color: ${(props) => (props.active ? props.theme.colors.white : props.theme.colors.black)};
   }
   &:hover {
-    background-color: ${(props) => props.theme.colors.dodgerBlue};
-    span {
-      color: white;
-    }
+    background-color: ${(props) => (!props.active ? props.theme.colors.porcelain : props.theme.colors.dodgerBlue)};
     &:after {
-      background-color: ${(props) => props.theme.colors.dodgerBlue};
       width: 100%;
       left: 0;
     }
@@ -197,6 +193,10 @@ const ActiveChatWrapperStyled = styled(Row)`
   padding: 20px 29px;
 `;
 
+const ActiveChatInnerStyled = styled.div`
+  width: 100%;
+`;
+
 const ActiveChatStyled = styled(Row)`
   flex-direction: column;
   flex-wrap: nowrap;
@@ -258,6 +258,7 @@ export {
   MessengerInputStyled,
   MessengerSendStyled,
   MessengerFormStyled,
+  ActiveChatInnerStyled,
   UserSearchWrapperStyled,
   SendOutlinedStyled,
   SearchStyled,

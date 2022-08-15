@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Form } from 'antd';
 
 const Global = createGlobalStyle`
-html{
+html {
   height: 100%;
   font-size: 14px;
   font-family: ${(props) => props.theme.typography.fontFamilyBase};

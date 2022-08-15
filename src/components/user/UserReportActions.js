@@ -23,18 +23,9 @@ const UserReportActions = (props) => {
             onClick={() => NavigationService(`${data._id}`)}
           />
         </Can>
-
-        {EditByOwnerCondition
-          ? (
-            <Can actionType={types.editOwn} resource={resources[resource.users]}>
-              <UserEditModal data={data} />
-            </Can>
-          )
-          : (
-            <Can actionType={types.edit} resource={resources[resource.users]}>
-              <UserEditModal data={data} />
-            </Can>
-          )}
+        <Can actionType={EditByOwnerCondition ? types.editOwn : types.edit} resource={resources[resource.users]}>
+          <UserEditModal data={data} />
+        </Can>
         <Can actionType={types.delete} resource={resources[resource.users]}>
           <Popconfirm title="Sure to delete?" onConfirm={() => deleteUser(data._id)}>
             <Button type="primary" icon={<UserDeleteOutlined />} />

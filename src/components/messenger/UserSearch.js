@@ -12,10 +12,9 @@ const UserSearch = (props) => {
     if (_.isEmpty(searchText)) {
       setMembersFiltered(members);
     }
-    setMembersFiltered((prevMembersFiltered) => {
-      const filtered = prevMembersFiltered.filter((member) => member.userName.includes(searchText));
-      return filtered;
-    });
+    setMembersFiltered((prevMembersFiltered) => (
+      prevMembersFiltered.filter((member) => member.userName.includes(searchText))
+    ));
   };
 
   return (

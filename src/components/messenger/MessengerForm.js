@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import {
   MessengerInputStyled, MessengerSendStyled, SendOutlinedStyled, MessengerFormStyled,
 } from 'components/messenger/Messenger.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const MessengerForm = (props) => {
@@ -21,6 +21,10 @@ const MessengerForm = (props) => {
     }
   };
 
+  useEffect(() => {
+    setText('');
+  }, [currentConversationUser]);
+
   return (
     <Form onFinish={handlerSend}>
       <MessengerFormStyled>
@@ -28,7 +32,10 @@ const MessengerForm = (props) => {
           value={text}
           onChange={({ target }) => setText(target.value)}
         />
-        <MessengerSendStyled icon={<SendOutlinedStyled />} />
+        <MessengerSendStyled
+          htmlType="submit"
+          icon={<SendOutlinedStyled />}
+        />
       </MessengerFormStyled>
     </Form>
   );

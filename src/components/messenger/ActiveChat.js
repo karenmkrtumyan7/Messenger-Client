@@ -16,8 +16,7 @@ const ActiveChat = (props) => {
       const seenMessagesIds = notSeenMessages.find((message) => message.conversationId === currentConversationUser.conversationId)?.ids;
       if (!_.isEmpty(seenMessagesIds)) {
         messagesSeen(seenMessagesIds);
-        getMembers(id);
-        getNotSeenMessages(currentConversationUser.conversationId);
+        getNotSeenMessages();
       }
     },
     [currentConversationUser.conversationId, getMembers, id, notSeenMessages, messagesSeen, getNotSeenMessages],
@@ -40,13 +39,15 @@ const ActiveChat = (props) => {
   useEffect(() => {
     socket.on(MessengerActionTypes.CONVERSATION_NEW_MESSAGE, (message) => {
       if (message) {
+        getMembers(id);
         if (message.conversationId === currentConversationUser.conversationId) {
           newMessage(message);
-          messagesSeen([message._id]);
+          if (message.to === id) {
+            messagesSeen([message._id]);
+          }
         } else {
           getNotSeenMessages();
         }
-        getMembers(id);
       }
     });
     return () => {
