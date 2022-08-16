@@ -10,14 +10,22 @@ const getConversationMembersSuccess = (members) => ({
   payload: { members },
 });
 
-const getMessagesRequest = (conversationId) => ({
+const getConversationMembersReset = () => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_MEMBERS_RESET,
+});
+
+const getConversationMessagesRequest = (conversationId) => ({
   type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_REQUEST,
   payload: { conversationId },
 });
 
-const getMessagesSuccess = (messages) => ({
+const getConversationMessagesSuccess = (messages) => ({
   type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_SUCCESS,
   payload: { messages },
+});
+
+const getConversationMessagesReset = () => ({
+  type: MessengerActionTypes.GET_CONVERSATION_MESSAGES_RESET,
 });
 
 const sendMessageRequest = (data) => ({
@@ -40,19 +48,36 @@ const getNotSeenMessagesSuccess = (data) => ({
   payload: { data },
 });
 
-const messagesSeenRequest = (messageIds) => ({
+const getNotSeenMessagesReset = () => ({
+  type: MessengerActionTypes.GET_CONVERSATIONS_NOT_SEEN_MESSAGES_RESET,
+});
+
+const userMessagesSeenRequest = (messageIds) => ({
   type: MessengerActionTypes.PUT_CONVERSATION_MESSAGES_SEEN_REQUEST,
   payload: { data: messageIds },
+});
+
+const userMessagesSeenSuccess = () => ({
+  type: MessengerActionTypes.PUT_CONVERSATION_MESSAGES_SEEN_SUCCESS,
+});
+
+const userMessagesSeenReset = () => ({
+  type: MessengerActionTypes.PUT_CONVERSATION_MESSAGES_SEEN_RESET,
 });
 
 export {
   getConversationsMembersRequest,
   getConversationMembersSuccess,
-  getMessagesRequest,
-  getMessagesSuccess,
+  getConversationMembersReset,
+  getConversationMessagesRequest,
+  getConversationMessagesSuccess,
+  getConversationMessagesReset,
   sendMessageRequest,
   newMessage,
   getNotSeenMessagesSuccess,
   getNotSeenMessagesRequest,
-  messagesSeenRequest,
+  getNotSeenMessagesReset,
+  userMessagesSeenRequest,
+  userMessagesSeenSuccess,
+  userMessagesSeenReset,
 };

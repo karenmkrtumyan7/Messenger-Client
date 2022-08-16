@@ -10,11 +10,19 @@ const MessengerMembers = (props) => {
   const {
     members, getMembers, currentConversationUser, setCurrentConversationUser, id,
     membersFiltered, setMembersFiltered, getNotSeenMessages, notSeenMessages,
+    isUserMessagesSeen, userMessagesSeenReset,
   } = props;
 
   useEffect(() => {
     getMembers(id);
   }, [getMembers, id]);
+
+  useEffect(() => {
+    if (isUserMessagesSeen) {
+      getNotSeenMessages();
+      userMessagesSeenReset();
+    }
+  }, [getNotSeenMessages, isUserMessagesSeen, userMessagesSeenReset]);
 
   useEffect(() => {
     getNotSeenMessages();
@@ -70,6 +78,8 @@ MessengerMembers.propTypes = {
   setMembersFiltered: PropTypes.func.isRequired,
   getNotSeenMessages: PropTypes.func.isRequired,
   notSeenMessages: PropTypes.array.isRequired,
+  isUserMessagesSeen: PropTypes.bool.isRequired,
+  userMessagesSeenReset: PropTypes.func.isRequired,
 };
 
 MessengerMembers.defaultProps = {

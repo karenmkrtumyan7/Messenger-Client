@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import socket from 'services/socket';
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
+import { Typing } from 'components/messenger/Typing';
 
 const ActiveChat = (props) => {
   const {
@@ -16,7 +17,6 @@ const ActiveChat = (props) => {
       const seenMessagesIds = notSeenMessages.find((message) => message.conversationId === currentConversationUser.conversationId)?.ids;
       if (!_.isEmpty(seenMessagesIds)) {
         messagesSeen(seenMessagesIds);
-        getNotSeenMessages();
       }
     },
     [currentConversationUser.conversationId, getMembers, id, notSeenMessages, messagesSeen, getNotSeenMessages],
@@ -68,6 +68,7 @@ const ActiveChat = (props) => {
             </BubbleStyled>
           ))
         }
+        <Typing />
       </ActiveChatStyled>
     )
   );

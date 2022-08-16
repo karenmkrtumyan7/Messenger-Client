@@ -7,19 +7,29 @@ import {
 } from 'components/messenger/Messenger.styled';
 import ActiveChat from 'containers/messenger/ActiveChat';
 import MessengerMembers from 'containers/messenger/MessengerMembers';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { selectMembers } from 'selectors/Messenger.selectors';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getConversationMembersReset, getConversationMessagesReset, getNotSeenMessagesReset } from 'actions/messenger/MessengerActionCreators';
+import { bindActionCreators } from 'redux';
 
 const Messenger = (props) => {
-  const { members } = props;
+  const {
+    members, getMembersReset, notSeenMessagesReset, getMessagesReset,
+  } = props;
   const [currentConversationUser, setCurrentConversationUser] = useState({});
   const [membersFiltered, setMembersFiltered] = useState(members);
   const messagesToBottomRef = useRef(null);
   const scrollToBottom = () => {
     messagesToBottomRef.current?.scrollIntoView();
   };
+
+  useEffect(() => () => {
+    getMembersReset();
+    notSeenMessagesReset();
+    getMessagesReset();
+  }, [getMembersReset, notSeenMessagesReset, getMessagesReset]);
 
   return (
     <MessengerStyled>
@@ -60,10 +70,22 @@ const Messenger = (props) => {
 
 Messenger.propTypes = {
   members: PropTypes.array.isRequired,
+  getMembersReset: PropTypes.func.isRequired,
+  notSeenMessagesReset: PropTypes.func.isRequired,
+  getMessagesReset: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ messenger }) => ({
   members: selectMembers(messenger),
 });
 
-export default connect(mapStateToProps)(Messenger);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    getMessagesReset: getConversationMessagesReset,
+    getMembersReset: getConversationMembersReset,
+    notSeenMessagesReset: getNotSeenMessagesReset,
+  },
+  dispatch,
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messenger);

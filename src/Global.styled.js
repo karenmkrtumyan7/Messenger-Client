@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Form } from 'antd';
 
 const Global = createGlobalStyle`
-html {
+html.app-html {
   height: 100%;
   font-size: 14px;
   font-family: ${(props) => props.theme.typography.fontFamilyBase};
@@ -21,10 +21,10 @@ html {
   button, input, select, textarea{
      font-family: ${(props) => props.theme.typography.fontFamilyBase};
   }
-  
-  body {
-    font-family: ${(props) => props.theme.typography.fontFamilyBase};
-  }
+}
+
+body.app-body {
+  font-family: ${(props) => props.theme.typography.fontFamilyBase};
 }
 
 ::-webkit-scrollbar {
@@ -48,8 +48,13 @@ const FormItemStyled = styled(Form.Item)`
   margin: 0;
 `;
 
+const ItalicStyled = styled.span`
+  font-style: italic;
+`;
+
 export default Global;
 
 export {
   FormItemStyled,
+  ItalicStyled,
 };

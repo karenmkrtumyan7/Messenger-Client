@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { selectMessages, selectNotSeenMessages } from 'selectors/Messenger.selectors';
 import { ActiveChat } from 'components/messenger/ActiveChat';
 import {
-  getConversationsMembersRequest, getMessagesRequest, getNotSeenMessagesRequest, messagesSeenRequest, newMessage,
+  getConversationsMembersRequest, getConversationMessagesRequest, getNotSeenMessagesRequest, userMessagesSeenRequest, newMessage,
 } from 'actions/messenger/MessengerActionCreators';
 import { bindActionCreators } from 'redux';
 import { selectAuthUserId } from 'selectors/Auth.selectors';
@@ -15,11 +15,11 @@ const mapStateToProps = ({ messenger, auth }) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
-    getMessages: getMessagesRequest,
+    getMessages: getConversationMessagesRequest,
     newMessage,
     getMembers: getConversationsMembersRequest,
     getNotSeenMessages: getNotSeenMessagesRequest,
-    messagesSeen: messagesSeenRequest,
+    messagesSeen: userMessagesSeenRequest,
   },
   dispatch,
 );

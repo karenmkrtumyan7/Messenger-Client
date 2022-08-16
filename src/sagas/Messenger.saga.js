@@ -2,7 +2,9 @@ import {
   all, call, put, takeEvery, takeLatest,
 } from '@redux-saga/core/effects';
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
-import { getConversationMembersSuccess, getMessagesSuccess, getNotSeenMessagesSuccess } from 'actions/messenger/MessengerActionCreators';
+import {
+  getConversationMembersSuccess, getConversationMessagesSuccess, getNotSeenMessagesSuccess, userMessagesSeenSuccess,
+} from 'actions/messenger/MessengerActionCreators';
 import { getError } from 'utils';
 import { failure } from 'actions/settings/SettingsActionCreators';
 import socket from 'services/socket';
@@ -28,7 +30,7 @@ function* getMessages({ payload }) {
   const { conversationId } = payload;
   try {
     const { data } = yield call(NetworkService.makeAPIGetRequest, [messenger, conversationId, messages]);
-    yield put(getMessagesSuccess(data));
+    yield put(getConversationMessagesSuccess(data));
   } catch (err) {
     const error = getError(err);
     failure(error);
@@ -64,6 +66,7 @@ function* putMessagesSeen({ payload }) {
 
   try {
     yield call(NetworkService.makeAPIPutRequest, [messenger, messagesSeen], options);
+    yield put(userMessagesSeenSuccess());
   } catch (err) {
     const error = getError(err);
     failure(error);

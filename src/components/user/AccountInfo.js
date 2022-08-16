@@ -1,6 +1,6 @@
 import {
-  AccountInfoDetailsStyled,
-  AccountInfoDetailsTitlesWrapper, AccountInfoDetailsWrapperStyled, AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper,
+  AccountInfoDetailsStyled, AccountInfoDetailsTitlesWrapper, AccountInfoDetailsWrapperStyled,
+  AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper,
 } from 'components/user/User.styled';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';

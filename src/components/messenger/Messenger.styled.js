@@ -40,9 +40,10 @@ const LastMessageStyled = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
+  word-break: break-word;
 `;
 
 const LastMessageTimeStyled = styled(LastMessageStyled)`
@@ -245,6 +246,42 @@ const MessengerFormWrapperStyled = styled.div`
   padding: 0 29px 10px;
 `;
 
+const TypingStyled = styled(BubbleStyled)`
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+`;
+
+const TypingDotStyled = styled.span`
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background-color: #000;
+  border-radius: 50%;
+  animation: animateTyping 1s infinite;
+
+  :nth-child(1) {
+    margin-left: 3px;
+  }
+  
+  :nth-child(2) {
+    animation-delay: .1s;
+  }
+
+  :nth-child(3) {
+    animation-delay: .2s;
+  }
+  
+  @keyframes animateTyping {
+    0% { transform: translateY(0) }
+    20% { transform: translateY(-3px) }
+    40% { transform: translateY(0) }
+    60% { transform: translateY(0) }
+    80% { transform: translateY(0) }
+    100% { transform: translateY(0) }
+  }
+`;
+
 export {
   UserItemStyled,
   UserNameStyled,
@@ -271,4 +308,6 @@ export {
   BubbleStyled,
   MessengerFormWrapperStyled,
   LastMessageTimeStyled,
+  TypingStyled,
+  TypingDotStyled,
 };

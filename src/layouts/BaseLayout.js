@@ -1,7 +1,7 @@
 import {
   LogoutOutlined, MessageOutlined, UserOutlined, UserSwitchOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Grid } from 'antd';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { selectAuthUserResources } from 'selectors/Auth.selectors';
@@ -14,10 +14,12 @@ import { ContentStyled, LayoutStyled, LayoutWrapperStyled } from 'layouts/layout
 import LocalStorageService from 'services/localStorage.service';
 
 const { Sider } = Layout;
+const { useBreakpoint } = Grid;
 
 const BaseLayout = (props) => {
+  const { md } = useBreakpoint();
   const { children, resources } = props;
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(LocalStorageService.get('baseLayoutCollapse'));
 
   const menuItems = [
     {
@@ -59,9 +61,14 @@ const BaseLayout = (props) => {
     return acc;
   }, []);
 
+  const handlerCollapse = (value) => {
+    LocalStorageService.set('baseLayoutCollapse', value);
+    setCollapsed(value);
+  };
+
   return (
     <LayoutWrapperStyled>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible={md} collapsed={md ? collapsed : true} onCollapse={handlerCollapse}>
         <Menu theme="dark" mode="inline" items={displayMenuItems} />
       </Sider>
       <ContentStyled>
