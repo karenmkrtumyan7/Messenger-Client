@@ -34,6 +34,15 @@ const verifyFailure = (error) => ({
   payload: error,
 });
 
+const getUserDetailsRequest = () => ({
+  type: AuthActionTypes.AUTH_USER_REQUEST,
+});
+
+const getUserDetailsSuccess = (data) => ({
+  type: AuthActionTypes.AUTH_USER_SUCCESS,
+  payload: { data },
+});
+
 export {
   signInSuccess,
   signInRequest,
@@ -42,4 +51,6 @@ export {
   verifyRequest,
   verifyFailure,
   signInReset,
+  getUserDetailsSuccess,
+  getUserDetailsRequest,
 };

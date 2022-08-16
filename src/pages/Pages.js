@@ -19,7 +19,7 @@ const Pages = (props) => {
     }
 
     return () => {
-      if (!errorMessage.length) {
+      if (errorMessage.length) {
         notification.destroy();
       }
     };

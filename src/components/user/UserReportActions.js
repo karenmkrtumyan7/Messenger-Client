@@ -1,35 +1,51 @@
 import { Button, Popconfirm, Row } from 'antd';
-import { EyeOutlined, UserDeleteOutlined } from '@ant-design/icons';
+import { LockOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import UserEditModal from 'containers/user/UserEditModal';
 import { UserReportActionsStyled } from 'components/user/User.styled';
+import { Can } from 'components/common/Can';
+import { types, resource } from 'constants/accessControl';
+import { NavigationService } from 'services/navigationService';
 
 const UserReportActions = (props) => {
-  const { data, deleteUser } = props;
-  const confirm = () => {
-    deleteUser(data._id);
-  };
+  const {
+    data, deleteUser, resources, currentUserId,
+  } = props;
+  const EditByOwnerCondition = data._id === currentUserId;
+
   return (
     <Row justify="center">
       <UserReportActionsStyled>
-        <Button type="primary" icon={<EyeOutlined />} />
-        <UserEditModal data={data} />
-        <Popconfirm title="Sure to delete?" onConfirm={confirm}>
-          <Button type="primary" icon={<UserDeleteOutlined />} />
-        </Popconfirm>
+        <Can actionType={types.manage} resource={resources[resource.users]}>
+          <Button
+            type="primary"
+            icon={<LockOutlined />}
+            onClick={() => NavigationService(`${data._id}`)}
+          />
+        </Can>
+        <Can actionType={EditByOwnerCondition ? types.editOwn : types.edit} resource={resources[resource.users]}>
+          <UserEditModal data={data} />
+        </Can>
+        <Can actionType={types.delete} resource={resources[resource.users]}>
+          <Popconfirm title="Sure to delete?" onConfirm={() => deleteUser(data._id)}>
+            <Button type="primary" icon={<UserDeleteOutlined />} />
+          </Popconfirm>
+        </Can>
       </UserReportActionsStyled>
     </Row>
   );
 };
 
 UserReportActions.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.object.isRequired,
+  resources: PropTypes.object.isRequired,
+  currentUserId: PropTypes.string,
   deleteUser: PropTypes.func,
 };
 
 UserReportActions.defaultProps = {
-  data: {},
   deleteUser: null,
+  currentUserId: PropTypes.string,
 };
 
 export { UserReportActions };

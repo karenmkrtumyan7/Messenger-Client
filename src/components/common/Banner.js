@@ -1,10 +1,19 @@
 import { BannerRadiusStyled, BannerTitleStyled } from 'components/styledComponents/Banner/BannerStyled';
+import PropTypes from 'prop-types';
 
-const Banner = () => (
-  <BannerRadiusStyled>
-    <BannerTitleStyled>
-      karen
-    </BannerTitleStyled>
-  </BannerRadiusStyled>
-);
+const Banner = (props) => {
+  const { text } = props;
+  return (
+    <BannerRadiusStyled>
+      <BannerTitleStyled>
+        {text}
+      </BannerTitleStyled>
+    </BannerRadiusStyled>
+  );
+};
+
+Banner.propTypes = {
+  text: PropTypes.string.isRequired,
+};
+
 export { Banner };

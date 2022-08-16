@@ -19,111 +19,111 @@ const AuthHeaderStyled = styled(Row)`
 const AuthHeadingStyled = styled(Title)`
   font-style: normal;
   font-weight: 600;
-  font-size: 50px;
+  font-size: 3.5rem;
   line-height: 75px;
 `;
 
 const AuthLoremStyled = styled.p`
-  font-size: 35px;
-  margin-bottom: 53px;
+  font-size: 2.5rem;
+  margin-bottom: 3.78rem;
 `;
 
 const AuthRedirectTxtStyled = styled.p`
-  font-size: 16px;
+  font-size: 1.14rem;
   line-height: 24px;
 `;
 
 const AuthRedirectUrlStyled = styled(Link)`
-  font-size: 16px;
+  font-size: 1.14rem;
   line-height: 24px;
-  color: #4D47C3;
+  color: ${(props) => props.theme.colors.indigo};
 `;
 
 const AuthInfoWrapperStyled = styled(Row)`
   justify-content: ${(props) => (props.large ? 'default' : 'center')};
-  margin-top: ${(props) => (props.large ? '110px' : 0)};
+  margin-top: ${(props) => (props.large ? '7.85rem' : 0)};
 `;
 
 const AuthInfoStyled = styled(ContainerStyled)`
-  padding-bottom: ${(props) => (props.large ? 'default' : '26px')};
+  padding-bottom: ${(props) => (props.large ? 'default' : '1.85rem')};
 `;
 
 const AuthTextFieldStyled = styled(Input)`
-  font-size: 15px;
+  font-size: 1.1rem;
   line-height: 22px;
-  background-color: #F0EFFF !important;
+  background-color: ${(props) => props.theme.colors.titanWhite} !important;
   height: 62px;
   border: 0px;
   border-radius: 8px;
   padding: 20px 19px 19px 26px;
-  color: #A7A3FF;
+  color: ${(props) => props.theme.colors.melrose};
 
   ::placeholder {
-    color: #A7A3FF;
+    color: ${(props) => props.theme.colors.melrose};
   };
 `;
 
 const AuthPassFieldStyled = styled(Input.Password)`
-  background-color: #F0EFFF !important;
+  background-color: ${(props) => props.theme.colors.titanWhite} !important;
   border-radius: 8px;
   border: 0px;
   height: 62px;
   padding: 20px 0px 19px 26px;
 
   input {
-    font-size: 15px;
+    font-size: 1.07rem;
     line-height: 22px;
-    background-color: #F0EFFF;
+    background-color: ${(props) => props.theme.colors.titanWhite};
     border: 0px;
-    color: #A7A3FF;
+    color: ${(props) => props.theme.colors.melrose};
     ::placeholder {
-      color: #A7A3FF;
+      color: ${(props) => props.theme.colors.melrose};
     };
   }
 `;
 
 const SignInPasswordInputStyled = styled(AuthPassFieldStyled)`
-  margin-top: 14px;
+  margin-bottom: 1rem;
 `;
 
 const AuthTitleStyled = styled.h3`
-  font-size: 30px;
+  font-size: 2.14rem;
   line-height: 52px;
-  margin-bottom: 28px;
+  margin-bottom: 1.78rem;
   font-weight: 500;
 `;
 
 const AuthButtonStyled = styled.button`
   cursor: pointer;
-  background: #4D47C3;
+  background-color: ${(props) => props.theme.colors.indigo};
   box-shadow: 0px 4px 61px rgba(77, 71, 195, 0.4);
   border-radius: 9px;
   width: 100%;
   height: 59px;
   border: none;
-  font-size: 16px;
+  font-size: 1.14rem;
   line-height: 24px;
   color: #FFFFFF;
-  margin-bottom: 54px;
+  margin-bottom: 3.85rem;
 `;
 
 const ForgotPassStyled = styled.p`
-  margin-bottom: 46px;
+  margin-bottom: 3.28rem;
   text-align: center;
-  font-size: 13px;
+  font-size: 0.92rem;
   line-height: 24px;
-  color: #B0B0B0;
+  color: ${(props) => props.theme.colors.silverChalice};
   text-align: end;
   cursor: pointer;
 `;
 
 const SocialIconsWrapperStyled = styled(Row)`
-  margin-bottom: ${(props) => (props.large ? 'default' : '20px')};
+  margin-bottom: ${(props) => (props.large ? 'default' : '1.42rem')};
 `;
 
 const SocialAuthTxtStyled = styled(ForgotPassStyled)`
   text-align: center;
-  font-size: 16px;
+  font-size: 1.14rem;
   cursor: text;
 `;
 
@@ -134,15 +134,15 @@ const SocialIconStyled = styled.img`
 `;
 
 const SocialIconMidStyled = styled(SocialIconStyled)`
-  margin-right: 20px;
+  margin-bottom: 1.42rem;
   margin-left: 20px;
 `;
 
 const EyeStyle = styled(Space)`
   width: 17px;
   height: 17px;
-  color: #A7A3FF;
-  margin-right: 25px;
+  color: ${(props) => props.theme.colors.melrose};
+  margin-right: 1.78rem;
   cursor: pointer
 `;
 

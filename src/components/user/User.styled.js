@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 import {
-  Col, DatePicker, Input, Row, Table,
+  Col, DatePicker, Input, Row, Tabs,
 } from 'antd';
 
 const UserReportActionsStyled = styled(Row)`
   column-gap: 5px;
   flex-wrap: nowrap;
-`;
-
-const UsersTableStyled = styled(Table)`
-  width: 1500px;
 `;
 
 const FiltersInputStyled = styled(Input)`
@@ -40,25 +36,33 @@ const AccountInfoWrapper = styled.div`
 `;
 
 const AccountInfoTitle = styled.h2`
-  font-size: 20px;
-  border-bottom: 1px solid #C2C6CB;
-  margin-bottom: 30px;
+  font-size: 1.42rem;
+  border-bottom: 1px solid ${(props) => props.theme.colors.silverSand};
+  margin-bottom: 2.14rem;
 `;
 
-const AccountInfoDetailsTitlesWrapper = styled(Col)`
-  margin-right: 25px;
+const AccountInfoDetailsTitlesWrapper = styled(Row)`
+  margin-bottom: 1.78rem;
+  flex-direction: column;
+  row-gap: 10px;
   text-align: end;
 `;
 
-const AccountInfoDetailsWrapper = styled(Col)`
+const AccountInfoDetailsStyled = styled(Row)`
   font-weight: bold;
+  flex-direction: column;
+  row-gap: 10px;
 `;
 
 const AccountInfoMainWrapper = styled(Row)`
   justify-content: center; 
-  background-color: white; 
+  background-color: ${(props) => props.theme.colors.white}; 
   border-radius: 10px; 
   flex: 1 1 auto;
+`;
+
+const AccountInfoDetailsWrapperStyled = styled(Row)`
+  column-gap: 1rem;
 `;
 
 const AccountStyled = styled.div`
@@ -69,9 +73,16 @@ const AccountStyled = styled.div`
   margin: 0 auto;
 `;
 
+const UserTabsStyled = styled(Tabs)`
+  margin-bottom: 2.14rem;
+`;
+
+const UserInfoStyled = styled(Row)`
+  row-gap: 10px;
+`;
+
 export {
   UserReportActionsStyled,
-  UsersTableStyled,
   FiltersInputStyled,
   FiltersDatePickerStyled,
   FilterWrapper,
@@ -80,7 +91,10 @@ export {
   AccountInfoWrapper,
   AccountInfoTitle,
   AccountInfoDetailsTitlesWrapper,
-  AccountInfoDetailsWrapper,
+  AccountInfoDetailsStyled,
+  AccountInfoDetailsWrapperStyled,
   AccountInfoMainWrapper,
   AccountStyled,
+  UserTabsStyled,
+  UserInfoStyled,
 };

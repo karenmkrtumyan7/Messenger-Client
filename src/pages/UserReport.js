@@ -4,7 +4,7 @@ import Filters from 'containers/user/Filters';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { selectUsersCount } from '../selectors';
+import { selectUsersCount } from 'selectors';
 
 const UserReport = (props) => {
   const { count } = props;

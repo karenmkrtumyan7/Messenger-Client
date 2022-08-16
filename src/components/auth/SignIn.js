@@ -9,6 +9,7 @@ import { ForgotPasswordPopup } from 'components/auth/ForgotPasswordPopup';
 import {
   AuthButtonStyled, AuthTitleStyled, SignInPasswordInputStyled, EyeStyle, AuthTextFieldStyled,
 } from 'components/auth/Auth.styled';
+import { NavigationService } from 'services/navigationService';
 
 const iconRenderer = (visible) => {
   const Eye = visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />;
@@ -21,9 +22,8 @@ const SignIn = (props) => {
   const onFinish = (values) => signInRequest(values);
 
   useEffect(() => {
-    if (Object.keys(authData).length) {
-      localStorageService.set('auth', authData);
-      navigate('/', { replace: true });
+    if (Object.keys(authData).length && localStorageService.get('auth')) {
+      NavigationService('/');
     }
   }, [authData, navigate]);
 

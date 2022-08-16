@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import UserReportActions from 'containers/user/UserReportActions';
 import _ from 'lodash';
-import { UsersTableStyled } from 'components/user/User.styled';
+import { Table } from 'antd';
 
 const UserReport = (props) => {
   const {
@@ -88,7 +88,7 @@ const UserReport = (props) => {
   };
 
   return (
-    <UsersTableStyled
+    <Table
       columns={columns}
       dataSource={data}
       scroll={{ x: 100, y: 700 }}
