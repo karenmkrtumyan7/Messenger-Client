@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import socket from 'services/socket';
 import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
 import { Typing } from 'components/messenger/Typing';
+import { Popover } from 'antd';
+import { MessageActions } from 'components/messenger/MessageActions';
 
 const ActiveChat = (props) => {
   const {
     messages, getMessages, id, currentConversationUser, scrollToBottom,
     newMessage, getMembers, getNotSeenMessages, messagesSeen, notSeenMessages,
+    userTyping, userTypingReset, isUserTyping,
   } = props;
 
   useEffect(
@@ -24,7 +27,7 @@ const ActiveChat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, scrollToBottom]);
+  }, [messages, scrollToBottom, isUserTyping]);
 
   useEffect(() => {
     if (currentConversationUser.conversationId) {
@@ -55,20 +58,65 @@ const ActiveChat = (props) => {
     };
   }, [newMessage, getMembers, id, currentConversationUser.conversationId, getNotSeenMessages, messagesSeen]);
 
+  useEffect(() => {
+    socket.on(MessengerActionTypes.CONVERSATION_TYPING, (conversationId) => {
+      if (conversationId === currentConversationUser.conversationId) {
+        userTyping();
+      }
+    });
+
+    return () => {
+      socket.off(MessengerActionTypes.CONVERSATION_TYPING);
+    };
+  }, [currentConversationUser.conversationId, userTyping]);
+
+  useEffect(() => {
+    socket.on(MessengerActionTypes.CONVERSATION_TYPING_RESET, (conversationId) => {
+      if (conversationId === currentConversationUser.conversationId) {
+        userTypingReset();
+      }
+    });
+
+    return () => {
+      socket.off(MessengerActionTypes.CONVERSATION_TYPING_RESET);
+    };
+  }, [currentConversationUser.conversationId, userTypingReset]);
+
+  useEffect(() => () => {
+    userTypingReset();
+    socket.emit(MessengerActionTypes.CONVERSATION_TYPING_RESET, currentConversationUser.conversationId);
+  }, [currentConversationUser.conversationId, userTypingReset]);
+
+  useEffect(() => {
+    socket.on(MessengerActionTypes.CONVERSATION_MESSAGE_DELETE, () => {
+      getMembers(id);
+      getMessages(currentConversationUser.conversationId);
+    });
+
+    return () => {
+      socket.off(MessengerActionTypes.CONVERSATION_MESSAGE_DELETE);
+    };
+  }, [getMembers, currentConversationUser.conversationId, getMessages, id]);
+
   return (
     !_.isEmpty(messages) && (
       <ActiveChatStyled>
         {
           messages.map((message) => (
-            <BubbleStyled
+            <Popover
+              trigger="hover"
+              content={(id === message.from) && <MessageActions message={message} />}
               key={message._id}
-              me={id === message.from}
             >
-              { message.text }
-            </BubbleStyled>
+              <BubbleStyled
+                me={id === message.from}
+              >
+                { message.text }
+              </BubbleStyled>
+            </Popover>
           ))
         }
-        <Typing />
+        { isUserTyping && <Typing /> }
       </ActiveChatStyled>
     )
   );
@@ -85,6 +133,9 @@ ActiveChat.propTypes = {
   getNotSeenMessages: PropTypes.func.isRequired,
   messagesSeen: PropTypes.func.isRequired,
   notSeenMessages: PropTypes.array.isRequired,
+  userTyping: PropTypes.func.isRequired,
+  userTypingReset: PropTypes.func.isRequired,
+  isUserTyping: PropTypes.bool.isRequired,
 };
 
 export { ActiveChat };

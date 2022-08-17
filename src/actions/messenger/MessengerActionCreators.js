@@ -65,6 +65,14 @@ const userMessagesSeenReset = () => ({
   type: MessengerActionTypes.PUT_CONVERSATION_MESSAGES_SEEN_RESET,
 });
 
+const userTyping = () => ({
+  type: MessengerActionTypes.CONVERSATION_TYPING,
+});
+
+const userTypingReset = () => ({
+  type: MessengerActionTypes.CONVERSATION_TYPING_RESET,
+});
+
 export {
   getConversationsMembersRequest,
   getConversationMembersSuccess,
@@ -80,4 +88,6 @@ export {
   userMessagesSeenRequest,
   userMessagesSeenSuccess,
   userMessagesSeenReset,
+  userTyping,
+  userTypingReset,
 };

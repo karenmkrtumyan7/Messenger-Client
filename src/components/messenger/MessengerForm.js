@@ -4,9 +4,14 @@ import {
 } from 'components/messenger/Messenger.styled';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import socket from 'services/socket';
+import { MessengerActionTypes } from 'actions/messenger/MessengerActionTypes';
+import _ from 'lodash';
 
 const MessengerForm = (props) => {
-  const { sendMessage, currentConversationUser, id } = props;
+  const {
+    sendMessage, currentConversationUser, id,
+  } = props;
   const [text, setText] = useState('');
   const handlerSend = () => {
     if (text) {
@@ -25,12 +30,21 @@ const MessengerForm = (props) => {
     setText('');
   }, [currentConversationUser]);
 
+  const handlerTyping = ({ target }) => {
+    socket.emit(MessengerActionTypes.CONVERSATION_TYPING, currentConversationUser.conversationId);
+
+    if (_.isEmpty(target.value)) {
+      socket.emit(MessengerActionTypes.CONVERSATION_TYPING_RESET, currentConversationUser.conversationId);
+    }
+    setText(target.value);
+  };
+
   return (
     <Form onFinish={handlerSend}>
       <MessengerFormStyled>
         <MessengerInputStyled
           value={text}
-          onChange={({ target }) => setText(target.value)}
+          onChange={handlerTyping}
         />
         <MessengerSendStyled
           htmlType="submit"

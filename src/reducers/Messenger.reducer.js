@@ -5,6 +5,7 @@ const initialState = {
   members: [],
   notSeenMessages: [],
   isUserMessagesSeen: false,
+  isUserTyping: false,
 };
 
 export const messenger = (state = initialState, { type, payload }) => {
@@ -54,6 +55,18 @@ export const messenger = (state = initialState, { type, payload }) => {
     return {
       ...state,
       isUserMessagesSeen: false,
+    };
+  }
+  case MessengerActionTypes.CONVERSATION_TYPING: {
+    return {
+      ...state,
+      isUserTyping: true,
+    };
+  }
+  case MessengerActionTypes.CONVERSATION_TYPING_RESET: {
+    return {
+      ...state,
+      isUserTyping: false,
     };
   }
   default: return state;

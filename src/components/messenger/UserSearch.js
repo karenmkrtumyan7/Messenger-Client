@@ -11,10 +11,11 @@ const UserSearch = (props) => {
   const userSearchSubmitHandler = ({ searchText }) => {
     if (_.isEmpty(searchText)) {
       setMembersFiltered(members);
+    } else {
+      setMembersFiltered((prevMembersFiltered) => (
+        prevMembersFiltered.filter((member) => member.userName.includes(searchText))
+      ));
     }
-    setMembersFiltered((prevMembersFiltered) => (
-      prevMembersFiltered.filter((member) => member.userName.includes(searchText))
-    ));
   };
 
   return (
