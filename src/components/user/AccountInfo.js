@@ -4,6 +4,7 @@ import {
 } from 'components/user/User.styled';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { AvatarUpload } from './AvatarUpload';
 
 const AccountInfo = (props) => {
   const { getUserDetails, user } = props;
@@ -18,6 +19,7 @@ const AccountInfo = (props) => {
   return (
     <AccountInfoMainWrapper>
       <AccountInfoWrapper>
+        <AvatarUpload />
         <AccountInfoTitle>Account Info</AccountInfoTitle>
         <AccountInfoDetailsWrapperStyled>
           <AccountInfoDetailsTitlesWrapper>
