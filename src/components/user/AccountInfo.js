@@ -1,10 +1,10 @@
 import {
   AccountInfoDetailsStyled, AccountInfoDetailsTitlesWrapper, AccountInfoDetailsWrapperStyled,
-  AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper,
+  AccountInfoMainWrapper, AccountInfoTitle, AccountInfoWrapper, AvatarWrapperStyled,
 } from 'components/user/User.styled';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { AvatarUpload } from './AvatarUpload';
+import AvatarUpload from 'containers/auth/AvatarUpload';
 
 const AccountInfo = (props) => {
   const { getUserDetails, user } = props;
@@ -19,7 +19,9 @@ const AccountInfo = (props) => {
   return (
     <AccountInfoMainWrapper>
       <AccountInfoWrapper>
-        <AvatarUpload />
+        <AvatarWrapperStyled>
+          <AvatarUpload />
+        </AvatarWrapperStyled>
         <AccountInfoTitle>Account Info</AccountInfoTitle>
         <AccountInfoDetailsWrapperStyled>
           <AccountInfoDetailsTitlesWrapper>

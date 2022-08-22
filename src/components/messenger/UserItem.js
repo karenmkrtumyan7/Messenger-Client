@@ -1,4 +1,6 @@
-import { Badge, Col, Skeleton } from 'antd';
+import {
+  Badge, Col, Image, Skeleton,
+} from 'antd';
 import {
   LastMessageStyled, LastMessageTimeStyled, UserAvatarStyled, UserDescriptionWrapperStyled, UserItemStyled, UserNameStyled,
 } from 'components/messenger/Messenger.styled';
@@ -8,7 +10,7 @@ import { getIsoHours } from 'utils';
 
 const UserItem = (props) => {
   const {
-    avatar, userName, date, text,
+    userName, date, text, _id,
   } = props.data;
   const { active, onClick, count } = props;
   return (
@@ -16,7 +18,10 @@ const UserItem = (props) => {
       <UserItemStyled active={active ? 1 : 0} onClick={onClick}>
         <Col>
           <Badge count={count}>
-            <UserAvatarStyled src={avatar || user} />
+            <UserAvatarStyled
+              src={`http://localhost:8001/upload/avatars/${_id}.png`}
+              icon={<Image preview={false} src={user} />}
+            />
           </Badge>
         </Col>
         <UserDescriptionWrapperStyled>

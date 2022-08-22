@@ -58,6 +58,7 @@ const UserNameStyled = styled(LastMessageStyled)`
 const UserAvatarStyled = styled(Avatar)`
   width: 40px;
   height: 40px;
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 const UserDescriptionWrapperStyled = styled(Row)`

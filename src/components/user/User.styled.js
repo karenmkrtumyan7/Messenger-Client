@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {
-  Col, DatePicker, Input, Row, Tabs,
+  Col, DatePicker, Image, Input, Row, Tabs,
 } from 'antd';
 
 const UserReportActionsStyled = styled(Row)`
@@ -33,6 +33,18 @@ const FilterInputWrapperStyled = styled(Col)`
 
 const AccountInfoWrapper = styled.div`
   margin: 100px 0;
+`;
+
+const AvatarWrapperStyled = styled(Row)`
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+const AvatarStyled = styled(Image)`
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid black;
+  border-radius: 50%;
 `;
 
 const AccountInfoTitle = styled.h2`
@@ -97,4 +109,6 @@ export {
   AccountStyled,
   UserTabsStyled,
   UserInfoStyled,
+  AvatarWrapperStyled,
+  AvatarStyled,
 };
